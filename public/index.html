@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>MYOB Github Recruitment Tool</title>
+    <meta name="description" content="MYOB Github Recruitment Tool">
+    <meta name="author" content="nFuse">
+
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+    <script>
+        function authorize() {
+            window.location.href = "https://github.com/login/oauth/authorize?client_id=b8e1d295bb54ac91ab15&scope=user,repo,admin:org,repo_deployment";
+        }
+    </script>
+    <button type="button" onclick="authorize()">Launch Authorization</button>
+</body>
+
+</html>
