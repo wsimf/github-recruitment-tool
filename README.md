@@ -9,3 +9,4 @@
 ## Dependencies
 
 Following dependencies are used in the projct
+jQuery: If using an IDE like WebStorm to develop, then open the terminal and run the following - "npm install --save jquery". This will enable autosuggest in the IDE.
