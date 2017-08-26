@@ -1,6 +1,7 @@
 $(document).ready(function() {
     console.log("Getting access code from Github");
     var code = getUrlParams(window.location.toString(), "code");
+    console.log("code is: " + code);
 
     if (code === undefined) {
         console.error("Unable to continue - Invalid code received");
@@ -22,6 +23,25 @@ $(document).ready(function() {
         $('#info').text("Done - Authentication data received");
     });
 });
+
+function createRepo() {
+    var code = getUrlParams(window.location.toString(), "code");
+    var accessTokenRequest = $.ajax({
+        url: "http://127.0.0.1:8080/createRepository",
+        method: "POST",
+        accepts: "application/json",
+        data: "code=" + code,
+        error: function(obj, errorText, errorCode) {
+            console.log(errorText + errorCode + obj);
+            $('#repo').text(errorText);
+        }
+    });
+    console.log("Repo request started.");
+
+    accessTokenRequest.done(function(reply) {
+        $('#repo').text("Done - Repo created!");
+    });
+}
 
 function getUrlParams(url, requiredParam) {
     if (url === undefined) {
