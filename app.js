@@ -38,7 +38,7 @@ app.post('/requestGithubToken', function(req, res) {
                 res.status(200);
 
                 //TODO send the access_token and userid to a database
-                authToken = jsonData;
+                authToken = jsonData.access_token;
                 console.log(jsonData);
 
                 res.json({
@@ -70,9 +70,9 @@ app.post('/createRepository', function (req, res) {
         client_secret: '89229bc9e9c3563f49e5b013f45852ecb0d6f509', //This is very important! Guard it with your life lol :P
         code: req.body.code,
         access_token: authToken,
-        name: "Hello World",
-        description: "This is your first repository",
-        homepage: "https://github.com",
+        name: 'Hello World',
+        description: 'This is your first repository',
+        homepage: 'https://github.com',
         private: true,
         has_issues: true,
         has_projects: true,
@@ -85,8 +85,8 @@ app.post('/createRepository', function (req, res) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'access_token': authToken,
-            'User-Agent': 'gihub-recruitment-tool',
+            'Authorization': 'token ' + authToken,
+            'User-Agent': 'github-recruitment-tool',
             'Content-Length': data.length,
             'Accept': 'application/json',
         },
