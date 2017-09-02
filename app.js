@@ -70,10 +70,10 @@ app.post('/createRepository', function (req, res) {
         client_secret: '89229bc9e9c3563f49e5b013f45852ecb0d6f509', //This is very important! Guard it with your life lol :P
         code: req.body.code,
         access_token: authToken,
-        name: 'Hello World',
+        name: 'code-challenge',
         description: 'This is your first repository',
         homepage: 'https://github.com',
-        private: true,
+        private: false,   //False for now since we dont have any private repos for the general acc
         has_issues: true,
         has_projects: true,
         has_wiki: true
@@ -81,6 +81,7 @@ app.post('/createRepository', function (req, res) {
 
     const httpsOptions = {
         hostname: 'api.github.com',
+        //for creating
         path: '/user/repos',
         method: 'POST',
         headers: {
@@ -93,7 +94,11 @@ app.post('/createRepository', function (req, res) {
     };
 
     const externalRequest = https.request(httpsOptions, function(githubResponse) {
+        let chunks = [];
         githubResponse.on('data', function(data) {
+            chunks.push(data);
+        }).on('end', function(){
+            let data = Buffer.concat(chunks);
             const jsonData = JSON.parse(data);
             if (jsonData['error'] === undefined) { //Successful
                 res.status(200);
@@ -122,5 +127,67 @@ app.post('/createRepository', function (req, res) {
     externalRequest.end();
 
 });
+
+
+app.put('/importRepository', function (req, res) {
+    //Send the HTTP request to Github
+    const data = JSON.stringify({
+        client_id: 'b8e1d295bb54ac91ab15',
+        client_secret: '89229bc9e9c3563f49e5b013f45852ecb0d6f509', //This is very important! Guard it with your life lol :P
+        code: req.body.code,
+        access_token: authToken,
+        vcs: "git",
+        vcs_url: "https://github.com/nfuseuoa/Origin-Technical-Challenge.git"
+    });
+
+    const httpsOptions = {
+        hostname: 'api.github.com',
+        //for creating
+        path: '/repos/nfuseuoa/code-challenge/import',
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'token ' + authToken,
+            'User-Agent': 'github-recruitment-tool',
+            'Content-Length': data.length,
+            'Accept': 'application/vnd.github.barred-rock-preview',   //Need this particular media type
+        },
+    };
+
+    const externalRequest = https.request(httpsOptions, function(githubResponse) {
+        let chunks = [];
+        githubResponse.on('data', function(data) {
+            chunks.push(data);
+        }).on('end', function() {
+            let data = Buffer.concat(chunks);
+            const jsonData = JSON.parse(data);
+            if (jsonData['error'] === undefined) { //Successful
+                res.status(200);
+
+                console.log(jsonData);
+
+                res.json({
+                    'success': 'Repo ' + data.html_url + " is been imported"
+                });
+            } else { //Not successfull - communicate to the user
+                res.status(401);
+                res.json(jsonData);
+            }
+        });
+    });
+
+    externalRequest.on('error', function(error) {
+        console.log("Error while importing repo");
+        res.status(401); //Inform it to the user - unauthorized
+        res.json({
+            'error': 'Unable to send the Github request'
+        });
+    });
+
+    externalRequest.write(data);
+    externalRequest.end();
+});
+
+
 
 app.listen(8080);

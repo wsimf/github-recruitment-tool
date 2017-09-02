@@ -39,8 +39,22 @@ function createRepo() {
     console.log("Repo request started.");
 
     accessTokenRequest.done(function(reply) {
-        $('#repo').text("Done - Repo created!");
+        var importRequest = $.ajax({
+            url: "http://127.0.0.1:8080/importRepository",
+            method: "PUT",
+            accepts: "application/json",
+            data: "code=" + code,
+            error: function(obj, errorText, errorCode) {
+                console.log(errorText + errorCode + obj);
+                $('#repo').text(errorText);
+            }
+        });
+        console.log("Importing content into repo");
+        importRequest.done(function(reply) {
+            $('#repo').text("Done - Repo created!");
+        });
     });
+
 }
 
 function getUrlParams(url, requiredParam) {
