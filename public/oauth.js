@@ -38,6 +38,9 @@ function createRepo() {
     });
     console.log("Repo request started.");
 
+  var collaborator = document.getElementsByName("collaborator")[0].value;
+  console.log(collaborator);
+
     accessTokenRequest.done(function(reply) {
         var importRequest = $.ajax({
             url: "http://127.0.0.1:8080/importRepository",
@@ -53,7 +56,27 @@ function createRepo() {
         importRequest.done(function(reply) {
             $('#repo').text("Done - Repo created!");
         });
+
+      var addCollaboratorRequest = $.ajax({
+        url: "http://127.0.0.1:8080/addCollaborator",
+        method: "PUT",
+        accepts: "application/json",
+        data: "code=" + code + "&collaborator=" + collaborator,
+        error: function(obj, errorText, errorCode) {
+          console.log(errorText + errorCode + obj);
+          $('#repo').text(errorText);
+        }
+      });
+      console.log("Adding candidate into repo");
+      addCollaboratorRequest.done(function(reply) {
+        $('#repo').text("Done - Candidate added!");
+      });
+
+
     });
+
+
+
 
 }
 
