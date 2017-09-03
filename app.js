@@ -64,13 +64,15 @@ app.post('/requestGithubToken', function(req, res) {
 });
 
 app.post('/createRepository', function (req, res) {
+    var collaborator = req.body.collaborator;
+
     //Send the HTTP request to Github
     const data = JSON.stringify({
         client_id: 'b8e1d295bb54ac91ab15',
         client_secret: '89229bc9e9c3563f49e5b013f45852ecb0d6f509', //This is very important! Guard it with your life lol :P
         code: req.body.code,
         access_token: authToken,
-        name: 'code-challenge',
+        name: 'code-challenge-' + collaborator,
         description: 'This is your first repository',
         homepage: 'https://github.com',
         private: false,   //False for now since we dont have any private repos for the general acc
@@ -130,6 +132,8 @@ app.post('/createRepository', function (req, res) {
 
 
 app.put('/importRepository', function (req, res) {
+    var collaborator = req.body.collaborator;
+
     //Send the HTTP request to Github
     const data = JSON.stringify({
         client_id: 'b8e1d295bb54ac91ab15',
@@ -143,7 +147,7 @@ app.put('/importRepository', function (req, res) {
     const httpsOptions = {
         hostname: 'api.github.com',
         //for creating
-        path: '/repos/nfuseuoa/code-challenge/import',
+        path: '/repos/nfuseuoa/code-challenge-' + collaborator + '/import',
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -203,7 +207,7 @@ app.put('/addCollaborator', function (req, res) {
   const httpsOptions = {
     hostname: 'api.github.com',
     //for creating
-    path: '/repos/nfuseuoa/code-challenge/collaborators/' + collaborator,
+    path: '/repos/nfuseuoa/code-challenge-' + collaborator + '/collaborators/' + collaborator,
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
