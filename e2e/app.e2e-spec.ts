@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('github-recruitment-tool App', () => {
+describe('mean App', () => {
   let page: AppPage;
 
   beforeEach(() => {
