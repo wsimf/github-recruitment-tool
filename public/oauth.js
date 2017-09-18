@@ -9,7 +9,7 @@ $(document).ready(function () {
   }
 
   var accessTokenRequest = $.ajax({
-    url: "http://127.0.0.1:8080/requestGithubToken",
+    url: "http://127.0.0.1:80/requestGithubToken",
     method: "POST",
     accepts: "application/json",
     data: "code=" + code + "&userid=" + "TestUser",
@@ -30,7 +30,7 @@ function createRepo() {
 
   var code = getUrlParams(window.location.toString(), "code");
   var accessTokenRequest = $.ajax({
-    url: "http://127.0.0.1:8080/createRepository",
+    url: "http://127.0.0.1:80/createRepository",
     method: "POST",
     accepts: "application/json",
     data: "code=" + code + "&collaborator=" + collaborator,
@@ -44,7 +44,7 @@ function createRepo() {
 
   accessTokenRequest.done(function (reply) {
     var importRequest = $.ajax({
-      url: "http://127.0.0.1:8080/importRepository",
+      url: "http://127.0.0.1:80/importRepository",
       method: "PUT",
       accepts: "application/json",
       data: "code=" + code + "&collaborator=" + collaborator,
@@ -60,7 +60,7 @@ function createRepo() {
     }).done(function (reply) {
       // After import is done, add collaborators (only 1 request can be executed at a time)
       var addCollaboratorRequest = $.ajax({
-        url: "http://127.0.0.1:8080/addCollaborator",
+        url: "http://127.0.0.1:80/addCollaborator",
         method: "PUT",
         accepts: "application/json",
         data: "code=" + code + "&collaborator=" + collaborator,
