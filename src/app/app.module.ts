@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/Forms';
+import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 //import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -25,7 +25,7 @@ import { RegisterComponent } from './components/register/register.component';
 
 import { AppService } from './services/app.service';
 import { AuthService } from './services/auth.service';
-import { AuthGuard } from './guards/auth.guard'; 
+import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
