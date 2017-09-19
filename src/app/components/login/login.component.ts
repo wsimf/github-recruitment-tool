@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AppService} from '../../services/app.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { FlashMessagesService } from 'angular2-flash-messages'; 
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 
 @Component({
@@ -25,15 +25,15 @@ export class LoginComponent implements OnInit {
     console.log(this.appService.myData());
   }
 
-  onSubmit(){
+  onSubmit() {
     this.authService.login(this.email, this.password)
-    .then((res) =>{
-      this.flashMessageService.show('Your are logged in', { cssClass: 'alert-success', timeout: 4000 });
-      this.router.navigate(['/'])
+    .then((res) => {
+      this.flashMessageService.show('Your are logged in!', { cssClass: 'alert-success', timeout: 4000 });
+      this.router.navigate(['/']);
     })
-    .catch((err) =>{
+    .catch((err) => {
       this.flashMessageService.show(err.message, { cssClass: 'alert-danger', timeout: 4000 });
-      this.router.navigate(['/login'])
-    })
+      this.router.navigate(['/register']);
+    });
   }
 }
