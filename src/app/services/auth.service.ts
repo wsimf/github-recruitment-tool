@@ -14,12 +14,12 @@ interface Repo {
 export class AuthService {
   repos$: Observable<Repo[]>;
 
-  constructor(public afAuth:AngularFireAuth,private http: HttpClient ) { }
+  constructor(public afAuth: AngularFireAuth, private http: HttpClient ) { }
 
-  login(email:string, password:string){
-    return  new Promise((resolve, reject)=>{
+  login(email: string, password: string){
+    return  new Promise((resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(userData => resolve(userData),err => reject(err));
+      .then(userData => resolve(userData), err => reject(err));
     });
   }
 
@@ -27,15 +27,17 @@ export class AuthService {
     return this.afAuth.authState.map(auth => auth);
   }
 
-  logout(){
+  logout() {
     this.afAuth.auth.signOut();
   }
 
   authentication(){ // token: 9f7fa497acff70abc90ea8c4419bd35495615ba0
-    console.log("called")
-const headers = new HttpHeaders().set("Authorization", "token " + "9f7fa497acff70abc90ea8c4419bd35495615ba0");
+    console.log('called');
+const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
+const body = {name: 'This is my repository'};
     console.log({headers});
-    return this.http.get<Repo[]>("https://api.github.com/user/repos", {headers});
+    // return this.http.post<Repo[]>('https://api.github.com/user/repos', body, {headers});
+    return this.http.get<Repo[]>('https://api.github.com/user/repos', {headers});
     // this.repos$ = this.http.get<Repo[]>("https://api.github.com/user/repos", {headers}).map(data => _.values(data)).do(console.log);
     // this.http.get("https://api.github.com/user/repos", {headers}).subscribe(val => console.log(val)); n
 
