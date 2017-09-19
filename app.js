@@ -18,8 +18,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 // API location
 app.use('/api', api);
-app.use('/authenticate', authenticate);
-app.use('/collaborator', collaborator);
+app.use('/api/authenticate', authenticate);
+app.use('/api/collaborator', collaborator);
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
