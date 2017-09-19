@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
@@ -16,6 +16,8 @@ export class CandidatelistComponent implements OnInit {
 
   constructor(
     public dialog : MdDialog,
+    public renderer: Renderer,
+    public elementRef: ElementRef
   ) { }
 
   ngOnInit() {
@@ -25,10 +27,18 @@ export class CandidatelistComponent implements OnInit {
   openDialog(){
     this.dialogRef = this.dialog.open(AddReviewersComponent,{
       width:'1px',height:'1px'});
-  }
+      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0]; 
+      var boxShadow = document.createAttribute("style");
+      boxShadow.value = "box-shadow:none;";
+      hideShadow.attributes.setNamedItem(boxShadow);
+    }
 
   editCan(){
     this.dialogRef2 = this.dialog.open(EditCanComponent,{
       width:'1px',height:'1px'});
+      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0]; 
+      var boxShadow = document.createAttribute("style");
+      boxShadow.value = "padding:0";
+      hideShadow.attributes.setNamedItem(boxShadow);
   }
 }

@@ -1,0 +1,17 @@
+.cdk-overlay-container{
+	position: absolute;
+	border-style: hidden;
+	top:100px;
+	left:600px;
+	background-color: transparent;
+	box-shadow: none;
+}
+.cdk-global-overlay-wrapper,.cdk-overlay-backdrop,.cdk-overlay-dark-backdrop,.cdk-overlay-backdrop-showing,.cdk-overlay-pane,.mat-dialog-container,.ng-tns-c4-0,.ng-trigger,.ng-trigger-slideDialog{
+	border-style: hidden;
+	background-color: transparent;
+	box-shadow: none;
+}
+.mat-dialog-container{
+	box-shadow: none;
+	padding:0;
+}
