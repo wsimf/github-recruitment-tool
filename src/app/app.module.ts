@@ -2,6 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/Forms';
+import { AngularFireModule } from 'angularfire2';
+//import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import  { MaterialModule } from '@angular/material';
@@ -18,14 +22,25 @@ import { EditCanComponent } from './components/edit-can/edit-can.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
-import {AppService} from './services/app.service';
+
+import { AppService } from './services/app.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard'; 
 
 const appRoutes: Routes =[
-  {path:'',component:DashboardComponent},
+  {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path:'add-cand',component:AddCandComponent},
+  {path:'add-cand',component:AddCandComponent,canActivate:[AuthGuard]},
 ];
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyD7fRL10_swZMnvnG5CG-VClHsKtlkcAmU",
+  authDomain: "nufeproject.firebaseapp.com",
+  databaseURL: "https://nufeproject.firebaseio.com",
+  storageBucket: "",
+  messagingSenderId: "763732167157"
+};
 
 @NgModule({
   declarations: [
@@ -41,19 +56,27 @@ const appRoutes: Routes =[
   ],
   imports: [
     BrowserModule,
-    BrowserModule,
+    FormsModule,
     RouterModule.forRoot(appRoutes),
     MaterialModule,
     BrowserAnimationsModule,
     MdButtonModule,
     MdCardModule,
-    MdDialogModule
+    MdDialogModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    FlashMessagesModule
   ],
   entryComponents:[
     AddReviewersComponent,
     EditCanComponent
   ],
-  providers: [AppService],
+  providers: [
+    AppService,
+    AngularFireAuth,
+    //AngularFireDatabase,
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

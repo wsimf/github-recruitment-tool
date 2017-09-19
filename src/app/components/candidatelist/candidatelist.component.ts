@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
@@ -12,12 +12,9 @@ export class CandidatelistComponent implements OnInit {
 
   dialogRef : MdDialogRef<AddReviewersComponent>;
   dialogRef2 : MdDialogRef<EditCanComponent>;
-  dialogResult:"";
 
   constructor(
     public dialog : MdDialog,
-    public renderer: Renderer,
-    public elementRef: ElementRef
   ) { }
 
   ngOnInit() {
