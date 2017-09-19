@@ -3,21 +3,19 @@ const router = express.Router();
 
 router.put('/addCollaborator', (req, res) => {
   var collaborator = req.body.collaborator;
-  if (collaborator === undefined) {
-    console.error("No collaborator specified")
-  }
 
-  //Send the HTTP request to Github
-  const data = JSON.stringify({
-    client_id: 'b8e1d295bb54ac91ab15',
-    client_secret: '89229bc9e9c3563f49e5b013f45852ecb0d6f509', //This is very important! Guard it with your life lol :P
-    code: req.body.code,
-    access_token: authToken
-  });
+  //Check if collaborator is available
+  if (collaborator === undefined) {
+    console.error("No collaborator specified");
+    res.status(400);
+    res.json({
+      'error': 'Collaborator is empty'
+    });
+    return;
+  }
 
   const httpsOptions = {
     hostname: 'api.github.com',
-    //for creating
     path: '/repos/nfuseuoa/code-challenge-' + collaborator + '/collaborators/' + collaborator,
     method: 'PUT',
     headers: {
@@ -58,7 +56,7 @@ router.put('/addCollaborator', (req, res) => {
     });
   });
 
-  externalRequest.write(data);
+  externalRequest.write();
   externalRequest.end();
 })
 
