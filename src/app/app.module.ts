@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 //import { AngularFireDatabase } from 'angularfire2/database';
+import {HttpClientModule} from '@angular/common/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
@@ -64,7 +65,8 @@ export const firebaseConfig = {
     MdCardModule,
     MdDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    FlashMessagesModule
+    FlashMessagesModule,
+    HttpClientModule
   ],
   entryComponents:[
     AddReviewersComponent,

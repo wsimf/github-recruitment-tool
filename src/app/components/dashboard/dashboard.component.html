@@ -1,1 +1,9 @@
 <app-candidatelist></app-candidatelist>
+<button (click)="test()">Click me</button>
+<ul *ngIf="repos$ | async as repos else noData">
+  <li *ngFor="let repo of repos">
+    {{repo.name}}
+  </li>
+</ul>
+<ng-template #noData>No Data Available</ng-template>
+
