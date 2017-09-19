@@ -18,6 +18,7 @@ import { EditCanComponent } from './components/edit-can/edit-can.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
+import {AppService} from './services/app.service';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent},
@@ -52,7 +53,7 @@ const appRoutes: Routes =[
     AddReviewersComponent,
     EditCanComponent
   ],
-  providers: [],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
