@@ -2,17 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
+// AngularFire Imports
 import { AngularFireModule } from 'angularfire2';
-//import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
+// Material imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import  { MaterialModule } from '@angular/material';
+import { MaterialModule } from '@angular/material';
 import { MdCardModule } from '@angular/material';
 import { MdButtonModule } from '@angular/material';
 import { MdDialogModule } from '@angular/material';
 
+// Component Imports
 import { AppComponent } from './app.component';
 import { AddCandComponent } from './components/add-cand/add-cand.component';
 import { AddReviewersComponent } from './components/add-reviewers/add-reviewers.component';
@@ -23,9 +27,11 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 
+// Import services
 import { AppService } from './services/app.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { CandidateService } from './services/candidate.service';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -75,7 +81,9 @@ export const firebaseConfig = {
     AngularFireAuth,
     //AngularFireDatabase,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    AngularFireDatabase,
+    CandidateService
   ],
   bootstrap: [AppComponent]
 })
