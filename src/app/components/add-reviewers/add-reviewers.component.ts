@@ -16,8 +16,8 @@ import { GithubService} from "../../services/github.service";
 export class AddReviewersComponent implements OnInit {
   reviewerGithubID: string;
   reviewer: Reviewer;
-  githubId : string;
-  reviewerList : any[];
+  githubId: string;
+  reviewerList: any[];
   candidate: Candidate;
 
   constructor(public dialogRef: MdDialogRef<AddReviewersComponent>,
@@ -48,7 +48,7 @@ export class AddReviewersComponent implements OnInit {
     this.candidate = this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
     this.reviewerList = this.candidateService.getReviewerList(this.githubId);
 
-    // CALL gitubAPI service
+    // adding reviewer as collaborator.
     this.githubService.addCollaborator(this.candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
       console.log(res);
     });
