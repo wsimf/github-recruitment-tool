@@ -36,58 +36,6 @@ export class CandidatelistComponent implements OnInit {
     public candidateService: CandidateService
   ){
     //this.repos$ = this.githubService.getCandidateList();
-    // Hard code the candidate list
-    // this.candidates = [
-    //   {
-    //     name: 'Joe Joe',
-    //     email: 'joejoe123@gmail.com',
-    //     githubID: 'JohPa8696',
-    //     problem: 'problem1',
-    //     repository: 'url1',
-    //     progressStatus: 'Done',
-    //     adder: 'Karyn',
-    //     reviewers: [
-    //       {
-    //         name: 'Mark Hunt',
-    //         email: 'MarkTheManager@gmail.com',
-    //         githubID: 'MarkTheManager'
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     name: 'James Murray',
-    //     email: 'james134@gmail.com',
-    //     githubID: 'jam134',
-    //     problem: 'problem1',
-    //     repository: 'url1',
-    //     progressStatus: 'Being review',
-    //     adder: 'Karyn',
-    //     reviewers: [
-    //       {
-    //         name: 'Mark Hunt',
-    //         email: 'MarkTheManager@gmail.com',
-    //         githubID: 'MarkTheManager'
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     name: 'Tom Waz',
-    //     email: 'TomTom@gmail.com',
-    //     githubID: 'Tom123',
-    //     problem: 'problem1',
-    //     repository: 'url1',
-    //     progressStatus: 'Done',
-    //     adder: 'Karyn',
-    //     reviewers: [
-    //       {
-    //         name: 'Jake Romano',
-    //         email: 'Jakey123@gmail.com',
-    //         githubID: 'Jake123'
-    //       }
-    //     ]
-    //   }
-    // ];
-
 
   }
 
