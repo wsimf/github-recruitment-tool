@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { DatabaseClientService } from './candidate.service';
+import { CandidateService } from './candidate.service';
 
 describe('DatabaseClientService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DatabaseClientService]
+      providers: [CandidateService]
     });
   });
 
-  it('should be created', inject([DatabaseClientService], (service: DatabaseClientService) => {
+  it('should be created', inject([CandidateService], (service: CandidateService) => {
     expect(service).toBeTruthy();
   }));
 });

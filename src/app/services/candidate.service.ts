@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-
+import {Reviewer} from '../models/Reviewer';
 import {Candidate} from '../models/Candidate';
-import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class CandidateService {
@@ -35,6 +33,19 @@ export class CandidateService {
 
   newCandidate(candidate: Candidate) {
     this.candidates.push(candidate);
+  }
+
+  addReviewertoCandidate(candidateID: string, reviewer: Reviewer ) {
+    // this.candidates.forEach(function(cand: Candidate[]){
+
+      // this.candidates.forEach(obj => {
+      //   console.log(cand.name);
+      //   if (obj.$key === candidateID) {
+      //     console.log(candidateID);
+      //     cand.reviewers.push(reviewer);
+      //   }
+      //   );
+      //   }
   }
 
 }

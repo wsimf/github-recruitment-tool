@@ -5,24 +5,23 @@
         <h5 class="modal-title" style="color:white">Add Reviewer</h5>
         <button class="close" (click)="onCloseCancel()">&times;</button>
       </div>
+      <div class ="identifier" ></div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
+          <div class="form-group" id="">
             <label for="reviewerName">Reviewer Name</label>
-            <input type="text" placeholder="Type Reviewer Name/Email" class="form-control" id="reviewerName">
+            <input type="text" placeholder="Type Reviewer Name/Email" [(ngModel)]="reviewerGithubID" name="reviewerName" class="form-control" id="reviewerName">
           </div>
         </form>
         <div id="reviewerList">
-            <ul>
-                <li class="d-inline mx-2 px-2 py-1">Reviewer1</li>
-                <li class="d-inline mx-2 px-2 py-1">Reviewer1</li>
-                <li class="d-inline mx-2 px-2 py-1">Reviewer1</li>
+            <ul *ngFor = "let reviewer of reviewers">
+              <li class="d-inline mx-2 px-2 py-1" > {{reviewer.githubID}}</li>
             </ul>
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" (click)="onCloseCancel()">Close</button>
-        <button class="btn btn-warning">Save</button>
+        <button class="btn btn-warning" (click)="addReviewer()">Save</button>
       </div>
     </div>
   </div>
