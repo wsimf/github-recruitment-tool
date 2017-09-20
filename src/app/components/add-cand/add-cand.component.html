@@ -21,15 +21,15 @@
             <label for="candidateGithubID">Candiate Github ID</label>
             <input type="text" name="candidateGithubID" [(ngModel)]="githubID" class="form-control" required="Please provide candidate's github id">
           </div>
-          <div class="form-group">
-            <label for="candidateRepository">Repository Name</label>
-            <input type="text" [(ngModel)]="repository" name="candidateRepository" class="form-control" required="Please provide a name for repository">
-          </div>
+          <!--<div class="form-group">-->
+            <!--<label for="candidateRepository">Repository Name</label>-->
+            <!--<input type="text" [(ngModel)]="repository" name="candidateRepository" class="form-control" required="Please provide a name for repository">-->
+          <!--</div>-->
           <div class="form-group">
             <label for="problems">Problems</label>
             <select id="problems" name = "problem" [(ngModel)]="problem" class="form-control">
-                    <option>Problem1</option>
-                    <option>Problem2</option>
+               <!--TODO: List of candidate problems currently hard coded into html (shift to db)-->
+                    <option>Origin-Technical-Challenge</option>
             </select>
           </div>
           <div class="row justify-content-around mt-4">

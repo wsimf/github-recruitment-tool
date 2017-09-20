@@ -14,7 +14,6 @@ export class AddCandComponent implements OnInit {
   name: string;
   email: string;
   githubID: string;
-  repository: string;
   problem: string;
   candidate: Candidate;
   constructor(
@@ -22,7 +21,7 @@ export class AddCandComponent implements OnInit {
     public router: Router,
     public githubService: GithubService
   ) {
-
+    this.problem = 'Origin-Technical-Challenge';
   }
 
   ngOnInit() {
@@ -39,7 +38,6 @@ export class AddCandComponent implements OnInit {
       email: this.email,
       githubID: this.githubID,
       problem: this.problem,
-      repository: this.repository,
       progressStatus: 'None',
       adder: 'Karyn',
     };
