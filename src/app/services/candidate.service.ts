@@ -13,7 +13,6 @@ interface Repo {
 
 @Injectable()
 export class CandidateService {
-  repos$: Observable<Repo[]>;
   candidates: FirebaseListObservable<any[]>;
   candidate: FirebaseObjectObservable<any>;
 
