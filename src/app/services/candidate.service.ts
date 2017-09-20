@@ -44,16 +44,15 @@ export class CandidateService {
   }
 
   addReviewertoCandidate(candidateID: string, reviewer: Reviewer ) {
-    // this.candidates.forEach(function(cand: Candidate[]){
 
-      // this.candidates.forEach(obj => {
-      //   console.log(cand.name);
-      //   if (obj.$key === candidateID) {
-      //     console.log(candidateID);
-      //     cand.reviewers.push(reviewer);
-      //   }
-      //   );
-      //   }
+      this.candidates.forEach(obj => {
+        obj.forEach(candidate=> {
+          if(candidate.$key === candidateID) {
+            candidate.reviewers.push(reviewer);
+          }
+        })
+      });
+
   }
   getCandidateList(){ // token: 9f7fa497acff70abc90ea8c4419bd35495615ba0
     console.log('called');
