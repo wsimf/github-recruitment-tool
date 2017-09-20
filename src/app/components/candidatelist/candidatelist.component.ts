@@ -6,6 +6,13 @@ import { Candidate } from '../../models/Candidate';
 import { Reviewer } from '../../models/Reviewer';
 
 import { CandidateService } from '../../services/candidate.service';
+import {Observable} from "rxjs/Observable";
+
+interface Repo {
+  name: string;
+  url: string;
+}
+
 @Component({
   selector: 'app-candidatelist',
   templateUrl: './candidatelist.component.html',
@@ -14,6 +21,7 @@ import { CandidateService } from '../../services/candidate.service';
 export class CandidatelistComponent implements OnInit {
   dialogRef: MdDialogRef<AddReviewersComponent>;
   dialogRef2: MdDialogRef<EditCanComponent>;
+  repos$: Observable<Repo[]>;
 
   // Fetch all candidate from the database
   candidates: Candidate[];
@@ -22,6 +30,8 @@ export class CandidatelistComponent implements OnInit {
     public dialog: MdDialog,
     public candidateService: CandidateService,
   ){
+
+    this.repos$ = this.candidateService.getCandidateList();
     // Hard code the candidate list
     // this.candidates = [
     //   {
