@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
         this.flashMessageService.show('Register user successful!', { cssClass: 'alert-success', timeout: 4000 });
         this.router.navigate(['/']);
 
-        // Persist the recruiter, after user login 
+        // Persist the recruiter, after user login
         this.recruiterService.persistRecruiter(this.recruiter);
       })
       .catch((err) => {

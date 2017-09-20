@@ -14,15 +14,18 @@ import { Candidate } from '../../models/Candidate';
 })
 export class AddReviewersComponent implements OnInit {
   reviewerGithubID: string;
-  reviewer: Reviewer;
   reviewers: Reviewer;
+  githubId : string;
+  reviewerList : any[];
 
-  constructor( public dialogRef: MdDialogRef<AddReviewersComponent>,
-               public reviewerService: ReviewerService,
-               public candidateService: CandidateService) {
+  constructor(public dialogRef: MdDialogRef<AddReviewersComponent>,
+    public reviewerService: ReviewerService,
+    public candidateService: CandidateService) {
   }
 
   ngOnInit() {
+    this.githubId = document.getElementById("identifier").innerHTML;
+    this.reviewerList = this.candidateService.getReviewerList(this.githubId);
   }
 
   onCloseCancel() {
@@ -34,16 +37,15 @@ export class AddReviewersComponent implements OnInit {
 
 
     // For database
-    var identifierDiv = document.getElementsByClassName("identifier")[0];
-    var githubID = identifierDiv.attributes.getNamedItem("id");
-    console.log(githubID.value);
-
-    this.reviewer = {
+    //var identifierDiv = document.getElementById("identifier");
+    //var gid = identifierDiv.innerHTML;
+    console.log(this.githubId);
+    this.reviewers = {
       name: '',
       email: '',
       githubID: this.reviewerGithubID,
     };
-    this.candidateService.addReviewertoCandidate(githubID.value, this.reviewer);
-
+    this.candidateService.addReviewertoCandidate(this.githubId, this.reviewers.githubID);
+    this.reviewerList = this.candidateService.getReviewerList(this.githubId);
   }
 }

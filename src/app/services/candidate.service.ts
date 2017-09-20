@@ -7,6 +7,7 @@ import {Candidate} from '../models/Candidate';
 export class CandidateService {
   candidates: FirebaseListObservable<any[]>;
   candidate: FirebaseObjectObservable<any>;
+  can : any[];
 
   constructor( public angularfirebase: AngularFireDatabase) {
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
@@ -35,16 +36,39 @@ export class CandidateService {
     this.candidates.push(candidate);
   }
 
-  addReviewertoCandidate(candidateID: string, reviewer: Reviewer ) {
-
-      this.candidates.forEach(obj => {
-        obj.forEach(candidate=> {
-          if(candidate.$key === candidateID) {
-            candidate.reviewers.push(reviewer);
-          }
-        })
-      });
-
+  addReviewertoCandidate(githubId: string, reviewerGithubID: string ) {
+    this.getCandidates().subscribe(cand =>{
+      this.can = cand;
+    });
+    for(let ca of this.can){
+      console.log(ca);
+      if(ca.githubID != undefined && ca.githubID == githubId){
+        if(ca.reviewers == "" || ca.reviewers == undefined){
+          console.log("1-1");
+          ca.reviewers = reviewerGithubID;
+          this.candidates.update(ca.$key,ca);
+          //this.candidates.update(githubId,ca);
+        }else{
+          console.log("1-2");
+          ca.reviewers += "," + reviewerGithubID;
+          this.candidates.update(ca.$key,ca);
+        }
+      }
+    }
+    return "";
   }
 
+  getReviewerList(githubId: string){
+    this.getCandidates().subscribe(cand =>{
+      this.can = cand;
+    });
+    for(let ca of this.can){
+      if(ca.githubID != undefined && ca.githubID == githubId){
+        if(ca.reviewers != "" && ca.reviewers != undefined){
+          var viewList = ca.reviewers.split(',');
+          return viewList;
+        }
+      }
+    }
+  }
 }

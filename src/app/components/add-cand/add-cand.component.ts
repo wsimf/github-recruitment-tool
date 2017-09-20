@@ -20,7 +20,11 @@ export class AddCandComponent implements OnInit {
     public flashMessageService: FlashMessagesService,
     public router: Router,
     public githubService: GithubService,
+<<<<<<< HEAD
     public candidateService: CandidateService,
+=======
+    public candidateService: CandidateService
+>>>>>>> 07b9676490cab7ec05bd4cf65482831a4c0e84e3
   ) {
     this.problem = 'Origin-Technical-Challenge';
   }
@@ -41,7 +45,7 @@ export class AddCandComponent implements OnInit {
       email: this.email,
       githubID: this.githubID,
       problem: this.problem,
-      progressStatus: 'None',
+      progressStatus: 'Doing',
       adder: 'Karyn',
     };
 
