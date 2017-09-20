@@ -21,7 +21,7 @@ export class CandidatelistComponent implements OnInit {
   constructor(
     public dialog: MdDialog,
     public candidateService: CandidateService,
-  ){
+  ) {
     // Hard code the candidate list
     // this.candidates = [
     //   {
@@ -84,13 +84,17 @@ export class CandidatelistComponent implements OnInit {
       });
   }
 
-  openDialog() {
+  openDialog(candidate: Candidate) {
     this.dialogRef = this.dialog.open(AddReviewersComponent, {
       width:'1px',height:'1px'});
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0];
       var boxShadow = document.createAttribute("style");
       boxShadow.value = "box-shadow:none;";
       hideShadow.attributes.setNamedItem(boxShadow);
+      var indentifierDiv = document.getElementsByClassName("identifier")[0];
+      var candidateKey = document.createAttribute("id");
+      candidateKey.value= candidate.$key;
+      indentifierDiv.attributes.setNamedItem(candidateKey);
     }
 
   editCan(){

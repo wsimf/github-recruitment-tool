@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-
+import {Reviewer} from '../models/Reviewer';
 import {Candidate} from '../models/Candidate';
 import {Observable} from "rxjs/Observable";
+import {of} from "rxjs/observable/of";
 
 interface Repo {
   name: string;
@@ -43,6 +44,18 @@ export class CandidateService {
     this.candidates.push(candidate);
   }
 
+  addReviewertoCandidate(candidateID: string, reviewer: Reviewer ) {
+    // this.candidates.forEach(function(cand: Candidate[]){
+
+      // this.candidates.forEach(obj => {
+      //   console.log(cand.name);
+      //   if (obj.$key === candidateID) {
+      //     console.log(candidateID);
+      //     cand.reviewers.push(reviewer);
+      //   }
+      //   );
+      //   }
+  }
   getCandidateList(){ // token: 9f7fa497acff70abc90ea8c4419bd35495615ba0
     console.log('called');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
