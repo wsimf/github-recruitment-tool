@@ -36,16 +36,15 @@ export class CandidateService {
   }
 
   addReviewertoCandidate(candidateID: string, reviewer: Reviewer ) {
-    // this.candidates.forEach(function(cand: Candidate[]){
 
-      // this.candidates.forEach(obj => {
-      //   console.log(cand.name);
-      //   if (obj.$key === candidateID) {
-      //     console.log(candidateID);
-      //     cand.reviewers.push(reviewer);
-      //   }
-      //   );
-      //   }
+      this.candidates.forEach(obj => {
+        obj.forEach(candidate=> {
+          if(candidate.$key === candidateID) {
+            candidate.reviewers.push(reviewer);
+          }
+        })
+      });
+
   }
 
 }
