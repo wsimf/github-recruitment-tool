@@ -6,6 +6,8 @@ import {Candidate} from "../models/Candidate";
 interface Repo {
   name: string;
   url: string;
+  full_name: string;
+  subscribers_url: string;
 }
 
 @Injectable()

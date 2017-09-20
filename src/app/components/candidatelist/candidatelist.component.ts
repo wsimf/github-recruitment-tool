@@ -12,6 +12,8 @@ import {GithubService} from "../../services/github.service";
 interface Repo {
   name: string;
   url: string;
+  full_name: string;
+  subscribers_url: string;
 }
 
 @Component({
