@@ -7,13 +7,11 @@ import { Reviewer } from '../../models/Reviewer';
 
 import { CandidateService } from '../../services/candidate.service';
 import {Observable} from "rxjs/Observable";
+import {GithubService} from "../../services/github.service";
 
 interface Repo {
   name: string;
   url: string;
-  full_name: string;
-  subscribers_url: string;
-  owner: any;
 }
 
 @Component({
@@ -25,20 +23,15 @@ export class CandidatelistComponent implements OnInit {
   dialogRef: MdDialogRef<AddReviewersComponent>;
   dialogRef2: MdDialogRef<EditCanComponent>;
   repos$: Observable<Repo[]>;
-  test$: Repo[];
 
   // Fetch all candidate from the database
   candidates: Candidate[];
 
   constructor(
     public dialog: MdDialog,
-    public candidateService: CandidateService,
+    public githubService: GithubService,
   ){
-
-    this.repos$ = this.candidateService.getCandidateList();
-    this.candidateService.getCandidateList().subscribe(data => console.log(data));
-    // this.test$ = this.candidateService.test();
-
+    this.repos$ = this.githubService.getCandidateList();
     // Hard code the candidate list
     // this.candidates = [
     //   {
@@ -95,19 +88,23 @@ export class CandidatelistComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.candidateService.getCandidates().subscribe(candidates => {
+      this.githubService.getCandidateList().subscribe(candidates => {
         this.candidates = candidates;
         console.log(this.candidates);
       });
   }
 
-  openDialog() {
+  openDialog(candidate: Candidate) {
     this.dialogRef = this.dialog.open(AddReviewersComponent, {
       width:'1px',height:'1px'});
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0];
       var boxShadow = document.createAttribute("style");
       boxShadow.value = "box-shadow:none;";
       hideShadow.attributes.setNamedItem(boxShadow);
+      var indentifierDiv = document.getElementsByClassName("identifier")[0];
+      var candidateKey = document.createAttribute("id");
+      candidateKey.value= candidate.$key;
+      indentifierDiv.attributes.setNamedItem(candidateKey);
     }
 
   editCan(){

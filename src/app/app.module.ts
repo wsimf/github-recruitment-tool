@@ -33,6 +33,8 @@ import { AppService } from './services/app.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { CandidateService } from './services/candidate.service';
+import {GithubService} from "./services/github.service";
+import { ReviewerService } from './services/reviewer.service';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -85,7 +87,9 @@ export const firebaseConfig = {
     AuthService,
     AuthGuard,
     AngularFireDatabase,
-    CandidateService
+    CandidateService,
+    GithubService,
+    ReviewerService
   ],
   bootstrap: [AppComponent]
 })
