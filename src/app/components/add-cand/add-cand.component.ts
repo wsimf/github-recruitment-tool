@@ -19,7 +19,8 @@ export class AddCandComponent implements OnInit {
   constructor(
     public flashMessageService: FlashMessagesService,
     public router: Router,
-    public githubService: GithubService
+    public githubService: GithubService,
+    public candidateService: CandidateService
   ) {
     this.problem = 'Origin-Technical-Challenge';
   }
@@ -38,11 +39,12 @@ export class AddCandComponent implements OnInit {
       email: this.email,
       githubID: this.githubID,
       problem: this.problem,
-      progressStatus: 'None',
+      progressStatus: 'Doing',
       adder: 'Karyn',
     };
     console.log(this.candidate);
     this.githubService.addCandidate(this.candidate);
+    this.candidateService.newCandidate(this.candidate);
     this.flashMessageService.show('New candidate added!', { cssClass: 'alert-success', timeout: 2000 });
     this.router.navigate(['/']);
     // }

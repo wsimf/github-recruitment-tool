@@ -21,11 +21,11 @@
 #addReview{
 	margin-top: 160px;
 }
-#reviewerList ul{
+.reviewerLi ul{
 	list-style: none;
 	padding-left: 15px;
 }
-#reviewerList ul li{
+.reviewerLi ul li{
 	background-color: #6100A5;
 	border-radius: 15px;
 	color: white;
