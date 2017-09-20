@@ -3,11 +3,16 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {Candidate} from '../models/Candidate';
-import {Observable} from "rxjs/Observable";
+import { Response } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 
 interface Repo {
   name: string;
   url: string;
+  full_name: string;
+  subscribers_url: string;
+  owner: any;
 }
 
 @Injectable()
@@ -45,12 +50,12 @@ export class CandidateService {
   getCandidateList(){ // token: 9f7fa497acff70abc90ea8c4419bd35495615ba0
     console.log('called');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
-    const body = {name: 'This is my repository'};
-    console.log({headers});
+
     // return this.http.post<Repo[]>('https://api.github.com/user/repos', body, {headers});
     return this.http.get<Repo[]>('https://api.github.com/user/repos', {headers});
     // this.repos$ = this.http.get<Repo[]>("https://api.github.com/user/repos", {headers}).map(data => _.values(data)).do(console.log);
     // this.http.get("https://api.github.com/user/repos", {headers}).subscribe(val => console.log(val)); n
   }
+
 
 }

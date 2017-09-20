@@ -4,14 +4,14 @@
   </div>
 </div>
 
-<ul class="Unstyled">
-  <li class="card mb-1" *ngFor = "let candidate of candidates">
+<ul class="Unstyled" *ngIf="repos$ | async as repos else noData">
+  <li class="card mb-1" *ngFor="let repo of repos">
     <div class="mx-5 py-4 row justify-content-between  align-items-center">
       <div>
-        <h4 class="card-title">{{candidate.name}}</h4>
-        <span class="card-text-createdby">Created by: {{candidate.adder}} | </span>
-        <span class="card-text-githubID">GithubID: {{candidate.githubID}} | </span>
-        <span class="card-text-progressStatus">Status: {{candidate.progressStatus}} </span>
+        <h4 class="card-title">{{repo.name}}</h4>
+        <span class="card-text-createdby">Created by: {{repo.owner.login}} </span>
+        <!--<span class="card-text-githubID">Name: {{repo.full_name}} | </span>-->
+        <!--<span class="card-text-progressStatus">Collaborators url: {{repo.subscribers_url}} </span>-->
       </div>
       <div>
         <button class="btn btn-warning btn-sm" (click)="openDialog()"> Add Reviewers</button>
@@ -63,9 +63,9 @@
           <!--</div>  -->
         <!--</li>-->
 </ul>
-<ul *ngIf="repos$ | async as repos else noData">
-  <li *ngFor="let repo of repos">
-    {{repo.name}}
-  </li>
-</ul>
-<ng-template #noData>No Data Available</ng-template>
+<!--<ul *ngIf="test$ | async as subscribers else noData">-->
+  <!--<li *ngFor="let subscriber of subscribers">-->
+    <!--{{subscriber.login}}-->
+  <!--</li>-->
+<!--</ul>-->
+<!--<ng-template #noData>No Data Available</ng-template>-->

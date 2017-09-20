@@ -11,6 +11,9 @@ import {Observable} from "rxjs/Observable";
 interface Repo {
   name: string;
   url: string;
+  full_name: string;
+  subscribers_url: string;
+  owner: any;
 }
 
 @Component({
@@ -22,6 +25,7 @@ export class CandidatelistComponent implements OnInit {
   dialogRef: MdDialogRef<AddReviewersComponent>;
   dialogRef2: MdDialogRef<EditCanComponent>;
   repos$: Observable<Repo[]>;
+  test$: Repo[];
 
   // Fetch all candidate from the database
   candidates: Candidate[];
@@ -32,6 +36,9 @@ export class CandidatelistComponent implements OnInit {
   ){
 
     this.repos$ = this.candidateService.getCandidateList();
+    this.candidateService.getCandidateList().subscribe(data => console.log(data));
+    // this.test$ = this.candidateService.test();
+
     // Hard code the candidate list
     // this.candidates = [
     //   {
