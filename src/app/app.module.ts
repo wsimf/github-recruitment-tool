@@ -35,6 +35,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { CandidateService } from './services/candidate.service';
 import {GithubService} from "./services/github.service";
 import { ReviewerService } from './services/reviewer.service';
+import { RecruiterService } from './services/recruiter.service';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -76,7 +77,7 @@ export const firebaseConfig = {
     FlashMessagesModule,
     HttpClientModule
   ],
-  entryComponents:[
+  entryComponents: [
     AddReviewersComponent,
     EditCanComponent
   ],
@@ -89,7 +90,8 @@ export const firebaseConfig = {
     AngularFireDatabase,
     CandidateService,
     GithubService,
-    ReviewerService
+    ReviewerService,
+    RecruiterService
   ],
   bootstrap: [AppComponent]
 })

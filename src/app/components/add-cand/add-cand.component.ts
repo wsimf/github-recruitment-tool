@@ -3,7 +3,7 @@ import {Candidate} from '../../models/Candidate';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { CandidateService} from '../../services/candidate.service';
-import {GithubService} from "../../services/github.service";
+import { GithubService } from "../../services/github.service";
 
 @Component({
   selector: 'app-add-cand',
@@ -19,7 +19,8 @@ export class AddCandComponent implements OnInit {
   constructor(
     public flashMessageService: FlashMessagesService,
     public router: Router,
-    public githubService: GithubService
+    public githubService: GithubService,
+    public candidateService: CandidateService,
   ) {
     this.problem = 'Origin-Technical-Challenge';
   }
@@ -33,6 +34,8 @@ export class AddCandComponent implements OnInit {
     //   this.flashMessageService.show('Invalid input!', { cssClass: 'alert-danger', timeout: 4000 });
     //   this.router.navigate(['/add-cand']);
     // } else {
+
+    // Adder need a new email
     this.candidate = {
       name: this.name,
       email: this.email,
@@ -41,8 +44,15 @@ export class AddCandComponent implements OnInit {
       progressStatus: 'None',
       adder: 'Karyn',
     };
+
     console.log(this.candidate);
+    // Create a repo and add candidate
     this.githubService.addCandidate(this.candidate);
+
+    // Persist the candidate
+    this.candidateService.newCandidate(this.candidate);
+
+    // Adding candidate succesful
     this.flashMessageService.show('New candidate added!', { cssClass: 'alert-success', timeout: 2000 });
     this.router.navigate(['/']);
     // }

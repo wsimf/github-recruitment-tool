@@ -15,6 +15,7 @@ export class GithubService {
 
   constructor(private http: HttpClient) { }
 
+  // Create a repo for a candidate
   addCandidate(candidate: Candidate) {
     this.createRepository(candidate).subscribe(data => {
       this.importRepository(data, candidate).subscribe( res => {
@@ -24,6 +25,7 @@ export class GithubService {
       });
     });
   }
+  // Create a repository for a candidate
   createRepository(candidate: Candidate) {
     console.log('Creating repository');
 
@@ -41,6 +43,7 @@ export class GithubService {
     return this.http.post('https://api.github.com/user/repos', body, {headers});
   }
 
+  // Clone repository
   importRepository(response: any, candidate: Candidate) {
     console.log(response);
 
@@ -56,6 +59,7 @@ export class GithubService {
     return this.http.put('https://api.github.com/repos/nfuseuoa/' + response["name"] + '/import', body, {headers});
   }
 
+  // Add colabrorator to a github repo
   addCollaborator(name: string, collaborator: string){
     console.log('Adding a collaborator');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
