@@ -15,6 +15,7 @@ export class AddCandComponent implements OnInit {
   email: string;
   githubID: string;
   problem: string;
+  repositoryName: string;
   candidate: Candidate;
   constructor(
     public flashMessageService: FlashMessagesService,
@@ -41,6 +42,7 @@ export class AddCandComponent implements OnInit {
       email: this.email,
       githubID: this.githubID,
       problem: this.problem,
+      repositoryName: this.repositoryName,
       progressStatus: 'Doing',
       adder: 'Karyn',
     };
