@@ -18,7 +18,9 @@ export class GithubService {
   addCandidate(candidate: Candidate) {
     this.createRepository(candidate).subscribe(data => {
       this.importRepository(data, candidate).subscribe( res => {
-        console.log(res);
+        this.addCollaborator(data['name'], candidate.githubID).subscribe(res =>{
+          console.log(res);
+        });
       });
     });
   }
@@ -52,6 +54,14 @@ export class GithubService {
 
     console.log({headers});
     return this.http.put('https://api.github.com/repos/nfuseuoa/' + response["name"] + '/import', body, {headers});
+  }
+
+  addCollaborator(name: string, collaborator: string){
+    console.log('Adding a collaborator');
+    const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
+      .set('Accept', 'application/vnd.github.barred-rock-preview');
+    return this.http.put('https://api.github.com/repos/nfuseuoa/code-challenge-'
+      + collaborator + '/collaborators/' + collaborator, null, {headers});
   }
 
   getCandidateList() { // token: 9f7fa497acff70abc90ea8c4419bd35495615ba0
