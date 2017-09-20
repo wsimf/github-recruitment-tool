@@ -7,6 +7,7 @@ import { Reviewer } from '../../models/Reviewer';
 
 import { CandidateService } from '../../services/candidate.service';
 import {Observable} from "rxjs/Observable";
+import {GithubService} from "../../services/github.service";
 
 interface Repo {
   name: string;
@@ -28,10 +29,10 @@ export class CandidatelistComponent implements OnInit {
 
   constructor(
     public dialog: MdDialog,
-    public candidateService: CandidateService,
+    public githubService: GithubService,
   ){
 
-    this.repos$ = this.candidateService.getCandidateList();
+    this.repos$ = this.githubService.getCandidateList();
     // Hard code the candidate list
     // this.candidates = [
     //   {
@@ -88,7 +89,7 @@ export class CandidatelistComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.candidateService.getCandidates().subscribe(candidates => {
+      this.githubService.getCandidateList().subscribe(candidates => {
         this.candidates = candidates;
         console.log(this.candidates);
       });

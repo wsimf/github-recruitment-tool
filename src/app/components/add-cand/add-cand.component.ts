@@ -3,6 +3,7 @@ import {Candidate} from '../../models/Candidate';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { CandidateService} from '../../services/candidate.service';
+import {GithubService} from "../../services/github.service";
 
 @Component({
   selector: 'app-add-cand',
@@ -19,8 +20,10 @@ export class AddCandComponent implements OnInit {
   constructor(
     public flashMessageService: FlashMessagesService,
     public router: Router,
-    public candidateService: CandidateService
-  ) { }
+    public githubService: GithubService
+  ) {
+
+  }
 
   ngOnInit() {
   }
@@ -41,7 +44,7 @@ export class AddCandComponent implements OnInit {
       adder: 'Karyn',
     };
     console.log(this.candidate);
-    this.candidateService.newCandidate(this.candidate);
+    this.githubService.addCandidate(this.candidate);
     this.flashMessageService.show('New candidate added!', { cssClass: 'alert-success', timeout: 2000 });
     this.router.navigate(['/']);
     // }
