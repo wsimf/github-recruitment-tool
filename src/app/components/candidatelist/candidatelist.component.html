@@ -13,8 +13,11 @@
 <li class="card mb-1" *ngFor="let c of candidates">
   <div class="mx-5 py-4 row justify-content-between  align-items-center">
     <div>
-      <h4 class="card-title">{{c.problem}}-{{c.githubID}}  </h4>
-      <span class="card-text-createdby">Created by: {{c.adder}} {{c.progressStatus}} </span>
+      <h4 class="card-title">{{c.name}}  </h4>
+      <span class="card-text-createdby">Created by: {{c.adder}} | Repository: {{c.repositoryName}} |  Progress: {{c.progressStatus}} </span><br>
+      <!--<span class ="card-text-githubRepo">Repository: {{c.repositoryName}}</span><br>-->
+      <!--<span class="card-text-githubID">GithubID: {{c.githubID}} </span><br>-->
+      <!--<span class="card-get-progress">Progress: {{c.progressStatus}}</span><br>-->
       <!--<span class="card-text-githubID">Name: {{repo.full_name}} | </span>-->
       <!--<span class="card-text-progressStatus">Collaborators url: {{repo.subscribers_url}} </span>-->
     </div>

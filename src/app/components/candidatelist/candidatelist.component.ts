@@ -40,12 +40,12 @@ export class CandidatelistComponent implements OnInit {
   }
 
   ngOnInit() {
-      //this.githubService.getCandidateList().subscribe(candidates => {
-      //this.candidates = candidates;
-      //});
+      // this.githubService.getCandidateList().subscribe(candidates => {
+      // this.candidates = candidates;
+      // });
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
-      })
+      });
   }
 
   openDialog(id: string) {

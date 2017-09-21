@@ -31,7 +31,7 @@ export class GithubService {
 
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
     const body = {
-      name: 'code-challenge-' + candidate.githubID,
+      name: candidate.repositoryName,
       description: 'MYOB technical challenge for ' + candidate.name,
       private: false,   //False for now since we dont have any private repos for the general acc
       has_issues: true,
@@ -60,12 +60,14 @@ export class GithubService {
   }
 
   // Add colabrorator to a github repo
-  addCollaborator(name: string, collaborator: string){
+  addCollaborator(name: string, collaborator: string) {
     console.log('Adding a collaborator');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
       .set('Accept', 'application/vnd.github.barred-rock-preview');
-    return this.http.put('https://api.github.com/repos/nfuseuoa/code-challenge-'
-      + collaborator + '/collaborators/' + collaborator, null, {headers});
+    console.log(name + '  ' + collaborator);
+    return this.http.put('https://api.github.com/repos/nfuseuoa/' + name + '/collaborators/' + collaborator, null, {headers});
+    // return this.http.put('https://api.github.com/repos/nfuseuoa/code-challenge-'
+    //   + collaborator + '/collaborators/' + collaborator, null, {headers});
   }
 
   getCandidateList() { // token: 9f7fa497acff70abc90ea8c4419bd35495615ba0

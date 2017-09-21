@@ -5,7 +5,7 @@ export interface Candidate {
   email?: string;
   githubID?: string;
   problem?: string;
-  repository?: string;
+  repositoryName?: string;
   progressStatus?: string;
   adder?: string;
   reviewers?: Reviewer[];
