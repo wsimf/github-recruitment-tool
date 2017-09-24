@@ -1,0 +1,18 @@
+<div class="container-fluid" *ngIf="comments?.length>0; else noComments">
+  <md-card *ngFor="let c of comments">
+    <md-card-header>
+      <md-card-title><strong>{{c.candidateGithubName}}</strong></md-card-title>
+      <md-card-subtitle>{{c.candidateGithubID}}</md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      <p><strong>Comment to the candidate: </strong>{{c.commentToCandidate}}</p>
+      <p><strong>Comment to the recruiter: </strong>{{c.commentToRecruiter}}</p>
+    </md-card-content>
+
+  </md-card>
+</div>
+
+<ng-template #noComments>
+  <hr>
+  <h5>There are no reviewer comments to view. </h5>
+</ng-template>

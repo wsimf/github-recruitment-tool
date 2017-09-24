@@ -42,6 +42,7 @@ const appRoutes: Routes =[
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'add-cand',component:AddCandComponent,canActivate:[AuthGuard]},
+  {path:'results', component:ResultsComponent,canActivate:[AuthGuard]}
 ];
 
 export const firebaseConfig = {
