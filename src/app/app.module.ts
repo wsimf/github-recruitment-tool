@@ -12,7 +12,6 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 
 // Material imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
 import { MdCardModule } from '@angular/material';
 import { MdButtonModule } from '@angular/material';
 import { MdDialogModule } from '@angular/material';
@@ -68,7 +67,6 @@ export const firebaseConfig = {
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
-    MaterialModule,
     BrowserAnimationsModule,
     MdButtonModule,
     MdCardModule,
