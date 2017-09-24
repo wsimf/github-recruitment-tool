@@ -53,15 +53,18 @@ export class CandidateService {
           ca.reviewers += "," + reviewerGithubID;
           this.candidates.update(ca.$key,ca);
         }
+        return ca;
       }
     }
-    return "";
   }
 
   getReviewerList(githubId: string){
+    // Get the list of the candidate
     this.getCandidates().subscribe(cand =>{
       this.can = cand;
     });
+
+    // Find the reviewers
     for(let ca of this.can){
       if(ca.githubID != undefined && ca.githubID == githubId){
         if(ca.reviewers != "" && ca.reviewers != undefined){
