@@ -35,6 +35,7 @@ import { CandidateService } from './services/candidate.service';
 import {GithubService} from "./services/github.service";
 import { ReviewerService } from './services/reviewer.service';
 import { RecruiterService } from './services/recruiter.service';
+import { ResultsComponent } from './components/results/results.component';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -61,7 +62,8 @@ export const firebaseConfig = {
     LoginComponent,
     NavbarComponent,
     RegisterComponent,
-    AddReviewersComponent
+    AddReviewersComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
