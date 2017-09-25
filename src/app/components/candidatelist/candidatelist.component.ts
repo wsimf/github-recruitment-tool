@@ -53,7 +53,7 @@ export class CandidatelistComponent implements OnInit {
       width:'1px',height:'1px'});
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0];
       var boxShadow = document.createAttribute("style");
-      boxShadow.value = "box-shadow:none;";
+      boxShadow.value = "padding:0;";
       hideShadow.attributes.setNamedItem(boxShadow);
       var indentifierDiv =  document.getElementById("identifier");
       //var candidateId = document.createAttribute("id");
