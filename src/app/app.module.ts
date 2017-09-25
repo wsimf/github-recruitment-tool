@@ -36,13 +36,15 @@ import {GithubService} from "./services/github.service";
 import { ReviewerService } from './services/reviewer.service';
 import { RecruiterService } from './services/recruiter.service';
 import { ResultsComponent } from './components/results/results.component';
+import { FeedbackComponent } from './components/feedback/feedback.component';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'add-cand',component:AddCandComponent,canActivate:[AuthGuard]},
-  {path:'results', component:ResultsComponent,canActivate:[AuthGuard]}
+  {path:'results', component:ResultsComponent,canActivate:[AuthGuard]},
+  {path:'feedback', component:FeedbackComponent}
 ];
 
 export const firebaseConfig = {
@@ -64,7 +66,8 @@ export const firebaseConfig = {
     NavbarComponent,
     RegisterComponent,
     AddReviewersComponent,
-    ResultsComponent
+    ResultsComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,6 @@ export const firebaseConfig = {
   providers: [
     AppService,
     AngularFireAuth,
-    //AngularFireDatabase,
     AuthService,
     AuthGuard,
     AngularFireDatabase,
