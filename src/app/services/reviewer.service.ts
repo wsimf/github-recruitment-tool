@@ -27,30 +27,15 @@ export class ReviewerService {
   }
 
   findReviews(githubId: string){
-    this.comments.forEach(function (review: FeedbackForm) {
-      console.log(review);
-      for (let entry in review) {
-        if (review[entry].githubId === githubId){
-          console.log(review[entry]);
-          this.matchedComments.push(review[entry]);
-        }
-      }
-    });
-    if (this.matchedComments.length > 0){
+    console.log("Searching for: " + githubId);
+    return this.comments.map(items => {
+      items.forEach(item => {
+        item.githubId === githubId ? this.matchedComments.push(item) : console.log("not found");
+      });
       return this.matchedComments;
-    } else {
-      return null;
-    }
+    });
   }
 
-  // findCandidate(key: string) {
-  //   this.candidates.forEach(function(cand: Candidate){
-  //     if (cand.$key === key) {
-  //       return cand;
-  //     }
-  //   });
-  //   // no candidate found
-  //   return null;
-  // }
+
 
 }

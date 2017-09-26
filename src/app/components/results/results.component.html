@@ -1,12 +1,25 @@
-<div class="container-fluid" *ngIf="comments?.length>0; else noComments">
-  <md-card *ngFor="let c of comments">
+<!--<div class="container-fluid" *ngIf="comments?.length>0; else noComments">-->
+  <!--<md-card *ngFor="let c of comments">-->
+    <!--<md-card-header>-->
+      <!--<md-card-title><strong>{{c.candidateGithubName}}</strong></md-card-title>-->
+      <!--<md-card-subtitle>{{c.candidateGithubID}}</md-card-subtitle>-->
+    <!--</md-card-header>-->
+    <!--<md-card-content>-->
+      <!--<p><strong>Comment to the candidate: </strong>{{c.commentToCandidate}}</p>-->
+      <!--<p><strong>Comment to the recruiter: </strong>{{c.commentToRecruiter}}</p>-->
+    <!--</md-card-content>-->
+
+  <!--</md-card>-->
+<!--</div>-->
+<div class="container-fluid" *ngIf="(reviews | async)?.length>0; else noComments">
+  <md-card *ngFor="let c of reviews | async">
     <md-card-header>
-      <md-card-title><strong>{{c.candidateGithubName}}</strong></md-card-title>
-      <md-card-subtitle>{{c.candidateGithubID}}</md-card-subtitle>
+      <md-card-title><strong>{{c.githubId}}</strong></md-card-title>
+      <md-card-subtitle>{{c.githubId}}</md-card-subtitle>
     </md-card-header>
     <md-card-content>
-      <p><strong>Comment to the candidate: </strong>{{c.commentToCandidate}}</p>
-      <p><strong>Comment to the recruiter: </strong>{{c.commentToRecruiter}}</p>
+      <p><strong>Comment to the candidate: </strong>{{c.comprehensive}}</p>
+      <p><strong>Comment to the recruiter: </strong>{{c.comprehensiveScore}}</p>
     </md-card-content>
 
   </md-card>
