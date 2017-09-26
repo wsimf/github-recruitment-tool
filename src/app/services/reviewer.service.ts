@@ -15,7 +15,7 @@ export class ReviewerService {
     this.comments = this.angularfirebase.list('/responses') as FirebaseListObservable<ReviewerComment[]>;
   }
 
-  getComments(){
+  public getComments(){
     return this.comments;
   }
 
