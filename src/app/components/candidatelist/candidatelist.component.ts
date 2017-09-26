@@ -8,6 +8,7 @@ import { Reviewer } from '../../models/Reviewer';
 import { CandidateService } from '../../services/candidate.service';
 import {Observable} from "rxjs/Observable";
 import {GithubService} from "../../services/github.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 interface Repo {
   name: string;
@@ -33,7 +34,8 @@ export class CandidatelistComponent implements OnInit {
   constructor(
     public dialog: MdDialog,
     public githubService: GithubService,
-    public candidateService: CandidateService
+    public candidateService: CandidateService,
+    public route: Router
   ){
     //this.repos$ = this.githubService.getCandidateList();
 
@@ -46,6 +48,10 @@ export class CandidatelistComponent implements OnInit {
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
       });
+  }
+
+  changeView(githubId: string){
+      this.route.navigate(['results', githubId]);
   }
 
   openDialog(id: string) {

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {FormControl, FormsModule} from '@angular/forms';
 
 // AngularFire Imports
 import { AngularFireModule } from 'angularfire2';
@@ -12,7 +12,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 
 // Material imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdCardModule } from '@angular/material';
+import {MdCardModule, MdFormFieldControl, MdSliderModule} from '@angular/material';
 import { MdButtonModule } from '@angular/material';
 import { MdDialogModule } from '@angular/material';
 
@@ -43,7 +43,7 @@ const appRoutes: Routes =[
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'add-cand',component:AddCandComponent,canActivate:[AuthGuard]},
-  {path:'results', component:ResultsComponent,canActivate:[AuthGuard]},
+  {path:'results/:id', component:ResultsComponent,canActivate:[AuthGuard]},
   {path:'feedback', component:FeedbackComponent}
 ];
 

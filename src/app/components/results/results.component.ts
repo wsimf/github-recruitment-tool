@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ReviewerService} from "../../services/reviewer.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-results',
@@ -9,11 +10,17 @@ import {ReviewerService} from "../../services/reviewer.service";
 export class ResultsComponent implements OnInit {
 
   comments: any[];
-  constructor(public reviewerService: ReviewerService) { }
+  githubId: string;
+  constructor(public reviewerService: ReviewerService, public route: ActivatedRoute) {
+  }
 
   ngOnInit() {
-    this.reviewerService.getComments().subscribe(comments =>{
-      this.comments = comments;
+    // this.reviewerService.getComments().subscribe(comments =>{
+    //   this.comments = comments;
+    // });
+    this.route.params.subscribe(params => {
+      this.githubId = params.id;
+      // this.comments = this.reviewerService.findReviews(this.githubId);
     });
   }
 
