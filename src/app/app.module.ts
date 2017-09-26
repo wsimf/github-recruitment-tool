@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpModule} from '@angular/http';
+import {GoogleApiModule} from "ng-gapi";
 
 // AngularFire Imports
 import { AngularFireModule } from 'angularfire2';
@@ -36,6 +38,7 @@ import { CandidateService } from './services/candidate.service';
 import {GithubService} from "./services/github.service";
 import { ReviewerService } from './services/reviewer.service';
 import { RecruiterService } from './services/recruiter.service';
+import {EmailService} from "./services/email.service";
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -62,7 +65,7 @@ export const firebaseConfig = {
     LoginComponent,
     NavbarComponent,
     RegisterComponent,
-    AddReviewersComponent
+    AddReviewersComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,8 @@ export const firebaseConfig = {
     MdDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FlashMessagesModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpModule
   ],
   entryComponents: [
     AddReviewersComponent,
@@ -91,7 +95,8 @@ export const firebaseConfig = {
     CandidateService,
     GithubService,
     ReviewerService,
-    RecruiterService
+    RecruiterService,
+    EmailService
   ],
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,7 @@ import { ReviewerService } from '../../services/reviewer.service';
 import { CandidateService } from '../../services/candidate.service';
 import { Candidate } from '../../models/Candidate';
 import { GithubService} from "../../services/github.service";
+import {EmailService} from "../../services/email.service";
 
 
 @Component({
@@ -23,7 +24,7 @@ export class AddReviewersComponent implements OnInit {
   constructor(public dialogRef: MdDialogRef<AddReviewersComponent>,
     public reviewerService: ReviewerService,
     public candidateService: CandidateService,
-    public githubService: GithubService) {
+    public githubService: GithubService, private emailService: EmailService) {
   }
 
   ngOnInit() {
@@ -36,6 +37,7 @@ export class AddReviewersComponent implements OnInit {
   }
 
   addReviewer() {
+    //Send Reviewer email
     // For database
     //var identifierDiv = document.getElementById("identifier");
     //var gid = identifierDiv.innerHTML;
@@ -52,5 +54,7 @@ export class AddReviewersComponent implements OnInit {
     this.githubService.addCollaborator(this.candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
       console.log(res);
     });
+
+    this.emailService.sendRecruiterEmail();
   }
 }
