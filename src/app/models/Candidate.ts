@@ -1,4 +1,5 @@
 import {Reviewer} from './Reviewer';
+import {Feedback} from "./Feedback";
 export interface Candidate {
   $key?: string;
   name?: string;
@@ -8,5 +9,6 @@ export interface Candidate {
   repositoryName?: string;
   progressStatus?: string;
   adder?: string;
-  reviewers?: Reviewer[];
+  reviewers?: string;
+  feedback?: string;
 }

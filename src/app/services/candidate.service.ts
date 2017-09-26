@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import {Reviewer} from '../models/Reviewer';
 import {Candidate} from '../models/Candidate';
+import {Feedback} from "../models/Feedback";
 
 @Injectable()
 export class CandidateService {
@@ -43,7 +44,7 @@ export class CandidateService {
     for(let ca of this.can){
       console.log(ca);
       if(ca.githubID != undefined && ca.githubID == githubId){
-        if(ca.reviewers == "" || ca.reviewers == undefined){
+        if(ca.reviewers == undefined || ca.reviewers == ""){
           console.log("1-1");
           ca.reviewers = reviewerGithubID;
           this.candidates.update(ca.$key,ca);
@@ -58,6 +59,41 @@ export class CandidateService {
     }
   }
 
+  addFeedbacktoCandidate(githubId: string, feedback: Feedback) {
+    this.getCandidates().subscribe(cand =>{
+      this.can = cand;
+    });
+    for(let ca of this.can){
+      console.log(ca);
+      if(ca.githubID != undefined && ca.githubID == githubId){
+        if(ca.feedback == undefined || ca.feedback == ""){
+          ca.feedback = feedback.feedbackID;
+          this.candidates.update(ca.$key,ca);
+        } else {
+          ca.feedback += "," + feedback.feedbackID;
+          this.candidates.update(ca.$key,ca);
+        }
+      }
+    }
+  }
+
+  getFeedbackList(githubId: string){
+    // Get the list of the candidate
+    this.getCandidates().subscribe(cand =>{
+      this.can = cand;
+    });
+
+    // Find the feedback IDs
+    for(let ca of this.can){
+      if(ca.githubID != undefined && ca.githubID == githubId){
+        if(ca.feedback != undefined && ca.feedback != ""){
+          var feedbackList = ca.feedback.split(',');
+          return feedbackList;
+        }
+      }
+    }
+  }
+
   getReviewerList(githubId: string){
     // Get the list of the candidate
     this.getCandidates().subscribe(cand =>{
@@ -67,7 +103,7 @@ export class CandidateService {
     // Find the reviewers
     for(let ca of this.can){
       if(ca.githubID != undefined && ca.githubID == githubId){
-        if(ca.reviewers != "" && ca.reviewers != undefined){
+        if(ca.reviewers != undefined && ca.reviewers != ""){
           var viewList = ca.reviewers.split(',');
           return viewList;
         }

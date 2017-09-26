@@ -5,7 +5,7 @@
         <!--<div >-->
         <!--<a routerLink="/" href="#" class = "btn btn-link"><i class ="fa fa-arrow-circle-o-left"></i> Back</a>-->
         <!--</div>-->
-        <h3 style="text-align: center">Please fill in your feedback for the candidate  </h3>
+        <h3 style="text-align: center">Please fill in your feedback for the candidate </h3> <!--Note: probably good to mention which candidate this form is for, get candidateGithubID from url parameter -->
 
         <form #f="ngForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
@@ -48,7 +48,7 @@
 
           <div class="form-group">
             <label for="comprehensive">Test Comprehensiveness</label>
-            <textarea name="comprehensive" [(ngModel)]="comprehensive" class="form-control" required="Please provide comments on test comprehensiveness"></textarea>
+            <textarea name="comprehensive" [(ngModel)]="comprehensive" class="form-control" required="Please provide comments on the comprehensiveness of the test"></textarea>
           </div>
           <div class="form-group mb-4">
             <span >1</span> <input type="range" min="1" max="5" value="3" step="1" class="slider" id="comprehensiveslide"> <span >5</span>
