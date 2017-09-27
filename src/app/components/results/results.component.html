@@ -3,13 +3,13 @@
   <md-card *ngFor="let f of candFeedbacks">
     <div class="row">
       <div class="col-sm-11 mx-auto">
-        <h1>Feedback for candidate: {{f.candidateGithub}}</h1>
+        <h1>Feedback for candidate: {{f.candidateGithub}}</h1> <!-- need to display this Only once, but not sure how to do it before the ngFor loop -->
         <br>
       </div>
     </div>
     <md-card-header>
-      <md-card-title><strong></strong></md-card-title>
-      <md-card-subtitle>feedback by reviewer: {{f.reviewerGithub}}, is this even working? :P</md-card-subtitle>
+      <md-card-title><strong>Feedback by reviewer: {{f.reviewerGithub}}, is this even working? :P</strong></md-card-title>
+      <md-card-subtitle></md-card-subtitle>
     </md-card-header>
     <md-card-content>
       <div class="form-group">

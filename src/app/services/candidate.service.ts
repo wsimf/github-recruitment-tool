@@ -61,22 +61,33 @@ export class CandidateService {
 
   addFeedbacktoCandidate(githubId: string, feedbackID: string) {
 
-    this.candidates.subscribe(cand =>{
+    this.getCandidates().subscribe(cand =>{
       this.can = cand;
-    });
-    for(let ca of this.can){
-      console.log("hello");
-      if(ca.githubID != undefined && ca.githubID == githubId){
-        if(ca.feedback == undefined || ca.feedback == ""){
-          ca.feedback = feedbackID;
-          this.candidates.update(ca.$key,ca);
-        } else {
-          ca.feedback += "," + feedbackID;
-          this.candidates.update(ca.$key,ca);
+
+      setTimeout(function() {
+
+        console.log("cand undefined? " + (cand == undefined));
+        // cand is undefined!!! why?
+        console.log("this.can undefined? " + (this.can == undefined));
+        for(let ca of cand){
+
+          if(ca != undefined && ca.githubID != undefined && ca.githubID == githubId){
+            if(ca.feedback == undefined || ca.feedback == ""){
+              ca.feedback = feedbackID;
+              this.candidates.update(ca.$key,ca);
+            } else {
+              ca.feedback += "," + feedbackID;
+              this.candidates.update(ca.$key,ca);
+            }
+            return ca;
+          }
         }
-        return ca;
-      }
-    }
+      }, 2000);
+    });
+
+
+
+
 
   }
 
