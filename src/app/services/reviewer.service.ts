@@ -29,10 +29,12 @@ export class ReviewerService {
   findReviews(githubId: string){
     console.log("Searching for: " + githubId);
     return this.comments.map(items => {
-      items.forEach(item => {
-        item.githubId === githubId ? this.matchedComments.push(item) : console.log("not found");
-      });
-      return this.matchedComments;
+      // items.forEach(item => {
+      //   item.githubId === githubId ? this.matchedComments.push(item) : console.log("not found");
+      // });
+      const filtered = items.filter(item => item.githubId === githubId);
+      return filtered;
+      //return this.matchedComments;
     });
   }
 
