@@ -2,6 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgForm, NgControl} from "@angular/forms";
 import {FeedbackForm} from "../../models/FeedbackForm";
 import {ReviewerService} from "../../services/reviewer.service";
+import {FlashMessagesService} from "angular2-flash-messages";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-feedback',
@@ -10,7 +12,9 @@ import {ReviewerService} from "../../services/reviewer.service";
 })
 export class FeedbackComponent implements OnInit {
 
-  constructor(public reviewerService: ReviewerService) { }
+  constructor(public reviewerService: ReviewerService,
+              public router: Router,
+              public flashMessageService: FlashMessagesService) { }
 
   ngOnInit() {
   }
@@ -24,7 +28,10 @@ export class FeedbackComponent implements OnInit {
     }));
     console.log(feedback);
     this.reviewerService.newFeedback(feedback);
-  }
 
+  // feedback submission succesful
+  this.flashMessageService.show('Feedback submitted!', { cssClass: 'alert-success', timeout: 2000 });
+  this.router.navigate(['/']);
+  }
 
 }
