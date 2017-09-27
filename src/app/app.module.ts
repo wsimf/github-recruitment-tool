@@ -27,8 +27,6 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 
-//import { FeedbackComponent } from './components/feedback/feedback.component';
-
 // Import services
 import { AppService } from './services/app.service';
 import { AuthService } from './services/auth.service';
@@ -39,6 +37,7 @@ import { ReviewerService } from './services/reviewer.service';
 import { RecruiterService } from './services/recruiter.service';
 import { ResultsComponent } from './components/results/results.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { FeedbackService} from "./services/feedback.service";
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -96,7 +95,8 @@ export const firebaseConfig = {
     CandidateService,
     GithubService,
     ReviewerService,
-    RecruiterService
+    RecruiterService,
+    FeedbackService
   ],
   bootstrap: [AppComponent]
 })

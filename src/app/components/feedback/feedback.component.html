@@ -10,63 +10,72 @@
         <form #f="ngForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <br>
+            <label for="candidateGithub">Candidate Github ID</label>
+            <input type="text" id="candidateGithub" name="candidateGithub" class="form-control" [(ngModel)]="candidateGithub">
+          </div>
+          <div class="form-group">
+            <label for="reviewerGithub">Your (reviewer's) Github ID</label>
+            <input type="text" name="reviewerGithub" id="reviewerGithub" class="form-control" [(ngModel)]="reviewerGithub">
+          </div><hr><br>
+          <div class="form-group">
+            <br>
             <label for="solution">Solution Design</label>
-            <textarea name="solution" rows="3" [(ngModel)]="solution" class="form-control" required ="Please provide comments about the solution design"></textarea>
+            <textarea name="solution" id="solution" rows="3" [(ngModel)]="solution" class="form-control" [required]="isRequired"></textarea>
             <!--<div *ngIf="candidateName.errors?.required && candidateName.touched" class ="alert alert-danger"></div>-->
           </div>
           <div class="form-group mb-4">
-              <span >1</span> <input  type="range" min="1" max="5" value="3" step="1" class="slider" id="solutionslide"> <span >5</span>
+            <span >1</span> <input name="solutionslide" [(ngModel)]="solutionslide" [value]="3"  type="range" min="1" max="5" value="3" step="1" class="slider" id="solutionslide"  list="scale"> <span >5</span>
           </div>
 
 
           <div class="form-group">
             <label for="concerns">Separation of Concerns</label>
-            <textarea name="concerns" [(ngModel)]="style" class="form-control" required="Please provide comments on the candidate's Seperation of Concerns"></textarea>
+            <textarea name="concerns" id="concerns" [(ngModel)]="concerns" class="form-control" required="Please provide comments on the candidate's Seperation of Concerns"></textarea>
           </div>
           <div class="form-group mb-4">
-            <span >1</span> <input type="range" min="1" max="5" value="3" step="1" class="slider" id="concernsslide"> <span >5</span>
+            <span >1</span> <input name="concernsslide" [(ngModel)]="concernsslide" [value]="3"  type="range" min="1" max="5" value="3" step="1" class="slider" id="concernsslide"  list="scale"> <span >5</span>
           </div>
 
 
           <div class="form-group">
             <label for="readability">Solution's Readability</label>
-            <textarea name="readability" [(ngModel)]="readability" class="form-control" required="Please provide comments on the Solution readability"></textarea>
+            <textarea name="readability" id="readability" [(ngModel)]="readability" class="form-control" required="Please provide comments on the Solution readability"></textarea>
           </div>
           <div class="form-group mb-4">
-            <span >1</span> <input type="range" min="1" max="5" value="3" step="1" class="slider" id="readabilityslide"> <span >5</span>
+            <span >1</span> <input name="readabilityslide" [(ngModel)]="readabilityslide" [value]="3"  type="range" min="1" max="5" value="3" step="1" class="slider" id="readabilityslide"  list="scale"> <span >5</span>
           </div>
 
 
           <div class="form-group">
             <label for="knowledge">Knowledge and Technology</label>
-            <textarea name="knowledge" [(ngModel)]="knowledge" class="form-control" required="Please provide comments on the Candidate's knowledge and technical skill"></textarea>
+            <textarea name="knowledge" id="knowledge" [(ngModel)]="knowledge" class="form-control" required="Please provide comments on the Candidate's knowledge and technical skill"></textarea>
           </div>
           <div class="form-group mb-4">
-            <span >1</span> <input type="range" min="1" max="5" value="3" step="1" class="slider" id="knowledgeslide"> <span >5</span>
+            <span >1</span> <input name="knowledgeslide" [(ngModel)]="knowledgeslide" [value]="3"  type="range" min="1" max="5" value="3" step="1" class="slider" id="knowledgeslide"  list="scale"> <span >5</span>
           </div>
 
 
           <div class="form-group">
             <label for="comprehensive">Test Comprehensiveness</label>
-            <textarea name="comprehensive" [(ngModel)]="comprehensive" class="form-control" required="Please provide comments on the comprehensiveness of the test"></textarea>
+            <textarea name="comprehensive" id="comprehensive" [(ngModel)]="comprehensive" class="form-control" required="Please provide comments on the comprehensiveness of the test"></textarea>
           </div>
           <div class="form-group mb-4">
-            <span >1</span> <input type="range" min="1" max="5" value="3" step="1" class="slider" id="comprehensiveslide"> <span >5</span>
+            <span >1</span> <input name="comprehensiveslide" [(ngModel)]="comprehensiveslide" [value]="3" type="range" min="1" max="5" value="3" step="1" class="slider" id="comprehensiveslide"  list="scale"> <span >5</span>
           </div>
 
 
           <div class="form-group">
             <label for="quality">Test Quality</label>
-            <textarea name="quality" [(ngModel)]="quality" class="form-control" required="Please provide comments on test quality"></textarea>
+            <textarea name="quality" id="quality" [(ngModel)]="quality" class="form-control" required="Please provide comments on test quality"></textarea>
           </div>
           <div class="form-group mb-4">
-            <span >1</span> <input type="range" min="1" max="5" value="3" step="1" class="slider" id="qualityslide"> <span >5</span>
+            <span >1</span> <input name="qualityslide" [(ngModel)]="qualityslide" [value]="3" type="range" min="1" max="5" value="3" step="1" class="slider" id="qualityslide"  list="scale"> <span >5</span>
           </div>
 
 
           <div class="form-group">
             <label for="summary">Summary feedback</label>
-            <textarea name="summary" [(ngModel)]="summary" class="form-control" required="Please provide a summary of the feedback for HR use"></textarea>
+            <textarea name="summary" id="summary" [(ngModel)]="summary" class="form-control" required="Please provide a summary of the feedback for HR use"></textarea>
           </div>
           <br>
           <div class="form-group">
@@ -83,11 +92,20 @@
           <!--<label for="candidateRepository">Repository Name</label>-->
           <!--<input type="text" [(ngModel)]="repositoryName" name="candidateRepository" class="form-control" required="Please provide a name for repository">-->
           <!--</div>-->
-            <button type="reset" class="btn btn-secondary col-md-5">Reset</button>
-            <button type="submit" class="btn btn-warning col-md-5" id="">Submit</button>
+          <button type="reset" class="btn btn-secondary col-md-5">Reset</button>
+          <button type="submit" class="btn btn-warning col-md-5" id="">Submit</button>
 
         </form>
       </div>
     </div>
   </div>
 </div>
+
+
+<datalist id="scale">
+  <option value="1" label="1">
+  <option value="2" label="2">
+  <option value="3" label="3">
+  <option value="4" label="4">
+  <option value="5" label="5">
+</datalist>

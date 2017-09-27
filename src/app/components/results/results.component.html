@@ -1,18 +1,58 @@
-<div class="container-fluid" *ngIf="comments?.length>0; else noComments">
-  <md-card *ngFor="let c of comments">
+
+<div class="container-fluid" *ngIf="candFeedbacks?.length>0; else noFeedback">
+  <md-card *ngFor="let f of candFeedbacks">
+    <div class="row">
+      <div class="col-sm-11 mx-auto">
+        <h1>Feedback for candidate: {{f.candidateGithub}}</h1>
+        <br>
+      </div>
+    </div>
     <md-card-header>
-      <md-card-title><strong>{{c.candidateGithubName}}</strong></md-card-title>
-      <md-card-subtitle>{{c.candidateGithubID}}</md-card-subtitle>
+      <md-card-title><strong></strong></md-card-title>
+      <md-card-subtitle>feedback by reviewer: {{f.reviewerGithub}}, is this even working? :P</md-card-subtitle>
     </md-card-header>
     <md-card-content>
-      <p><strong>Comment to the candidate: </strong>{{c.commentToCandidate}}</p>
-      <p><strong>Comment to the recruiter: </strong>{{c.commentToRecruiter}}</p>
-    </md-card-content>
+      <div class="form-group">
+        <p><strong>Solution Design: </strong> {{f.solution}}</p>
+        <p><strong>Rating: </strong> {{f.solutionslide}}</p>
+        <br>
+      </div>
+      <div class="form-group">
+        <p><strong>Separation of Concerns: </strong> {{f.concerns}}</p>
+        <p><strong>Rating: </strong> {{f.concernsslide}}</p>
+        <br>
+      </div>
+      <div class="form-group">
+        <p><strong>Solution's Readability: </strong> {{f.readability}}</p>
+        <p><strong>Rating: </strong> {{f.readabilityslide}}</p>
+        <br>
+      </div>
+      <div class="form-group">
+        <p><strong>Knowledge and Technology: </strong> {{f.knowledge}}</p>
+        <p><strong>Rating: </strong> {{f.knowledgeslide}}</p>
+        <br>
+      </div>
+      <div class="form-group">
+        <p><strong>Test Comprehensiveness: </strong> {{f.comprehensive}}</p>
+        <p><strong>Rating: </strong> {{f.comprehensiveslide}}</p>
+        <br>
+      </div>
+      <div class="form-group">
+          <p><strong>Test Quality: </strong> {{f.quality}}</p>
+        <p><strong>Rating: </strong> {{f.qualityslide}}</p>
+        <br>
+      </div>
+      <div class="form-group">
+        <p><strong>Summary of feedback: </strong> {{f.summary}}</p>
+        <p><strong>Overall Recommendation: </strong> {{f.recommend}}</p>
+        <br>
+      </div>
 
+    </md-card-content>
   </md-card>
 </div>
 
-<ng-template #noComments>
+<ng-template #noFeedback>
   <hr>
-  <h5>There are no reviewer comments to view. </h5>
+  <h5>There is no reviewer comments to display. </h5>
 </ng-template>

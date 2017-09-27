@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ReviewerService} from "../../services/reviewer.service";
+import {FeedbackService} from "../../services/feedback.service";
 
 @Component({
   selector: 'app-results',
@@ -8,13 +9,13 @@ import {ReviewerService} from "../../services/reviewer.service";
 })
 export class ResultsComponent implements OnInit {
 
-  comments: any[];
-  constructor(public reviewerService: ReviewerService) { }
+  candFeedbacks: any[];
+  constructor(public feedbackService: FeedbackService) { }
 
   ngOnInit() {
-    this.reviewerService.getComments().subscribe(comments =>{
-      this.comments = comments;
-    });
+    this.candFeedbacks = this.feedbackService.getCandidateFeedback('jfk123');
+    console.log(this.candFeedbacks);
+
   }
 
 }

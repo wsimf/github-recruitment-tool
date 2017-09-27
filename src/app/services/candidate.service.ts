@@ -59,22 +59,25 @@ export class CandidateService {
     }
   }
 
-  addFeedbacktoCandidate(githubId: string, feedback: Feedback) {
-    this.getCandidates().subscribe(cand =>{
+  addFeedbacktoCandidate(githubId: string, feedbackID: string) {
+
+    this.candidates.subscribe(cand =>{
       this.can = cand;
     });
     for(let ca of this.can){
-      console.log(ca);
+      console.log("hello");
       if(ca.githubID != undefined && ca.githubID == githubId){
         if(ca.feedback == undefined || ca.feedback == ""){
-          ca.feedback = feedback.feedbackID;
+          ca.feedback = feedbackID;
           this.candidates.update(ca.$key,ca);
         } else {
-          ca.feedback += "," + feedback.feedbackID;
+          ca.feedback += "," + feedbackID;
           this.candidates.update(ca.$key,ca);
         }
+        return ca;
       }
     }
+
   }
 
   getFeedbackList(githubId: string){
