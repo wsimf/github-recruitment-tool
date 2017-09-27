@@ -24,11 +24,11 @@ export class CandidateService {
   }
 
   findCandidate(key: string) {
-    this.candidates.forEach(function(cand: Candidate){
-      if (cand.$key === key) {
-        return cand;
-      }
-    });
+    // this.candidates.forEach(function(cand: Candidate){
+    //   if (cand.$key === key) {
+    //     return cand;
+    //   }
+    // });
     // no candidate found
     return null;
   }
@@ -63,14 +63,9 @@ export class CandidateService {
 
     this.getCandidates().subscribe(cand =>{
       this.can = cand;
+    });
 
-      setTimeout(function() {
-
-        console.log("cand undefined? " + (cand == undefined));
-        // cand is undefined!!! why?
-        console.log("this.can undefined? " + (this.can == undefined));
-        for(let ca of cand){
-
+        for(let ca of this.can){
           if(ca != undefined && ca.githubID != undefined && ca.githubID == githubId){
             if(ca.feedback == undefined || ca.feedback == ""){
               ca.feedback = feedbackID;
@@ -82,14 +77,7 @@ export class CandidateService {
             return ca;
           }
         }
-      }, 2000);
-    });
-
-
-
-
-
-  }
+ }
 
   getFeedbackList(githubId: string){
     // Get the list of the candidate
