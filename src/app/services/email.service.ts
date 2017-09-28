@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import {Reviewer} from "../models/Reviewer";
 
 @Injectable()
 export class EmailService {
@@ -26,11 +27,10 @@ export class EmailService {
       })
   }
 
-  sendEmail() {
+  sendReviewerEmail(reviewer: Reviewer) {
+    console.log(reviewer);
     const req = this.http.put('http://localhost:80/api/sendgrid/sendEmail', {
-      title: 'foo',
-      body: 'bar',
-      userId: 1
+      reviewer: reviewer
     }).subscribe(
         res => {
           console.log(res);

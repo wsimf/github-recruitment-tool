@@ -20,6 +20,8 @@ export class AddReviewersComponent implements OnInit {
   githubId: string;
   reviewerList: any[];
   candidate: Candidate;
+  private githubUser: any;
+  private r: Reviewer;
 
   constructor(public dialogRef: MdDialogRef<AddReviewersComponent>,
     public reviewerService: ReviewerService,
@@ -41,20 +43,34 @@ export class AddReviewersComponent implements OnInit {
     // For database
     //var identifierDiv = document.getElementById("identifier");
     //var gid = identifierDiv.innerHTML;
-    console.log(this.githubId);
-    this.reviewer = {
-      name: '',
-      email: '',
-      githubID: this.reviewerGithubID,
-    };
-    this.candidate = this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
-    this.reviewerList = this.candidateService.getReviewerList(this.githubId);
 
-    // adding reviewer as collaborator.
-    this.githubService.addCollaborator(this.candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
-      console.log(res);
+    //Get email of the reviewer from github
+    this.githubService.getUser(this.reviewerGithubID).subscribe( githubUser => {
+      this.githubUser = githubUser;
+      console.log (githubUser);
+      this.reviewer = {
+        name: this.githubUser.name,
+        email: this.githubUser.email,
+        githubID: this.reviewerGithubID,
+      };
+      this.candidate = this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
+      this.reviewerList = this.candidateService.getReviewerList(this.githubId);
+
+
+      // If this is a new reviewer, add their details to the db
+      this.r = this.reviewerService.findReviewer(this.reviewerGithubID)
+      if (this.r == null) {
+        this.reviewerService.persistReviewer(this.reviewer);
+      }
+
+      // adding reviewer as collaborator.
+      this.githubService.addCollaborator(this.candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
+        console.log(res);
+      });
+
+      this.emailService.sendReviewerEmail(this.reviewer);
     });
+    // console.log(this.githubUser);
 
-    this.emailService.sendEmail();
   }
 }

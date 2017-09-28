@@ -4,12 +4,12 @@ const router = express.Router();
 
 router.put('/sendEmail', (req, res) => {
   sgMail.setApiKey('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');
+  // console.log(req.body.reviewer);
   const msg = {
-    to: 'azho472@aucklanduni.ac.nz',
+    to: req.body.reviewer.email,
     from: 'nfuseuoa@gmail.com',
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    subject: 'You have been assigned a new Candidate to review!',
+    text: 'You will receive an invitation to a GitHub repository with the candidates solution. Fill in comments here: '
   };
   sgMail.send(msg);
 

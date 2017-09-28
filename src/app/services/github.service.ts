@@ -10,6 +10,11 @@ interface Repo {
   subscribers_url: string;
 }
 
+interface GithubUser {
+  name: string;
+  email: string;
+}
+
 @Injectable()
 export class GithubService {
 
@@ -79,6 +84,12 @@ export class GithubService {
     return this.http.get<Repo[]>('https://api.github.com/user/repos', {headers});
     // this.repos$ = this.http.get<Repo[]>("https://api.github.com/user/repos", {headers}).map(data => _.values(data)).do(console.log);
     // this.http.get("https://api.github.com/user/repos", {headers}).subscribe(val => console.log(val));
+  }
+
+  getUser(githubId: string) {
+    console.log("Getting user details from GitHub...");
+    const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
+    return this.http.get<GithubUser>('https://api.github.com/users/' + githubId, {headers});
   }
 
 }
