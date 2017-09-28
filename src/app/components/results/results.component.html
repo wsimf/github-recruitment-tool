@@ -12,9 +12,10 @@
   <!--</md-card>-->
 <!--</div>-->
 <div class="container-fluid" *ngIf="(reviews | async)?.length>0; else noComments">
+  <h1 align="center" *ngFor="let b of candidate | async">Feedback for {{b.name}}</h1>
   <md-card *ngFor="let c of reviews | async">
     <md-card-header class="justify-content-center">
-      <md-card-title><strong>Feedback for {{c.githubId}}</strong></md-card-title>
+      <!--<md-card-title><strong>Feedback for {{c.githubId}}</strong></md-card-title>-->
       <md-card-subtitle>Reviewed by {{c.reviewerGithub}}</md-card-subtitle>
     </md-card-header>
     <md-card-content>
@@ -45,6 +46,6 @@
 </div>
 
 <ng-template #noComments>
-  <hr>
-  <h5>There are no reviewer comments to view. </h5>
+  <md-spinner></md-spinner>
+  <h5 *ngIf="reviews?.length==0">There is no candidates in the system</h5>
 </ng-template>

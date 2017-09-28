@@ -79,6 +79,6 @@
 <!--</ul>-->
 <!--<ng-template #noData>No Data Available</ng-template>-->
 <ng-template #noCandidates>
-  <hr>
-  <h5>There is no candidates in the system</h5>
+  <md-spinner></md-spinner>
+  <h5 *ngIf="candidates?.length==0">There is no candidates in the system</h5>
 </ng-template>

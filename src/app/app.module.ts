@@ -12,7 +12,7 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 
 // Material imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MdCardModule, MdFormFieldControl, MdSliderModule} from '@angular/material';
+import {MdCardModule, MdFormFieldControl, MdProgressSpinnerModule, MdSliderModule} from '@angular/material';
 import { MdButtonModule } from '@angular/material';
 import { MdDialogModule } from '@angular/material';
 
@@ -79,7 +79,8 @@ export const firebaseConfig = {
     MdDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FlashMessagesModule,
-    HttpClientModule
+    HttpClientModule,
+    MdProgressSpinnerModule
   ],
   entryComponents: [
     AddReviewersComponent,
