@@ -28,7 +28,7 @@ export class ReviewerService {
   }
 
   findReviews(githubId: string){
-    console.log("Searching for: " + githubId);
+    console.log("Searching reviews for: " + githubId);
     return this.comments.map(items => {
       // items.forEach(item => {
       //   item.githubId === githubId ? this.matchedComments.push(item) : console.log("not found");

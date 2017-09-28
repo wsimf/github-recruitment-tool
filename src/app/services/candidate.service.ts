@@ -10,9 +10,9 @@ export class CandidateService {
   can : any[];
 
   constructor( public angularfirebase: AngularFireDatabase) {
-    console.log("Initializing candidates")
+    console.log("Initializing candidates");
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
-    console.log("Retrieved " + this.candidates.count + " candidates")
+    console.log("Retrieved " + this.candidates.count + " candidates");
   }
 
   getCandidates() {
