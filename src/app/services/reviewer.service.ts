@@ -8,7 +8,7 @@ export class ReviewerService {
   reviewers: FirebaseListObservable<Reviewer[]>;
 
   constructor(public angularfirebase: AngularFireDatabase) {
-    this.reviewers = this.angularfirebase.list('/recruiters') as FirebaseListObservable<Reviewer[]>;
+    this.reviewers = this.angularfirebase.list('/reviewers') as FirebaseListObservable<Reviewer[]>;
   }
 
   getReviewers() {
