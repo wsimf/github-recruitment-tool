@@ -55,6 +55,6 @@ export class AddReviewersComponent implements OnInit {
       console.log(res);
     });
 
-    this.emailService.sendRecruiterEmail();
+    this.emailService.sendEmail();
   }
 }

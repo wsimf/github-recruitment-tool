@@ -25,6 +25,21 @@ export class EmailService {
         console.log(err)
       })
   }
+
+  sendEmail() {
+    const req = this.http.put('http://localhost:80/api/sendgrid/sendEmail', {
+      title: 'foo',
+      body: 'bar',
+      userId: 1
+    }).subscribe(
+        res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+  }
   // sendEmail() {
   //   gapi.client.init(){
   //

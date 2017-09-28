@@ -8,6 +8,7 @@ const app = express();
 const api = require('./server/api');
 const authenticate = require('./server/routes/authenticate');
 const collaborator = require('./server/collaborator');
+const sendgrid = require('./server/sendgrid');
 
 // Parsers
 app.use(bodyParser.json());
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', api);
 app.use('/api/authenticate', authenticate);
 app.use('/api/collaborator', collaborator);
+app.use('/api/sendgrid', sendgrid);
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
