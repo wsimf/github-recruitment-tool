@@ -13,66 +13,34 @@
 <!--</div>-->
 <div class="container-fluid" *ngIf="(reviews | async)?.length>0; else noComments">
   <md-card *ngFor="let c of reviews | async">
-    <div class="row">
-    <div class="col-sm-11 mx-auto">
-    <h2>Feedback by reviewer {{c.reviewerGithub}}, for candidate {{c.githubId}}</h2>
-    <br>
-    </div>
-    </div>
-    <md-card-header>
-      <md-card-title><strong></strong></md-card-title>
-      <md-card-subtitle></md-card-subtitle>
+    <md-card-header class="justify-content-center">
+      <md-card-title><strong>Feedback for {{c.githubId}}</strong></md-card-title>
+      <md-card-subtitle>Reviewed by {{c.reviewerGithub}}</md-card-subtitle>
     </md-card-header>
     <md-card-content>
-      <div class="form-group">
+      <div class="container-fluid">
         <p><strong>Solution Design: </strong> {{c.solution}}</p>
         <p><strong>Rating: </strong> {{c.solutionScore}}</p>
         <br>
-      </div>
-      <div class="form-group">
         <p><strong>Separation of Concerns: </strong> {{c.concerns}}</p>
         <p><strong>Rating: </strong> {{c.concernsScore}}</p>
         <br>
-      </div>
-      <div class="form-group">
         <p><strong>Solution's Readability: </strong> {{c.readability}}</p>
         <p><strong>Rating: </strong> {{c.readabilityScore}}</p>
         <br>
-      </div>
-      <div class="form-group">
         <p><strong>Knowledge and Technology: </strong> {{c.knowledge}}</p>
         <p><strong>Rating: </strong> {{c.knowledgeScore}}</p>
         <br>
-      </div>
-      <div class="form-group">
         <p><strong>Test Comprehensiveness: </strong> {{c.comprehensive}}</p>
         <p><strong>Rating: </strong> {{c.comprehensiveScore}}</p>
         <br>
-      </div>
-      <div class="form-group">
         <p><strong>Test Quality: </strong> {{c.quality}}</p>
         <p><strong>Rating: </strong> {{c.qualityScore}}</p>
         <br>
-      </div>
-      <div class="form-group">
         <p><strong>Summary of feedback: </strong> {{c.summary}}</p>
         <p><strong>Overall Recommendation: </strong> {{c.recommend}}</p>
-        <br>
       </div>
     </md-card-content>
-
-
-
-
-    <!--<md-card-header>-->
-      <!--<md-card-title><strong>{{c.githubId}}</strong></md-card-title>-->
-      <!--<md-card-subtitle>{{c.githubId}}</md-card-subtitle>-->
-    <!--</md-card-header>-->
-    <!--<md-card-content>-->
-      <!--<p><strong>Comment to the candidate: </strong>{{c.comprehensive}}</p>-->
-      <!--<p><strong>Comment to the recruiter: </strong>{{c.comprehensiveScore}}</p>-->
-    <!--</md-card-content>-->
-
   </md-card>
 </div>
 
