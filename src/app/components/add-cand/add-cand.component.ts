@@ -4,6 +4,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 import { CandidateService} from '../../services/candidate.service';
 import { GithubService } from "../../services/github.service";
+import {EmailService} from "../../services/email.service";
 
 @Component({
   selector: 'app-add-cand',
@@ -21,7 +22,8 @@ export class AddCandComponent implements OnInit {
     public flashMessageService: FlashMessagesService,
     public router: Router,
     public githubService: GithubService,
-    public candidateService: CandidateService
+    public candidateService: CandidateService,
+    private emailService: EmailService
   ) {
     this.problem = 'Origin-Technical-Challenge';
   }
@@ -50,6 +52,9 @@ export class AddCandComponent implements OnInit {
     console.log(this.candidate);
     // Create a repo and add candidate
     this.githubService.addCandidate(this.candidate);
+
+    // Email candidate
+    this.emailService.sendCandidateEmail(this.candidate);
 
     // Persist the candidate
     this.candidateService.newCandidate(this.candidate);

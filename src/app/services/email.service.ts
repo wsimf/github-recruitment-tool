@@ -3,33 +3,34 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Reviewer} from "../models/Reviewer";
+import {Candidate} from "../models/Candidate";
 
 @Injectable()
 export class EmailService {
 
   constructor(private http: Http) { }
 
-  sendRecruiterEmail(){
-    let url = `https://us-central1-nufeproject.cloudfunctions.net/sendEmailtoRecruiter`
-    let params: URLSearchParams = new URLSearchParams();
-    let headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    params.set('to', 'dpha010@aucklanduni.ac.nz');
-    params.set('from', 'nfuseuoa@gmail.com');
-    params.set('subject', 'test-email');
-    params.set('content', 'Hello World');
-    return this.http.post(url, params, headers)
-      .toPromise()
-      .then( res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+  // sendRecruiterEmail(){
+  //   let url = `https://us-central1-nufeproject.cloudfunctions.net/sendEmailtoRecruiter`
+  //   let params: URLSearchParams = new URLSearchParams();
+  //   let headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+  //   params.set('to', 'dpha010@aucklanduni.ac.nz');
+  //   params.set('from', 'nfuseuoa@gmail.com');
+  //   params.set('subject', 'test-email');
+  //   params.set('content', 'Hello World');
+  //   return this.http.post(url, params, headers)
+  //     .toPromise()
+  //     .then( res => {
+  //       console.log(res)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
 
   sendReviewerEmail(reviewer: Reviewer) {
     console.log(reviewer);
-    const req = this.http.put('http://localhost:80/api/sendgrid/sendEmail', {
+    const req = this.http.put('http://localhost:80/api/sendgrid/sendReviewerEmail', {
       reviewer: reviewer
     }).subscribe(
         res => {
@@ -39,6 +40,20 @@ export class EmailService {
           console.log(err);
         }
       );
+  }
+
+  sendCandidateEmail(candidate: Candidate){
+    console.log(candidate);
+    const req = this.http.put('http://localhost:80/api/sendgrid/sendCandidateEmail', {
+      candidate: candidate
+    }).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
   // sendEmail() {
   //   gapi.client.init(){
