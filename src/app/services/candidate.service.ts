@@ -10,7 +10,9 @@ export class CandidateService {
   can : any[];
 
   constructor( public angularfirebase: AngularFireDatabase) {
+    console.log("Initializing candidates")
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
+    console.log("Retrieved " + this.candidates.count + " candidates")
   }
 
   getCandidates() {
@@ -30,6 +32,17 @@ export class CandidateService {
     });
     // no candidate found
     return null;
+  }
+
+  getCandidateByGithubId(githubId: string) {
+    return this.candidates.map(items => {
+      // items.forEach(item => {
+      //   item.githubId === githubId ? this.matchedComments.push(item) : console.log("not found");
+      // });
+      const filtered = items.filter(item => item.githubID === githubId);
+      return filtered;
+      //return this.matchedComments;
+    });
   }
 
   newCandidate(candidate: Candidate) {
