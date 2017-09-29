@@ -8,6 +8,7 @@ import { Reviewer } from '../../models/Reviewer';
 import { CandidateService } from '../../services/candidate.service';
 import {Observable} from "rxjs/Observable";
 import {GithubService} from "../../services/github.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 interface Repo {
   name: string;
@@ -33,7 +34,8 @@ export class CandidatelistComponent implements OnInit {
   constructor(
     public dialog: MdDialog,
     public githubService: GithubService,
-    public candidateService: CandidateService
+    public candidateService: CandidateService,
+    public route: Router
   ){
     //this.repos$ = this.githubService.getCandidateList();
 
@@ -48,12 +50,16 @@ export class CandidatelistComponent implements OnInit {
       });
   }
 
+  changeView(githubId: string){
+      this.route.navigate(['results', githubId]);
+  }
+
   openDialog(id: string) {
     this.dialogRef = this.dialog.open(AddReviewersComponent, {
       width:'1px',height:'1px'});
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0];
       var boxShadow = document.createAttribute("style");
-      boxShadow.value = "box-shadow:none;";
+      boxShadow.value = "padding:0;";
       hideShadow.attributes.setNamedItem(boxShadow);
       var indentifierDiv =  document.getElementById("identifier");
       //var candidateId = document.createAttribute("id");

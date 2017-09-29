@@ -1,0 +1,53 @@
+<!--<div class="container-fluid" *ngIf="comments?.length>0; else noComments">-->
+  <!--<md-card *ngFor="let c of comments">-->
+    <!--<md-card-header>-->
+      <!--<md-card-title><strong>{{c.candidateGithubName}}</strong></md-card-title>-->
+      <!--<md-card-subtitle>{{c.candidateGithubID}}</md-card-subtitle>-->
+    <!--</md-card-header>-->
+    <!--<md-card-content>-->
+      <!--<p><strong>Comment to the candidate: </strong>{{c.commentToCandidate}}</p>-->
+      <!--<p><strong>Comment to the recruiter: </strong>{{c.commentToRecruiter}}</p>-->
+    <!--</md-card-content>-->
+
+  <!--</md-card>-->
+<!--</div>-->
+<div class="container-fluid" *ngIf="(reviews | async)?.length>0; else noComments">
+  <h1 align="center" *ngFor="let b of candidate | async">Feedback for {{b.name}}</h1><br>
+  <md-card *ngFor="let c of reviews | async">
+    <h3>Reviewed by {{c.reviewerGithub}}</h3><hr><br>
+    <md-card-header class="justify-content-center">
+      <!--<md-card-title><strong>Reviewed by {{c.reviewerGithub}}</strong></md-card-title>-->
+      <!--<md-card-subtitle>Feedback for {{c.githubId}}</md-card-subtitle>-->
+    </md-card-header>
+    <md-card-content>
+      <div class="container-fluid">
+        <p><strong>Solution Design: </strong> {{c.solution}}</p>
+        <p><strong>Rating: </strong> {{c.solutionScore}}</p>
+        <br>
+        <p><strong>Separation of Concerns: </strong> {{c.concerns}}</p>
+        <p><strong>Rating: </strong> {{c.concernsScore}}</p>
+        <br>
+        <p><strong>Solution's Readability: </strong> {{c.readability}}</p>
+        <p><strong>Rating: </strong> {{c.readabilityScore}}</p>
+        <br>
+        <p><strong>Knowledge and Technology: </strong> {{c.knowledge}}</p>
+        <p><strong>Rating: </strong> {{c.knowledgeScore}}</p>
+        <br>
+        <p><strong>Test Comprehensiveness: </strong> {{c.comprehensive}}</p>
+        <p><strong>Rating: </strong> {{c.comprehensiveScore}}</p>
+        <br>
+        <p><strong>Test Quality: </strong> {{c.quality}}</p>
+        <p><strong>Rating: </strong> {{c.qualityScore}}</p>
+        <br>
+        <p><strong>Summary of feedback: </strong> {{c.summary}}</p>
+        <p><strong>Overall Recommendation: </strong> {{c.recommend}}</p>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>
+
+<ng-template #noComments>
+  <md-spinner></md-spinner>
+  <h5 *ngIf="(reviews | async)?.length==0">There is no feedback for this candidate</h5>
+  <!--<h5>There is no feedback for this candidate</h5>-->
+</ng-template>

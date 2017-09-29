@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-sm-11 mx-auto">
-    <p>Candidate List></p>
+    <h1>Candidate List</h1>
+    <br>
   </div>
 </div>
 <ul class="Unstyled" *ngIf="candidates?.length>0; else noCandidates">
@@ -23,7 +24,7 @@
     </div>
     <div>
       <button class="btn btn-warning btn-sm" (click)="openDialog(c.githubID)"> Add Reviewers</button>
-      <button class="btn btn-success btn-sm viewResult"> View Result</button>
+      <button class="btn btn-success btn-sm viewResult" (click)="changeView(c.githubID)"> View Result</button>
       <button class="btn btn-link" (click)="editCan()"> Edit</button>
       <button class="btn btn-link"> Delete</button>
     </div>
@@ -78,6 +79,6 @@
 <!--</ul>-->
 <!--<ng-template #noData>No Data Available</ng-template>-->
 <ng-template #noCandidates>
-  <hr>
-  <h5>There is no candidates in the system</h5>
+  <md-spinner></md-spinner>
+  <h5 *ngIf="candidates?.length==0">There is no candidates in the system</h5>
 </ng-template>

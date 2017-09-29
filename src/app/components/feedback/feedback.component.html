@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-block pb-5">
+        <!--<div >-->
+        <!--<a routerLink="/" href="#" class = "btn btn-link"><i class ="fa fa-arrow-circle-o-left"></i> Back</a>-->
+        <!--</div>-->
+        <h3 style="text-align: center">Please fill in your feedback for the candidate  </h3>
+
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <div class="form-group">
+            <br>
+            <label for="githubId">Candidate Github ID</label>
+            <input type="text" name="githubId" class="form-control" [(ngModel)]="githubId" id="githubId">
+          </div><div class="form-group">
+          <label for="reviewerGithub">Your (reviewer's) Github ID</label>
+          <input type="text" name="reviewerGithub" id="reviewerGithub" class="form-control" [(ngModel)]="reviewerGithub">
+        </div><hr><br>
+          <div class="form-group">
+            <label for="solution">Solution Design</label>
+            <textarea name="solution" rows="3" [(ngModel)]="solution" class="form-control" required ="Please provide comments about the solution design"></textarea>
+            <!--<div *ngIf="candidateName.errors?.required && candidateName.touched" class ="alert alert-danger"></div>-->
+          </div>
+          <div class="form-group mb-4">
+              <span >1</span> <input name="solutionScore" [(ngModel)]="solutionScore" [value]="3" type="range" min="1" max="5" value="3" step="1" class="slider" id="solutionScore" list="scale"> <span >5</span>
+          </div>
+          <hr>
+
+          <div class="form-group">
+            <label for="concerns">Separation of Concerns</label>
+            <textarea name="concerns" [(ngModel)]="concerns" class="form-control" required="Please provide comments on the candidate's Seperation of Concerns"></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <span >1</span> <input name="concernsScore" [(ngModel)]="concernsScore" type="range" min="1" max="5" value="3" step="1" class="slider" id="concernsScore" list="scale"> <span >5</span>
+          </div>
+          <hr>
+
+          <div class="form-group">
+            <label for="readability">Solution's Readability</label>
+            <textarea name="readability" [(ngModel)]="readability" class="form-control" required="Please provide comments on the Solution readability"></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <span >1</span> <input name="readabilityScore" [(ngModel)]="readabilityScore" type="range" min="1" max="5" value="3" step="1" class="slider" id="readabilityScore" list="scale"> <span >5</span>
+          </div>
+          <hr>
+
+          <div class="form-group">
+            <label for="knowledge">Knowledge and Technology</label>
+            <textarea name="knowledge" [(ngModel)]="knowledge" class="form-control" required="Please provide comments on the Candidate's knowledge and technical skill"></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <span >1</span> <input name="knowledgeScore" [(ngModel)]="knowledgeScore" type="range" min="1" max="5" value="3" step="1" class="slider" id="knowledgeScore" list="scale"> <span >5</span>
+          </div>
+          <hr>
+
+          <div class="form-group">
+            <label for="comprehensive">Test Comprehensiveness</label>
+            <textarea name="comprehensive" [(ngModel)]="comprehensive" class="form-control" required="Please provide comments on test comprehensiveness"></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <span >1</span> <input name="comprehensiveScore" [(ngModel)]="comprehensiveScore" type="range" min="1" max="5" value="3" step="1" class="slider" id="comprehensiveScore" list="scale"> <span >5</span>
+          </div>
+          <hr>
+
+          <div class="form-group">
+            <label for="quality">Test Quality</label>
+            <textarea name="quality" [(ngModel)]="quality" class="form-control" required="Please provide comments on test quality"></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <span >1</span> <input name="qualityScore" [(ngModel)]="testQualityScore" type="range" min="1" max="5" value="3" step="1" class="slider" id="qualityScore" list="scale"> <span >5</span>
+          </div>
+          <hr>
+
+          <div class="form-group">
+            <label for="summary">Summary feedback</label>
+            <textarea name="summary" [(ngModel)]="summary" class="form-control" required="Please provide a summary of the feedback for HR use"></textarea>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="recommend">Recommended Skill Level</label>
+            <select id="recommend" name = "recommend" [(ngModel)]="recommend" class="form-control">
+              <!--TODO: List of candidate problems currently hard coded into html (shift to db)-->
+              <option>Do not pursue</option>
+              <option>Junior</option>
+              <option>Intermediate</option>
+              <option>Senior</option>
+            </select>
+          </div>
+          <!--<div class="form-group">-->
+          <!--<label for="candidateRepository">Repository Name</label>-->
+          <!--<input type="text" [(ngModel)]="repositoryName" name="candidateRepository" class="form-control" required="Please provide a name for repository">-->
+          <!--</div>-->
+            <button type="reset" class="btn btn-secondary col-md-5">Reset</button>
+            <button type="submit" class="btn btn-warning col-md-5" id="">Submit</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<datalist id="scale">
+  <option value="1" label="1">
+  <option value="2" label="2">
+  <option value="3" label="3">
+  <option value="4" label="4">
+  <option value="5" label="5">
+</datalist>

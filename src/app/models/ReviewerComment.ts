@@ -4,7 +4,7 @@ export interface ReviewerComment {
   candidateGithubName?: string;
   candidateEmail?: string;
   reviewerName?: string;
-  commentToReviewer?: string;
+  commentToRecruiter?: string;
   commentToCandidate?: string;
   timestamp?: string;
 }
