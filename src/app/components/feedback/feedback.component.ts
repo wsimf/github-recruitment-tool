@@ -36,41 +36,57 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     feedback = JSON.parse(JSON.stringify(feedback, function (key, value) {
       return (key.endsWith("Score") && value === undefined) ? 3 : (value === undefined) ? '' : value
     }));
+    feedback.reviewId= feedback.githubId +"&" + feedback.reviewerGithub;
     console.log(feedback);
 
     //check if candidate exists and if reviewer is assigned to him
     console.log('finding candidate ' + feedback.githubId);
 
-    this.candidates = this.candidateService.getCandidates();
-    this.subscription = this.candidates.subscribe(candidateList => {
-      var candidateFound = false;
+    let errorMessage='noError';
+    let firstSubscribe = true;
+    this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
+      if(!firstSubscribe) {return};
+      firstSubscribe=false;
+
       for (let ca of candidateList) {
+
+        // First check if candidate with this githubId exists
         if (ca.githubID != undefined && ca.githubID == feedback.githubId) {
-          candidateFound = true;
+
+          // Now check if this reviewer githubid has been assigned to this candidate
           let reviewers = ca.reviewers.split(',');
           if (reviewers.indexOf(feedback.reviewerGithub) != -1) {
-            // feedback submission succesful
-            this.reviewerService.newFeedback(feedback);
-            this.flashMessageService.show('Feedback submitted!', {cssClass: 'alert-success', timeout: 2000});
-            this.router.navigate(['/']);
-          } else {
-            // reviewer not in the candidate's reviewer list
-            this.flashMessageService.show('Your github ID is not assigned to review candidate ' + ca.githubID, {
-              cssClass: 'alert-danger',
-              timeout: 5000
-            });
+
+            //Lastly, check that the reviewer has not already submitted feedback TODO: load previously filled feedbackform at the start
+            if (ca.reviews.indexOf(feedback.reviewId) == -1) {
+              // feedback submission successful
+              this.reviewerService.newFeedback(feedback);
+              this.candidateService.addReviewtoCandidate(feedback.githubId, feedback.reviewId);
+              this.flashMessageService.show('Feedback submitted!', {cssClass: 'alert-success', timeout: 4000});
+              this.router.navigate(['/']);
+
+            } else { // This reviewer has already submitted a feedbackform
+              errorMessage = 'A feedback form has already been submitted by this reviewer for this candidate'
+            }
+
+          } else { // Else: the reviewer is not in the candidate's reviewer list
+            errorMessage = 'Your github ID is not assigned to review candidate with github Id ';
           }
-          break;
+          break;  //candidate githubId already found, break the search
+
+        } else { // candidate githubid provided not found
+          errorMessage= "No candidate found for Github id " + feedback.githubId;
         }
       }
-      if (!candidateFound) {
-        console.log("No candidate found for id " + feedback.githubId);
-        this.flashMessageService.show("No candidate found with github id: " + feedback.githubId, {
+
+      // Display errorMessage if there is one
+      if (errorMessage != "noError") {
+        this.flashMessageService.show(errorMessage, {
           cssClass: 'alert-danger',
           timeout: 5000
         });
       }
-    }); // must unsubscribe after being done otherwise method keeps going in other components
+    });
   }
 
   ngOnDestroy(): void {

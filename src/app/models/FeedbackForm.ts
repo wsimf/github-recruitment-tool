@@ -4,6 +4,7 @@
 export class FeedbackForm {
   $key?: string;
   githubId?: string;
+  reviewId?: string;
   reviewerGithub?: string;
   comprehensive?: string;
   comprehensiveScore?: number;

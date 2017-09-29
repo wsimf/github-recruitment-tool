@@ -19,6 +19,7 @@ export class CandidateService {
     return this.candidates;
   }
 
+
   getCandidate(key: string) {
     this.candidate = this.findCandidate(key);
     return this.candidate;
@@ -45,6 +46,7 @@ export class CandidateService {
     });
   }
 
+
   newCandidate(candidate: Candidate) {
     this.candidates.push(candidate);
   }
@@ -69,6 +71,26 @@ export class CandidateService {
         return ca;
       }
     }
+  }
+
+  addReviewtoCandidate(githubId: string, reviewId: string ) {
+    let firstSubscribe = true;
+    this.getCandidates().subscribe(candidates =>{
+      if(!firstSubscribe) {return};
+      firstSubscribe=false;
+      for(let ca of candidates){
+        if(ca.githubID != undefined && ca.githubID == githubId){
+          if(ca.reviews == undefined || ca.reviews == ""){
+            ca.reviews = reviewId;
+            this.candidates.update(ca.$key,ca);
+          }else{
+            ca.reviews += "," + reviewId;
+            this.candidates.update(ca.$key,ca);
+          }
+          return ca;
+        }
+      }
+    });
   }
 
   getReviewerList(githubId: string){

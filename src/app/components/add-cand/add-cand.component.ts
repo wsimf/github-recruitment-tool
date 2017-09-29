@@ -19,7 +19,6 @@ export class AddCandComponent implements OnInit {
   // repositoryName: string;
   candidate: Candidate;
   candidates:  Observable<any[]>;
-  firstSubscribe : boolean;
   subscription: any;
 
   constructor(public flashMessageService: FlashMessagesService,
@@ -50,7 +49,7 @@ export class AddCandComponent implements OnInit {
       progressStatus: 'Doing',
       adder: 'Karyn',
     };
-    this.firstSubscribe = true;
+
     // check that all fields are entered
     let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
                        this.email == undefined || this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter candidate's email":
@@ -65,16 +64,17 @@ export class AddCandComponent implements OnInit {
     }
 
     // Now need to check if the Github Id is already in use in our system
-    var candidateGithubExists = false;
-    this.candidates = this.candidateService.getCandidates();
+    let candidateGithubExists = false;
 
-    this.subscription = this.candidates.subscribe(candidateList => {
+    let firstSubscribe = true;
+    this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
       console.log("inside subscribe!!!"); // delete all/most of console.logs closer to production date
       // Only allow first execution of subscribe to work
-      if (!this.firstSubscribe) { return;}
-      this.firstSubscribe = false;
+      if (!firstSubscribe) { return;}
+      firstSubscribe = false;
+
+      // Check if this GithubId is being used my another candidate
       for (let ca of candidateList) {
-        //make sure candidate github id is not already registered
         if (ca.githubID != undefined && ca.githubID == this.githubID) {
           candidateGithubExists = true;
           this.flashMessageService.show('This github ID ' + ca.githubID + ' is already registered to a candidate', {
@@ -90,7 +90,7 @@ export class AddCandComponent implements OnInit {
           // Create a repo and add candidate
           this.githubService.addCandidate(this.candidate);
 
-          // Persist the candidate
+          // // Persist the candidate
           this.candidateService.newCandidate(this.candidate);
 
           // Adding candidate succesful
@@ -101,7 +101,7 @@ export class AddCandComponent implements OnInit {
     });
   }
   ngOnDestroy(): void {
-    if (this.candidates != undefined) {
+    if (this.subscription != undefined) {
       this.subscription.unsubscribe();
     }
   }
