@@ -5,8 +5,8 @@ import {Candidate} from '../models/Candidate';
 
 @Injectable()
 export class CandidateService {
-  candidates: FirebaseListObservable<any[]>;
-  candidate: FirebaseObjectObservable<any>;
+  candidates: FirebaseListObservable<Candidate[]>;
+  candidate: FirebaseObjectObservable<Candidate>;
   can : any[];
 
   constructor( public angularfirebase: AngularFireDatabase) {
@@ -17,6 +17,10 @@ export class CandidateService {
 
   getCandidates() {
     return this.candidates;
+  }
+
+  updateCandidates(cand: Candidate){
+    this.candidates.update(cand.$key, cand);
   }
 
   getCandidate(key: string) {

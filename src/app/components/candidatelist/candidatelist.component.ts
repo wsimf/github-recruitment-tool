@@ -4,11 +4,14 @@ import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component'
 import { EditCanComponent } from '../edit-can/edit-can.component';
 import { Candidate } from '../../models/Candidate';
 import { Reviewer } from '../../models/Reviewer';
+import {FeedbackForm} from "../../models/FeedbackForm";
+import {ReviewerService} from "../../services/reviewer.service";
 
 import { CandidateService } from '../../services/candidate.service';
 import {Observable} from "rxjs/Observable";
 import {GithubService} from "../../services/github.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {FirebaseListObservable} from "angularfire2/database";
 
 interface Repo {
   name: string;
@@ -27,7 +30,7 @@ export class CandidatelistComponent implements OnInit {
   dialogRef2: MdDialogRef<EditCanComponent>;
   repos$: Observable<Repo[]>;
   candidates: any[];
-
+  //candidates: FirebaseListObservable<Candidate[]>;
   // Fetch all candidate from the database
   //candidates: Candidate[];
 
@@ -35,7 +38,8 @@ export class CandidatelistComponent implements OnInit {
     public dialog: MdDialog,
     public githubService: GithubService,
     public candidateService: CandidateService,
-    public route: Router
+    public route: Router,
+    public reviewerService : ReviewerService
   ){
     //this.repos$ = this.githubService.getCandidateList();
 
@@ -47,6 +51,7 @@ export class CandidatelistComponent implements OnInit {
       // });
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
+        this.reviewerService.updateReviewStatus(this.candidates);
       });
   }
 

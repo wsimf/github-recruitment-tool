@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {CandidateService} from "../../services/candidate.service";
 import {Candidate} from "../../models/Candidate";
 import {Observable} from "rxjs/Observable";
+import {FirebaseListObservable} from "angularfire2/database";
 
 @Component({
   selector: 'app-feedback',
