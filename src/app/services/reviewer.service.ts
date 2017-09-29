@@ -40,18 +40,18 @@ export class ReviewerService {
     });
   }
 
-  updateReviewStatus(candidates : Candidate[]){
+  updateReviewStatus(candidates : any[]){
     for (let candidate of candidates){
       this.comments.subscribe(items => {
         const filtered = items.filter(item => item.githubId === candidate.githubID);
-        if (candidate.reviewers === undefined || candidate.reviewers.length === 0){
+        if (candidate.reviewers === undefined || candidate.reviewers.split(',').length === 0){
           candidate.progressStatus = 'Doing';
         } else if (filtered.length === 0){
           candidate.progressStatus = 'Being Reviewed';
-        }else if (filtered.length === candidate.reviewers.length){
+        }else if (filtered.length === candidate.reviewers.split(',').length){
           candidate.progressStatus = 'Reviewing Completed';
         }else{
-          candidate.progressStatus = filtered.length + '/' + candidate.reviewers.length + ' Reviews Finished';
+          candidate.progressStatus = filtered.length + '/' + candidate.reviewers.split(',').length + ' Reviews Finished';
         }
       });
       this.candidateService.updateCandidates(candidate);
