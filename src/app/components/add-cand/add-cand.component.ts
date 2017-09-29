@@ -48,6 +48,7 @@ export class AddCandComponent implements OnInit {
       repositoryName: 'code-challenge-' + this.githubID,
       progressStatus: 'Doing',
       adder: 'Karyn',
+      reviews: "",
     };
 
     // check that all fields are entered
@@ -56,7 +57,7 @@ export class AddCandComponent implements OnInit {
                        this.githubID == undefined || this.name.trim().length == 0 ? "Please enter the candidate's Github ID":
                        this.problem == undefined ? "Please select a code problem for this candidate":
                        "noError";
-    console.log(errorMessage);
+
     // If there is an error in the form, display the error message and stop
     if (errorMessage != "noError"){
       this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
@@ -68,7 +69,6 @@ export class AddCandComponent implements OnInit {
 
     let firstSubscribe = true;
     this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
-      console.log("inside subscribe!!!"); // delete all/most of console.logs closer to production date
       // Only allow first execution of subscribe to work
       if (!firstSubscribe) { return;}
       firstSubscribe = false;
@@ -102,7 +102,7 @@ export class AddCandComponent implements OnInit {
   }
   ngOnDestroy(): void {
     if (this.subscription != undefined) {
-      this.subscription.unsubscribe();
+      this.subscription.unsubscribe();    //close subscription once component ceases, otherwise subscription persists
     }
   }
 }

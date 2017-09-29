@@ -80,7 +80,7 @@ export class CandidateService {
       firstSubscribe=false;
       for(let ca of candidates){
         if(ca.githubID != undefined && ca.githubID == githubId){
-          if(ca.reviews == undefined || ca.reviews == ""){
+          if(ca.reviews == "" || ca.reviews == undefined){
             ca.reviews = reviewId;
             this.candidates.update(ca.$key,ca);
           }else{
