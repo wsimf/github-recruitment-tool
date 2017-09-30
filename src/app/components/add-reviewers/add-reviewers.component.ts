@@ -27,7 +27,7 @@ export class AddReviewersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.githubId = document.getElementById("identifier").innerHTML;
+    this.githubId = document.getElementById("identifier").innerHTML.toLowerCase();
     this.reviewerList = this.candidateService.getReviewerList(this.githubId);
   }
 
@@ -39,11 +39,12 @@ export class AddReviewersComponent implements OnInit {
     // For database
     //var identifierDiv = document.getElementById("identifier");
     //var gid = identifierDiv.innerHTML;
-    console.log(this.githubId);
+
+    console.log('this.githubId is: ' +this.githubId);
     this.reviewer = {
       name: '',
-      email: '',
-      githubID: this.reviewerGithubID,
+      email: ''.toLowerCase(),
+      githubID: this.reviewerGithubID.toLowerCase(),
     };
     this.candidate = this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
     this.reviewerList = this.candidateService.getReviewerList(this.githubId);

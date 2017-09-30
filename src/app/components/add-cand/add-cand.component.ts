@@ -42,8 +42,8 @@ export class AddCandComponent implements OnInit {
     // Adder need a new email
     this.candidate = {
       name: this.name,
-      email: this.email,
-      githubID: this.githubID,
+      email: this.email.toLowerCase(),
+      githubID: this.githubID.toLowerCase(),
       problem: this.problem,
       repositoryName: 'code-challenge-' + this.githubID,
       progressStatus: 'Doing',
@@ -53,7 +53,8 @@ export class AddCandComponent implements OnInit {
 
     // check that all fields are entered
     let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
-                       this.email == undefined || this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter candidate's email":
+                       this.email == undefined || this.email.trim().length == 0 ? "Please enter candidate's email":
+                         this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter a correct email address":
                        this.githubID == undefined || this.name.trim().length == 0 ? "Please enter the candidate's Github ID":
                        this.problem == undefined ? "Please select a code problem for this candidate":
                        "noError";

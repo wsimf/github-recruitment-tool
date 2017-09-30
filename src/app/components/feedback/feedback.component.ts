@@ -36,12 +36,15 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     feedback = JSON.parse(JSON.stringify(feedback, function (key, value) {
       return (key.endsWith("Score") && value === undefined) ? 3 : (value === undefined) ? '' : value
     }));
+
+    // Make Ids case insensitive
+    feedback.githubId=feedback.githubId.toLowerCase();
+    feedback.reviewerGithub=feedback.reviewerGithub.toLowerCase();
+
+    // Generate unique reviewId for each feedbackform submitted
     feedback.reviewId= feedback.githubId +"&" + feedback.reviewerGithub;
-    console.log(feedback);
 
-    //check if candidate exists and if reviewer is assigned to him
-    console.log('finding candidate ' + feedback.githubId);
-
+    //check if candidate exists and if reviewer is assigned to him, and if this is the first submission
     let errorMessage='noError';
     let firstSubscribe = true;
     this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
