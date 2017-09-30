@@ -32,12 +32,20 @@ export class AddCandComponent implements OnInit {
   }
 
   onSubmit() {
-    // valid: boolean = true;
-    // if (!valid) {
-    //   // THE INFORMATION PROVIDE IS NOT VALID DO SOMETHING
-    //   this.flashMessageService.show('Invalid input!', { cssClass: 'alert-danger', timeout: 4000 });
-    //   this.router.navigate(['/add-cand']);
-    // } else {
+
+    // check that all fields are entered
+    let errorMessage = this.isUndefinedOrEmpty(this.name) ? "Please enter the name of the Candidate":
+                       this.isUndefinedOrEmpty(this.email) ? "Please enter candidate's email":
+                       !this.contains(this.email, ['@','.']) ? "Please enter a correct email address":
+                       this.isUndefinedOrEmpty(this.githubID) ? "Please enter the candidate's Github ID":
+                       this.isUndefinedOrEmpty(this.problem) ? "Please select a code problem for this candidate":
+                       "noError";
+
+    // If there is an error in the form, display the error message and stop
+    if (errorMessage != "noError"){
+      this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
+      return;
+    }
 
     // Adder need a new email
     this.candidate = {
@@ -50,20 +58,6 @@ export class AddCandComponent implements OnInit {
       adder: 'Karyn',
       reviews: "",
     };
-
-    // check that all fields are entered
-    let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
-                       this.email == undefined || this.email.trim().length == 0 ? "Please enter candidate's email":
-                       this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter a correct email address":
-                       this.githubID == undefined || this.name.trim().length == 0 ? "Please enter the candidate's Github ID":
-                       this.problem == undefined ? "Please select a code problem for this candidate":
-                       "noError";
-
-    // If there is an error in the form, display the error message and stop
-    if (errorMessage != "noError"){
-      this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
-      return;
-    }
 
     // Now need to check if the Github Id is already in use in our system
     let candidateGithubExists = false;
@@ -99,6 +93,22 @@ export class AddCandComponent implements OnInit {
           this.router.navigate(['/']);
         }
     });
+  }
+
+  isUndefinedOrEmpty(stringToCheck: string) {
+    if (stringToCheck === undefined || stringToCheck === null || stringToCheck.trim().length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  contains(stringToCheck, array) {
+    for (let item of array) {
+      if (stringToCheck.indexOf(item) === -1) {
+        return false;
+      }
+    }
+    return true;
   }
 
   ngOnDestroy(): void {
