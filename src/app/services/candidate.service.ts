@@ -14,7 +14,7 @@ export class CandidateService {
                public flashMessageService: FlashMessagesService,) {
     console.log("Initializing candidates");
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
-    console.log("Retrieved " + this.candidates.count + " candidates");
+    // console.log("Retrieved " + this.candidates.count + " candidates");   // candidates not available yet - async
   }
 
   getCandidates() {
@@ -22,7 +22,8 @@ export class CandidateService {
   }
 
 
-  getCandidate(key: string) {
+  // These three methods are not used anywhere, consider deleting
+/*  getCandidate(key: string) {
     this.candidate = this.findCandidate(key);
     return this.candidate;
   }
@@ -47,7 +48,7 @@ export class CandidateService {
       //return this.matchedComments;
     });
   }
-
+*/
 
   newCandidate(candidate: Candidate) {
     this.candidates.push(candidate);
@@ -72,7 +73,6 @@ export class CandidateService {
         } else {
           this.flashMessageService.show("This reviewer has already been added", {cssClass: 'alert-danger', timeout: 5000});
         }
-        console.log('this candidate was returned');
         console.log(ca);
         return ca;
       }

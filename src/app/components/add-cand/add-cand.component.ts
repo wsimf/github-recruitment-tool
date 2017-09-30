@@ -54,7 +54,7 @@ export class AddCandComponent implements OnInit {
     // check that all fields are entered
     let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
                        this.email == undefined || this.email.trim().length == 0 ? "Please enter candidate's email":
-                         this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter a correct email address":
+                       this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter a correct email address":
                        this.githubID == undefined || this.name.trim().length == 0 ? "Please enter the candidate's Github ID":
                        this.problem == undefined ? "Please select a code problem for this candidate":
                        "noError";
@@ -98,9 +98,9 @@ export class AddCandComponent implements OnInit {
           this.flashMessageService.show('New candidate added!', {cssClass: 'alert-success', timeout: 2000});
           this.router.navigate(['/']);
         }
-
     });
   }
+
   ngOnDestroy(): void {
     if (this.subscription != undefined) {
       this.subscription.unsubscribe();    //close subscription once component ceases, otherwise subscription persists
