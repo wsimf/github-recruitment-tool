@@ -81,4 +81,17 @@ export class GithubService {
     // this.http.get("https://api.github.com/user/repos", {headers}).subscribe(val => console.log(val));
   }
 
+  /**
+   * This function remove candidate from the repo
+   * This event happens when a reviewer is added to the repo
+   * @param {Candidate} candidate
+   * @returns {Subscription}
+   */
+  removeCandidateFromRepo(candidate: Candidate) {
+    console.log('Removing ' + candidate.name +' from ' + candidate.repositoryName);
+    const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
+      .set('Accept', 'application/vnd.github.barred-rock-preview');
+    return this.http.delete('https://api.github.com/repos/nfuseuoa/' +
+      candidate.repositoryName + '/collaborators/' + candidate.githubID,  {headers}).subscribe((ok) => {console.log(ok); } );
+  }
 }

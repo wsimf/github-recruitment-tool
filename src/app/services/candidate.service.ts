@@ -157,6 +157,7 @@ export class CandidateService {
     for (const ca of this.can) {
       if (ca.$key === key) {
         ca.progressStatus = status;
+        this.candidates.update(ca.$key, ca)
         console.log('Change candidate: ' + ca.name + '\'s progress status to ' + status);
         return;
       }
