@@ -53,5 +53,10 @@ export class AddReviewersComponent implements OnInit {
     this.githubService.addCollaborator(this.candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
       console.log(res);
     }).unsubscribe();
+
+    // Check  the candidate status to being review
+    // Kick candidate out of the repo
+
+    this.candidateService.
   }
 }
