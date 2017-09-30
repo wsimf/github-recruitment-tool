@@ -2,12 +2,21 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Candidate} from "../models/Candidate";
+import 'rxjs/add/operator/map';
 
 interface Repo {
   name: string;
   url: string;
   full_name: string;
   subscribers_url: string;
+}
+
+interface PullRequest {
+  name?: string;
+  number?: string;
+  link?: string;
+  state?: string;
+  head?: string;
 }
 
 @Injectable()
@@ -93,5 +102,22 @@ export class GithubService {
       .set('Accept', 'application/vnd.github.barred-rock-preview');
     return this.http.delete('https://api.github.com/repos/nfuseuoa/' +
       candidate.repositoryName + '/collaborators/' + candidate.githubID,  {headers}).subscribe((ok) => {console.log(ok); } );
+  }
+
+  /**
+   * Get the pull requests of the repo for the candidate
+   * @param {Candidate} candidate
+   * @returns {Observable<Promise<any>>}
+   */
+  getPullRequests(candidate: Candidate){
+    console.log('Getting number of pull requests for ' + candidate.repositoryName);
+    const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
+      .set('Accept', 'application/vnd.github.barred-rock-preview');
+    return this.http.get<PullRequest[]>('https://api.github.com/repos/nfuseuoa/' + candidate.repositoryName + '/pulls' ,{headers});
+    //   .map((pullRequest: Response) => {
+    //     pullRequest.json();
+    //     console.log("I CAN SEE DATA HERE: ", pullRequest.json());
+    //     return pullRequest.json();
+    // });
   }
 }

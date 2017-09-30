@@ -36,7 +36,7 @@ export class CandidatelistComponent implements OnInit {
     public githubService: GithubService,
     public candidateService: CandidateService,
     public route: Router
-  ){
+  ) {
     //this.repos$ = this.githubService.getCandidateList();
 
   }
@@ -45,7 +45,7 @@ export class CandidatelistComponent implements OnInit {
       // this.githubService.getCandidateList().subscribe(candidates => {
       // this.candidates = candidates;
       // });
-      this.candidateService.getCandidates().subscribe(candidates =>{
+      this.candidateService.getCandidates().subscribe(candidates => {
         this.candidates = candidates;
       });
   }
