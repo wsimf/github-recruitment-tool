@@ -4,6 +4,8 @@ import 'rxjs/add/operator/do';
 import {FeedbackForm} from "../models/FeedbackForm";
 import {Candidate} from "../models/Candidate";
 import {Reviewer} from '../models/Reviewer';
+import {EmailService} from "./email.service";
+import {Recruiter} from "../models/Recruiter";
 
 
 @Injectable()
@@ -11,14 +13,19 @@ export class ReviewerService {
   comments: FirebaseListObservable<any[]>;
   candidates: FirebaseListObservable<any[]>;
   reviewers: FirebaseListObservable<Reviewer[]>;
+  recruiters: FirebaseListObservable<Recruiter[]>;
 
   comment: FirebaseObjectObservable<any>;
   matchedComments: FeedbackForm[];
+  private c: Candidate;
+  private rc: Recruiter;
+  private rv: Reviewer;
 
-  constructor(public angularfirebase: AngularFireDatabase) {
+  constructor(public angularfirebase: AngularFireDatabase, public emailService: EmailService) {
     this.comments = this.angularfirebase.list('/responses') as FirebaseListObservable<FeedbackForm[]>;
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
     this.reviewers = this.angularfirebase.list('/reviewers') as FirebaseListObservable<Reviewer[]>;
+    this.recruiters = this.angularfirebase.list('/recruiters') as FirebaseListObservable<Recruiter[]>;
     this.matchedComments = [];
   }
 
@@ -28,6 +35,20 @@ export class ReviewerService {
 
   newFeedback(feedback: FeedbackForm) {
     this.comments.push(feedback);
+    console.log(feedback);
+    this.findName(feedback.githubId).subscribe( res => {
+      this.c = res[0];
+      console.log(this.c);
+      this.findRecruiter(this.c.adder).subscribe( rec => {
+        this.rc = rec[0];
+        console.log(this.rc);
+        this.emailService.sendRecruiterEmail(this.c, this.rc , feedback);
+      });
+    }) ; // find candidate
+
+
+    // this.rv = this.findReviewer(feedback.reviewerGithub);
+    // this.emailService.sendRecruiterEmail(this.c, this.rc , feedback);
   }
 
   findReviews(githubId: string){
@@ -48,6 +69,14 @@ export class ReviewerService {
       return filtered;
     })
   }
+
+  findRecruiter(recruiterName: string) {
+    return this.recruiters.map( recruiters => {
+      const recruiter = recruiters.filter( r => r.name === recruiterName);
+      return recruiter;
+    })
+  }
+
 
   getReviewers() {
     return this.reviewers;

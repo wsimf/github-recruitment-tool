@@ -4,6 +4,8 @@ import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {Reviewer} from "../models/Reviewer";
 import {Candidate} from "../models/Candidate";
+import {Recruiter} from "../models/Recruiter";
+import {FeedbackForm} from "../models/FeedbackForm";
 
 @Injectable()
 export class EmailService {
@@ -46,6 +48,26 @@ export class EmailService {
     console.log(candidate);
     const req = this.http.put('http://localhost:80/api/sendgrid/sendCandidateEmail', {
       candidate: candidate
+    }).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  sendRecruiterEmail(candidate: Candidate, recruiter: Recruiter, feedback: FeedbackForm) {
+    console.log(feedback);
+
+    // From feedback, find candidate and recruiter details
+
+    const req = this.http.put('http://localhost:80/api/sendgrid/sendRecruiterEmail', {
+      candidate: candidate,
+      recruiter: recruiter,
+      // reviewer: reviewer,
+      feedback: feedback
     }).subscribe(
       res => {
         console.log(res);
