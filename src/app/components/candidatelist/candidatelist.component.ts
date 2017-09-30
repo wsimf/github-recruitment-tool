@@ -50,30 +50,25 @@ export class CandidatelistComponent implements OnInit {
       });
   }
 
-  changeView(githubId: string){
+  viewResults(githubId: string){
       this.route.navigate(['results', githubId]);
   }
 
   openDialog(id: string) {
     this.dialogRef = this.dialog.open(AddReviewersComponent, {
       width:'1px',height:'1px'});
-      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0];
-      var boxShadow = document.createAttribute("style");
-      boxShadow.value = "padding:0;";
-      hideShadow.attributes.setNamedItem(boxShadow);
-      var indentifierDiv =  document.getElementById("identifier");
-      //var candidateId = document.createAttribute("id");
-      //candidateId.value= id;
+      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
+       var indentifierDiv =  document.getElementById("identifier");
       indentifierDiv.innerHTML = id;
-      //indentifierDiv.attributes.setNamedItem(candidateId);
     }
 
   editCan(){
     this.dialogRef2 = this.dialog.open(EditCanComponent,{
       width:'1px',height:'1px'});
-      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0];
-      var boxShadow = document.createAttribute("style");
-      boxShadow.value = "padding:0";
-      hideShadow.attributes.setNamedItem(boxShadow);
+      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
+      // Delete these three lines, setAttribute() is better than createAttribute()
+      // var boxShadow = document.createAttribute("style");
+    // boxShadow.value = "padding:0";
+    // hideShadow.attributes.setNamedItem(boxShadow);
   }
 }

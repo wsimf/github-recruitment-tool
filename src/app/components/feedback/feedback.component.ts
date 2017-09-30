@@ -3,7 +3,7 @@ import {NgForm, NgControl} from "@angular/forms";
 import {FeedbackForm} from "../../models/FeedbackForm";
 import {ReviewerService} from "../../services/reviewer.service";
 import {FlashMessagesService} from "angular2-flash-messages";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CandidateService} from "../../services/candidate.service";
 import {Candidate} from "../../models/Candidate";
 import {Observable} from "rxjs/Observable";
@@ -13,24 +13,35 @@ import {Observable} from "rxjs/Observable";
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css'],
 })
+
 export class FeedbackComponent implements OnInit, OnDestroy {
-
-
   candidate: Candidate;
-  // candidateResult: Observable<Candidate[]>;
   candidates: Observable<any[]>;
   subscription: any;
 
+  @Input() githubId;
+  @Input() reviewerGithub;
+
   constructor(public reviewerService: ReviewerService,
               public router: Router,
+              public route: ActivatedRoute,
               public flashMessageService: FlashMessagesService,
-              public candidateService: CandidateService) { }
+              public candidateService: CandidateService) {
+
+    // Retrieve params (if provided) and set the two github Ids inside the input boxes
+    this.subscription = this.route.params.subscribe(params => {
+      this.githubId = params.githubId != undefined ? params.githubId : "";
+      this.reviewerGithub =params.reviewerGithub != undefined ? params.reviewerGithub : "";
+    });
+  }
 
   ngOnInit() {
   }
 
+
   onSubmit(f: NgForm) {
     let feedback = new FeedbackForm();
+
     Object.assign(feedback, f.value);
 
     feedback = JSON.parse(JSON.stringify(feedback, function (key, value) {
@@ -48,7 +59,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     let errorMessage='noError';
     let firstSubscribe = true;
     this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
-      if(!firstSubscribe) {return};
+      if(!firstSubscribe) {return}
       firstSubscribe=false;
 
       for (let ca of candidateList) {
@@ -69,25 +80,22 @@ export class FeedbackComponent implements OnInit, OnDestroy {
               this.router.navigate(['/']);
 
             } else { // This reviewer has already submitted a feedbackform
-              errorMessage = 'A feedback form has already been submitted by this reviewer for this candidate'
+              errorMessage = 'A feedback form has already been submitted by this reviewer for this candidate';
             }
 
           } else { // Else: the reviewer is not in the candidate's reviewer list
-            errorMessage = 'Your github ID is not assigned to review candidate with github Id ';
+            errorMessage = 'Your github ID is not assigned to review this candidate';
           }
           break;  //candidate githubId already found, break the search
 
         } else { // candidate githubid provided not found
-          errorMessage= "No candidate found for Github id " + feedback.githubId;
+          errorMessage= "No candidate found with this Github id " + feedback.githubId;
         }
       }
 
       // Display errorMessage if there is one
       if (errorMessage != "noError") {
-        this.flashMessageService.show(errorMessage, {
-          cssClass: 'alert-danger',
-          timeout: 5000
-        });
+        this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 5000});
       }
     });
   }

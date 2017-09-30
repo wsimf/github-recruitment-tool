@@ -26,16 +26,6 @@ export class CandidateService {
   }
 
   /**
-   * return a candidate provided the unqiue key.
-   * @param {string} key
-   * @returns {FirebaseObjectObservable<any>}
-   */
-  getCandidate(key: string) {
-    this.candidate = this.findCandidate(key);
-    return this.candidate;
-  }
-
-  /**
    * Find the candidate given the unique key
    * @param {string} key
    * @returns {any}
@@ -72,7 +62,6 @@ export class CandidateService {
     });
   }
 
-
   /**
    * Adding new candidate to the candidate list
    * The candidate is persisted in the Firebase Realtime database
@@ -107,7 +96,6 @@ export class CandidateService {
         } else {
           this.flashMessageService.show("This reviewer has already been added", {cssClass: 'alert-danger', timeout: 5000});
         }
-        console.log('this candidate was returned');
         console.log(ca);
         return ca;
       }
