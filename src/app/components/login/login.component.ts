@@ -26,9 +26,15 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+
     this.authService.login(this.email, this.password)
     .then((res) => {
       this.flashMessageService.show('Your are logged in!', { cssClass: 'alert-success', timeout: 4000 });
+      console.log(this.authService.getAuth());
+      this.authService.getAuth().subscribe(users=> {
+          console.log(users);
+      });
+
       this.router.navigate(['/']);
     })
     .catch((err) => {
