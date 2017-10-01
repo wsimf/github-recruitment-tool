@@ -6,9 +6,10 @@ import { Candidate } from '../../models/Candidate';
 import { Reviewer } from '../../models/Reviewer';
 
 import { CandidateService } from '../../services/candidate.service';
-import {Observable} from "rxjs/Observable";
+// import {Observable} from "rxjs/Observable";
 import {GithubService} from "../../services/github.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Observable} from 'rxjs/Rx';
 
 interface Repo {
   name: string;
@@ -25,7 +26,7 @@ interface Repo {
 export class CandidatelistComponent implements OnInit {
   dialogRef: MdDialogRef<AddReviewersComponent>;
   dialogRef2: MdDialogRef<EditCanComponent>;
-  repos$: Observable<Repo[]>;
+  //repos$: Observable<Repo[]>;
   candidates: any[];
 
   // Fetch all candidate from the database
@@ -48,6 +49,18 @@ export class CandidatelistComponent implements OnInit {
       this.candidateService.getCandidates().subscribe(candidates => {
         this.candidates = candidates;
       });
+    // Check pull request every 2 min
+    Observable.interval(500 * 60).subscribe(x => {
+      for (let can of this.candidates){
+        if (can.progressStatus === 'Doing Problem'){
+          this.githubService.getPullRequests(can).subscribe(results => {
+            if (results.length >= 1) {
+              this.candidateService.updateCandidateStatus(can.$key,'Finished Problem');
+            }
+          });
+        }
+      }
+    });
   }
 
   viewResults(githubId: string){
@@ -70,5 +83,22 @@ export class CandidatelistComponent implements OnInit {
       // var boxShadow = document.createAttribute("style");
     // boxShadow.value = "padding:0";
     // hideShadow.attributes.setNamedItem(boxShadow);
+  }
+
+  /**
+   * Loop throgh the candidate list
+   * For candidate with doing problem status, check if they have submitted a pull request
+   * if there are 1 or more pull requests then change their status to 'finished problem'
+   */
+  checkCandidatesPullRequest() {
+    for (let can of this.candidates){
+      if (can.progressStatus === 'Doing Problem'){
+        this.githubService.getPullRequests(can).subscribe(results => {
+          if (results.length >= 1) {
+            this.candidateService.updateCandidateStatus(can,'Finished Problem');
+          }
+        });
+      }
+    }
   }
 }
