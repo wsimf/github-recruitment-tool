@@ -15,7 +15,7 @@
   <div class="mx-5 py-4 row justify-content-between  align-items-center">
     <div>
       <h4 class="card-title">{{c.name}}  </h4>
-      <span class="card-text-createdby">Created by: {{c.adder}} | Repository: {{c.repositoryName}} |  Progress: {{c.progressStatus}} </span><br>
+      <span class="card-text-createdby">Created by: {{c.adder}} | Repository: {{c.repositoryName}}<br />   Progress: {{c.progressStatus}} </span><br>
       <!--<span class ="card-text-githubRepo">Repository: {{c.repositoryName}}</span><br>-->
       <!--<span class="card-text-githubID">GithubID: {{c.githubID}} </span><br>-->
       <!--<span class="card-get-progress">Progress: {{c.progressStatus}}</span><br>-->
@@ -24,7 +24,7 @@
     </div>
     <div>
       <button class="btn btn-warning btn-sm" (click)="openDialog(c.githubID)"> Add Reviewers</button>
-      <button class="btn btn-success btn-sm viewResult" (click)="changeView(c.githubID)"> View Result</button>
+      <button class="btn btn-success btn-sm viewResult" (click)="viewResults(c.githubID)"> View Results</button>
       <button class="btn btn-link" (click)="editCan()"> Edit</button>
       <button class="btn btn-link"> Delete</button>
     </div>

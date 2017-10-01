@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import {Reviewer} from '../models/Reviewer';
 import {Candidate} from '../models/Candidate';
+import {FlashMessagesService} from "angular2-flash-messages";
 
 @Injectable()
 export class CandidateService {
@@ -9,17 +10,20 @@ export class CandidateService {
   candidate: FirebaseObjectObservable<any>;
   can : any[];
 
-  constructor( public angularfirebase: AngularFireDatabase) {
+  constructor( public angularfirebase: AngularFireDatabase,
+               public flashMessageService: FlashMessagesService,) {
     console.log("Initializing candidates");
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
-    console.log("Retrieved " + this.candidates.count + " candidates");
+    // console.log("Retrieved " + this.candidates.count + " candidates");   // candidates not available yet - async
   }
 
   getCandidates() {
     return this.candidates;
   }
 
-  getCandidate(key: string) {
+
+  // These three methods are not used anywhere, consider deleting
+/*  getCandidate(key: string) {
     this.candidate = this.findCandidate(key);
     return this.candidate;
   }
@@ -44,31 +48,55 @@ export class CandidateService {
       //return this.matchedComments;
     });
   }
+*/
 
   newCandidate(candidate: Candidate) {
     this.candidates.push(candidate);
   }
 
-  addReviewertoCandidate(githubId: string, reviewerGithubID: string ) {
+  addReviewertoCandidate(githubId: string, reviewerGithubId: string ) {
     this.getCandidates().subscribe(cand =>{
       this.can = cand;
     });
     for(let ca of this.can){
-      console.log(ca);
       if(ca.githubID != undefined && ca.githubID == githubId){
         if(ca.reviewers == "" || ca.reviewers == undefined){
-          console.log("1-1");
-          ca.reviewers = reviewerGithubID;
+          ca.reviewers = reviewerGithubId;
           this.candidates.update(ca.$key,ca);
-          //this.candidates.update(githubId,ca);
-        }else{
-          console.log("1-2");
-          ca.reviewers += "," + reviewerGithubID;
+
+         // Make sure reviewer isn't already added
+        }else if (ca.reviewers.indexOf(reviewerGithubId) == -1){
+          ca.reviewers += "," + reviewerGithubId;
           this.candidates.update(ca.$key,ca);
+
+        // If reviewer already assigned, display error message
+        } else {
+          this.flashMessageService.show("This reviewer has already been added", {cssClass: 'alert-danger', timeout: 5000});
         }
+        console.log(ca);
         return ca;
       }
     }
+  }
+
+  addReviewtoCandidate(githubId: string, reviewId: string ) {
+    let firstSubscribe = true;
+    this.getCandidates().subscribe(candidates =>{
+      if(!firstSubscribe) {return};
+      firstSubscribe=false;
+      for(let ca of candidates){
+        if(ca.githubID != undefined && ca.githubID == githubId){
+          if(ca.reviews == "" || ca.reviews == undefined){
+            ca.reviews = reviewId;
+            this.candidates.update(ca.$key,ca);
+          }else{
+            ca.reviews += "," + reviewId;
+            this.candidates.update(ca.$key,ca);
+          }
+          return ca;
+        }
+      }
+    });
   }
 
   getReviewerList(githubId: string){

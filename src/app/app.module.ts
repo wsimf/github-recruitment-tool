@@ -46,7 +46,8 @@ const appRoutes: Routes =[
   {path:'register',component:RegisterComponent},
   {path:'add-cand',component:AddCandComponent,canActivate:[AuthGuard]},
   {path:'results/:id', component:ResultsComponent,canActivate:[AuthGuard]},
-  {path:'feedback', component:FeedbackComponent}
+  {path:'feedback', component:FeedbackComponent},
+  {path:'feedback/:githubId/:reviewerGithub', component:FeedbackComponent} // https://elanderson.net/2017/01/angular-2-optional-route-parameter/
 ];
 
 export const firebaseConfig = {

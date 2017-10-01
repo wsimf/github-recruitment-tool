@@ -30,7 +30,7 @@ export class AddReviewersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.githubId = document.getElementById("identifier").innerHTML;
+    this.githubId = document.getElementById("identifier").innerHTML.toLowerCase();
     this.reviewerList = this.candidateService.getReviewerList(this.githubId);
   }
 
@@ -47,11 +47,11 @@ export class AddReviewersComponent implements OnInit {
     //Get email of the reviewer from github
     this.githubService.getUser(this.reviewerGithubID).subscribe( githubUser => {
       this.githubUser = githubUser;
-      console.log (githubUser);
+      console.log('this.githubId is: ' +this.githubId);
       this.reviewer = {
-        name: this.githubUser.name,
-        email: this.githubUser.email,
-        githubID: this.reviewerGithubID,
+        name: '',
+        email: ''.toLowerCase(),
+        githubID: this.reviewerGithubID.toLowerCase(),
       };
       this.candidate = this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
       this.reviewerList = this.candidateService.getReviewerList(this.githubId);

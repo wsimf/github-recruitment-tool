@@ -21,7 +21,6 @@ export class AddCandComponent implements OnInit {
   // repositoryName: string;
   candidate: Candidate;
   candidates:  Observable<any[]>;
-  firstSubscribe : boolean;
   subscription: any;
 
   constructor(public flashMessageService: FlashMessagesService,
@@ -37,12 +36,20 @@ export class AddCandComponent implements OnInit {
   }
 
   onSubmit() {
-    // valid: boolean = true;
-    // if (!valid) {
-    //   // THE INFORMATION PROVIDE IS NOT VALID DO SOMETHING
-    //   this.flashMessageService.show('Invalid input!', { cssClass: 'alert-danger', timeout: 4000 });
-    //   this.router.navigate(['/add-cand']);
-    // } else {
+
+    // check that all fields are entered
+    let errorMessage = this.isUndefinedOrEmpty(this.name) ? "Please enter the name of the Candidate":
+                       this.isUndefinedOrEmpty(this.email) ? "Please enter candidate's email":
+                       !this.contains(this.email, ['@','.']) ? "Please enter a correct email address":
+                       this.isUndefinedOrEmpty(this.githubID) ? "Please enter the candidate's Github ID":
+                       this.isUndefinedOrEmpty(this.problem) ? "Please select a code problem for this candidate":
+                       "noError";
+
+    // If there is an error in the form, display the error message and stop
+    if (errorMessage != "noError"){
+      this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
+      return;
+    }
 
     // Adder need a new email
     this.authService.getAuth().subscribe( user => {
@@ -54,7 +61,8 @@ export class AddCandComponent implements OnInit {
         problem: this.problem,
         repositoryName: 'code-challenge-' + this.githubID,
         progressStatus: 'Doing',
-        adder: user.email
+        adder: user.email,
+        reviews: ''
       };
       // check that all fields are entered
       let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
@@ -72,16 +80,16 @@ export class AddCandComponent implements OnInit {
 
     this.firstSubscribe = true;
     // Now need to check if the Github Id is already in use in our system
-    var candidateGithubExists = false;
-    this.candidates = this.candidateService.getCandidates();
+    let candidateGithubExists = false;
 
-    this.subscription = this.candidates.subscribe(candidateList => {
-      console.log("inside subscribe!!!"); // delete all/most of console.logs closer to production date
+    let firstSubscribe = true;
+    this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
       // Only allow first execution of subscribe to work
-      if (!this.firstSubscribe) { return;}
-      this.firstSubscribe = false;
+      if (!firstSubscribe) { return;}
+      firstSubscribe = false;
+
+      // Check if this GithubId is being used my another candidate
       for (let ca of candidateList) {
-        //make sure candidate github id is not already registered
         if (ca.githubID != undefined && ca.githubID == this.githubID) {
           candidateGithubExists = true;
           this.flashMessageService.show('This github ID ' + ca.githubID + ' is already registered to a candidate', {
@@ -100,19 +108,35 @@ export class AddCandComponent implements OnInit {
           // Email candidate
           this.emailService.sendCandidateEmail(this.candidate);
 
-          // Persist the candidate
+          // // Persist the candidate
           this.candidateService.newCandidate(this.candidate);
 
           // Adding candidate succesful
           this.flashMessageService.show('New candidate added!', {cssClass: 'alert-success', timeout: 2000});
           this.router.navigate(['/']);
         }
-
     });
   }
+
+  isUndefinedOrEmpty(stringToCheck: string) {
+    if (stringToCheck === undefined || stringToCheck === null || stringToCheck.trim().length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  contains(stringToCheck, array) {
+    for (let item of array) {
+      if (stringToCheck.indexOf(item) === -1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   ngOnDestroy(): void {
-    if (this.candidates != undefined) {
-      this.subscription.unsubscribe();
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe();    //close subscription once component ceases, otherwise subscription persists
     }
   }
 }
