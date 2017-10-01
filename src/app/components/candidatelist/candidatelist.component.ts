@@ -51,19 +51,23 @@ export class CandidatelistComponent implements OnInit {
       });
     // Check pull request every 2 min
     Observable.interval(500 * 60).subscribe(x => {
-      for (let can of this.candidates){
-        if (can.progressStatus === 'Doing Problem'){
-          this.githubService.getPullRequests(can).subscribe(results => {
-            if (results.length >= 1) {
-              this.candidateService.updateCandidateStatus(can.$key,'Finished Problem');
-            }
-          });
+      for (let candidate of this.candidates) {
+        if (candidate.reviewers === undefined || candidate.reviewers.split(',').length === 0) {
+          candidate.progressStatus = 'Doing';
+        } else if (candidate.reviews === undefined || candidate.reviews.split(',').length === 0) {
+          candidate.progressStatus = 'Being Reviewed';
+        } else if (candidate.reviews.split(',').length === candidate.reviewers.split(',')) {
+          candidate.progressStatus = 'Reviewing Completed';
+        } else {
+          candidate.progressStatus = candidate.reviews.split(',').length
+            + '/' + candidate.reviewers.split(',').length + ' Reviews Finished';
         }
+        this.candidateService.updateCandidateStatus(candidate);
       }
     });
   }
 
-  viewResults(githubId: string){
+  viewResults(githubId: string) {
       this.route.navigate(['results', githubId]);
   }
 
@@ -81,20 +85,4 @@ export class CandidatelistComponent implements OnInit {
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
   }
 
-  /**
-   * Loop throgh the candidate list
-   * For candidate with doing problem status, check if they have submitted a pull request
-   * if there are 1 or more pull requests then change their status to 'finished problem'
-   */
-  checkCandidatesPullRequest() {
-    for (let can of this.candidates){
-      if (can.progressStatus === 'Doing Problem'){
-        this.githubService.getPullRequests(can).subscribe(results => {
-          if (results.length >= 1) {
-            this.candidateService.updateCandidateStatus(can,'Finished Problem');
-          }
-        });
-      }
-    }
-  }
 }

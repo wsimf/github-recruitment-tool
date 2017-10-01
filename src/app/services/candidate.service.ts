@@ -135,8 +135,8 @@ export class CandidateService {
 
     // Find the reviewers
     for (const ca of this.can){
-      if (ca.githubID !== undefined && ca.githubID === githubId){
-        if (ca.reviewers !== '' && ca.reviewers !== undefined){
+      if (ca.githubID !== undefined && ca.githubID === githubId) {
+        if (ca.reviewers !== '' && ca.reviewers !== undefined) {
           const viewList = ca.reviewers.split(',');
           return viewList;
         }
@@ -146,22 +146,11 @@ export class CandidateService {
 
   /**
    * Update the status of the candidate
-   * @param {string} candidateGithubId
-   * @param {string} status
+   * @param {Candidate} candidate
    */
-  updateCandidateStatus(key: string, status: string ) {
-    this.getCandidates().subscribe(cand => {
-      this.can = cand;
-    });
-
-    for (const ca of this.can) {
-      if (ca.$key === key) {
-        ca.progressStatus = status;
-        this.candidates.update(ca.$key, ca)
-        console.log('Change candidate: ' + ca.name + '\'s progress status to ' + status);
-        return;
-      }
-    }
+  updateCandidateStatus(cand: Candidate) {
+    this.candidates.update(cand.$key, cand);
   }
+
 
 }

@@ -57,6 +57,7 @@ export class AddReviewersComponent implements OnInit {
     // Check  the candidate status to being review
     // Kick candidate out of the repo
     this.githubService.removeCandidateFromRepo(this.candidate);
-    this.candidateService.updateCandidateStatus(this.candidate.$key, 'Being reviewed');
+    this.candidate.progressStatus ='Being Reviewed';
+    this.candidateService.updateCandidateStatus(this.candidate);
   }
 }
