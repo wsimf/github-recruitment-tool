@@ -49,8 +49,8 @@ export class AddReviewersComponent implements OnInit {
       this.githubUser = githubUser;
       console.log('this.githubId is: ' +this.githubId);
       this.reviewer = {
-        name: '',
-        email: ''.toLowerCase(),
+        name: this.githubUser.name.toLowerCase(),
+        email: this.githubUser.email.toLowerCase(),
         githubID: this.reviewerGithubID.toLowerCase(),
       };
       this.candidate = this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
