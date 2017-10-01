@@ -54,7 +54,7 @@ export class AddCandComponent implements OnInit {
       githubID: this.githubID.toLowerCase(),
       problem: this.problem,
       repositoryName: 'code-challenge-' + this.githubID,
-      progressStatus: 'Doing Problem',
+      progressStatus: 'Doing',
       adder: 'Karyn',
       reviews: "",
     };
