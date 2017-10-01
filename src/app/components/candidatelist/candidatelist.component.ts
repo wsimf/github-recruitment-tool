@@ -50,7 +50,7 @@ export class CandidatelistComponent implements OnInit {
         this.candidates = candidates;
       });
     // Check pull request every 2 min
-    Observable.interval(100 * 60).subscribe(x => {
+    Observable.interval(5000 * 60).subscribe(x => {
       for (let candidate of this.candidates) {
         if (candidate.reviewers === undefined || candidate.reviewers.split(',').length === 0
           || candidate.reviewers === '' ) {
