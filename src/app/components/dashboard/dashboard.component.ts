@@ -3,6 +3,7 @@ import {CandidateService} from "../../services/candidate.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import * as _ from 'lodash';
 import {Observable} from "rxjs/Observable";
+import {AuthService} from "../../services/auth.service";
 
 interface Repo {
   name: string;
@@ -18,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
   repos$: Observable<Repo[]>;
 
-  constructor(private candidateService: CandidateService, private http: HttpClient) { }
+  constructor(private candidateService: CandidateService, private http: HttpClient, public authService: AuthService) { }
 
   ngOnInit() {
   }

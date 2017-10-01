@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {FeedbackForm} from "../../models/FeedbackForm";
 import {Candidate} from "../../models/Candidate";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-results',
@@ -30,7 +31,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
     // this.reviewerService.getComments().subscribe(comments =>{
     //   this.comments = comments;
     // });
-
   }
 
   ngOnDestroy(): void {

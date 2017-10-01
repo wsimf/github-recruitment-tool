@@ -79,10 +79,6 @@ export class CandidatelistComponent implements OnInit {
     this.dialogRef2 = this.dialog.open(EditCanComponent,{
       width:'1px',height:'1px'});
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
-      // Delete these three lines, setAttribute() is better than createAttribute()
-      // var boxShadow = document.createAttribute("style");
-    // boxShadow.value = "padding:0";
-    // hideShadow.attributes.setNamedItem(boxShadow);
   }
 
   /**
