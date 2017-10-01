@@ -4,6 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/do';
 import * as _ from 'lodash';
+import {User} from "firebase/app";
 
 @Injectable()
 export class AuthService {

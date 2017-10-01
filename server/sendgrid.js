@@ -29,9 +29,9 @@ router.put('/sendCandidateEmail', (req, res) => {
 
 router.put('/sendRecruiterEmail', (req, res) => {
   sgMail.setApiKey('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');
-  console.log(req.body.recruiter);
+  // console.log(req.body.recruiter);
   const msg = {
-    to: req.body.recruiter.email,
+    to: req.body.recruiterEmail,
     from: 'nfuseuoa@gmail.com',
     subject: 'A review has been completed for ' + req.body.candidate.name,
     text: JSON.stringify(req.body.feedback)

@@ -6,6 +6,7 @@ import { CandidateService} from '../../services/candidate.service';
 import { GithubService } from "../../services/github.service";
 import {EmailService} from "../../services/email.service";
 import {Observable} from "rxjs/Observable";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-add-cand',
@@ -27,8 +28,8 @@ export class AddCandComponent implements OnInit {
               public router: Router,
               public githubService: GithubService,
               public candidateService: CandidateService,
-              private emailService: EmailService) {
-
+              private emailService: EmailService,
+              public authService: AuthService) {
     this.problem = 'Origin-Technical-Challenge';
   }
 
@@ -44,29 +45,32 @@ export class AddCandComponent implements OnInit {
     // } else {
 
     // Adder need a new email
-    this.candidate = {
-      name: this.name,
-      email: this.email,
-      githubID: this.githubID,
-      problem: this.problem,
-      repositoryName: 'code-challenge-' + this.githubID,
-      progressStatus: 'Doing',
-      adder: 'Karyn',
-    };
-    this.firstSubscribe = true;
-    // check that all fields are entered
-    let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
-                       this.email == undefined || this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter candidate's email":
-                       this.githubID == undefined || this.name.trim().length == 0 ? "Please enter the candidate's Github ID":
-                       this.problem == undefined ? "Please select a code problem for this candidate":
-                       "noError";
-    console.log(errorMessage);
-    // If there is an error in the form, display the error message and stop
-    if (errorMessage != "noError"){
-      this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
-      return;
-    }
+    this.authService.getAuth().subscribe( user => {
+      console.log(user);
+      this.candidate = {
+        name: this.name,
+        email: this.email,
+        githubID: this.githubID,
+        problem: this.problem,
+        repositoryName: 'code-challenge-' + this.githubID,
+        progressStatus: 'Doing',
+        adder: user.email
+      };
+      // check that all fields are entered
+      let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
+        this.email == undefined || this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter candidate's email":
+          this.githubID == undefined || this.name.trim().length == 0 ? "Please enter the candidate's Github ID":
+            this.problem == undefined ? "Please select a code problem for this candidate":
+              "noError";
+      console.log(errorMessage);
+      // If there is an error in the form, display the error message and stop
+      if (errorMessage != "noError"){
+        this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
+        return;
+      }
+    })
 
+    this.firstSubscribe = true;
     // Now need to check if the Github Id is already in use in our system
     var candidateGithubExists = false;
     this.candidates = this.candidateService.getCandidates();

@@ -39,11 +39,7 @@ export class ReviewerService {
     this.findName(feedback.githubId).subscribe( res => {
       this.c = res[0];
       console.log(this.c);
-      this.findRecruiter(this.c.adder).subscribe( rec => {
-        this.rc = rec[0];
-        console.log(this.rc);
-        this.emailService.sendRecruiterEmail(this.c, this.rc , feedback);
-      });
+      this.emailService.sendRecruiterEmail(this.c, this.c.adder , feedback);
     }) ; // find candidate
 
 

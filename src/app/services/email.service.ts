@@ -58,14 +58,14 @@ export class EmailService {
     );
   }
 
-  sendRecruiterEmail(candidate: Candidate, recruiter: Recruiter, feedback: FeedbackForm) {
+  sendRecruiterEmail(candidate: Candidate, recruiterEmail: string, feedback: FeedbackForm) {
     console.log(feedback);
 
     // From feedback, find candidate and recruiter details
 
     const req = this.http.put('http://localhost:80/api/sendgrid/sendRecruiterEmail', {
       candidate: candidate,
-      recruiter: recruiter,
+      recruiterEmail: recruiterEmail,
       // reviewer: reviewer,
       feedback: feedback
     }).subscribe(
