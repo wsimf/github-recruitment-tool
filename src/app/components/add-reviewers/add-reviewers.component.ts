@@ -40,7 +40,7 @@ export class AddReviewersComponent implements OnInit {
     //var identifierDiv = document.getElementById("identifier");
     //var gid = identifierDiv.innerHTML;
 
-    console.log('this.githubId is: ' +this.githubId);
+    console.log('this.githubId is: ' + this.githubId);
     this.reviewer = {
       name: '',
       email: ''.toLowerCase(),

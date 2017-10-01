@@ -24,7 +24,8 @@ export class ReviewerService {
   }
 
   newFeedback(feedback: FeedbackForm) {
-    this.comments.push(feedback);
+    this.comments.set(feedback.reviewId, feedback);
+    // this.comments.push( feedback);
   }
 
   findReviews(githubId: string){
@@ -45,7 +46,5 @@ export class ReviewerService {
       return filtered;
     })
   }
-
-
 
 }
