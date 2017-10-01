@@ -3,6 +3,7 @@ const sgMail = require('@sendgrid/mail');
 const router = express.Router();
 
 router.put('/sendReviewerEmail', (req, res) => {
+  console.log("Sending email to reviewer: " + req.body.reviewer.name);
   sgMail.setApiKey('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');
   // console.log(req.body.reviewer);
   const msg = {
@@ -16,6 +17,7 @@ router.put('/sendReviewerEmail', (req, res) => {
 })
 
 router.put('/sendCandidateEmail', (req, res) => {
+  console.log("Sending email to candidate: " + req.body.candidate.name);
   sgMail.setApiKey('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');
   const msg = {
     to: req.body.candidate.email,
@@ -28,6 +30,7 @@ router.put('/sendCandidateEmail', (req, res) => {
 })
 
 router.put('/sendRecruiterEmail', (req, res) => {
+  console.log("Sending email to recruiter: " + req.body.recruiterEmail);
   sgMail.setApiKey('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');
   // console.log(req.body.recruiter);
   const msg = {
