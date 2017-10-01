@@ -10,7 +10,10 @@ import {FeedbackForm} from "../models/FeedbackForm";
 @Injectable()
 export class EmailService {
 
+
   constructor(private http: Http) { }
+
+  serverUrl = "http://localhost:80"
 
   // sendRecruiterEmail(){
   //   let url = `https://us-central1-nufeproject.cloudfunctions.net/sendEmailtoRecruiter`
@@ -32,7 +35,7 @@ export class EmailService {
 
   sendReviewerEmail(reviewer: Reviewer) {
     console.log(reviewer);
-    const req = this.http.put('http://localhost:80/api/sendgrid/sendReviewerEmail', {
+    const req = this.http.put( this.serverUrl + '/api/sendgrid/sendReviewerEmail', {
       reviewer: reviewer
     }).subscribe(
         res => {
@@ -46,7 +49,7 @@ export class EmailService {
 
   sendCandidateEmail(candidate: Candidate){
     console.log(candidate);
-    const req = this.http.put('http://localhost:80/api/sendgrid/sendCandidateEmail', {
+    const req = this.http.put(this.serverUrl + '/api/sendgrid/sendCandidateEmail', {
       candidate: candidate
     }).subscribe(
       res => {
@@ -63,7 +66,7 @@ export class EmailService {
 
     // From feedback, find candidate and recruiter details
 
-    const req = this.http.put('http://localhost:80/api/sendgrid/sendRecruiterEmail', {
+    const req = this.http.put(this.serverUrl + '/api/sendgrid/sendRecruiterEmail', {
       candidate: candidate,
       recruiterEmail: recruiterEmail,
       // reviewer: reviewer,
