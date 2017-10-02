@@ -23,7 +23,7 @@ export class AddCandComponent implements OnInit {
   candidates:  Observable<any[]>;
   subscription: any;
 
-  constructor(public flashMessageService: FlashMessagesService,
+   constructor(public flashMessageService: FlashMessagesService,
               public router: Router,
               public githubService: GithubService,
               public candidateService: CandidateService,
@@ -36,22 +36,21 @@ export class AddCandComponent implements OnInit {
   }
 
   onSubmit() {
-
     // check that all fields are entered
     let errorMessage = this.isUndefinedOrEmpty(this.name) ? "Please enter the name of the Candidate":
                        this.isUndefinedOrEmpty(this.email) ? "Please enter candidate's email":
                        !this.contains(this.email, ['@','.']) ? "Please enter a correct email address":
                        this.isUndefinedOrEmpty(this.githubID) ? "Please enter the candidate's Github ID":
                        this.isUndefinedOrEmpty(this.problem) ? "Please select a code problem for this candidate":
-                       "noError";
+                       "noFormErrors";
 
     // If there is an error in the form, display the error message and stop
-    if (errorMessage != "noError"){
+    if (errorMessage != "noFormErrors"){
       this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
       return;
     }
 
-    // Adder need a new email
+    // Create the a new Candidate object for new candidate, need authservice to get Adder's email
     this.authService.getAuth().subscribe( user => {
       console.log(user);
       this.candidate = {
@@ -64,40 +63,30 @@ export class AddCandComponent implements OnInit {
         adder: user.email,
         reviews: ''
       };
-      // check that all fields are entered
-      let errorMessage = this.name == undefined || this.name.trim().length == 0 ? "Please enter the name of the Candidate":
-        this.email == undefined || this.email.indexOf('@') == -1 || this.email.indexOf('.') ==-1? "Please enter candidate's email":
-          this.githubID == undefined || this.name.trim().length == 0 ? "Please enter the candidate's Github ID":
-            this.problem == undefined ? "Please select a code problem for this candidate":
-              "noError";
-      console.log(errorMessage);
-      // If there is an error in the form, display the error message and stop
-      if (errorMessage != "noError"){
-        this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
-        return;
-      }
-    })
 
-    // Now need to check if the Github Id is already in use in our system
-    let candidateGithubExists = false;
 
-    let firstSubscribe = true;
-    this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
-      // Only allow first execution of subscribe to work
-      if (!firstSubscribe) { return;}
-      firstSubscribe = false;
+      // Now need to check if the Github Id is already in use in our system
+      let candidateGithubExists = false;
 
-      // Check if this GithubId is being used my another candidate
-      for (let ca of candidateList) {
-        if (ca.githubID != undefined && ca.githubID == this.githubID) {
-          candidateGithubExists = true;
-          this.flashMessageService.show('This github ID ' + ca.githubID + ' is already registered to a candidate', {
-            cssClass: 'alert-danger',
-            timeout: 5000
-          });
-          break;
+      let firstSubscribe = true;
+      this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
+        // Only allow first execution of subscribe to work
+        if (!firstSubscribe) {
+          return;
         }
-      }
+        firstSubscribe = false;
+
+        // Check if this GithubId is being used my another candidate
+        for (let ca of candidateList) {
+          if (ca.githubID != undefined && ca.githubID == this.githubID) {
+            candidateGithubExists = true;
+            this.flashMessageService.show('This github ID ' + ca.githubID + ' is already registered to a candidate', {
+              cssClass: 'alert-danger',
+              timeout: 5000
+            });
+            break;
+          }
+        }
         //if github id is not being used by another candidate, successfully add it and make repo
         if (!candidateGithubExists) {
           console.log("Adding candidate now..");
@@ -114,6 +103,7 @@ export class AddCandComponent implements OnInit {
           this.flashMessageService.show('New candidate added!', {cssClass: 'alert-success', timeout: 2000});
           this.router.navigate(['/']);
         }
+      });
     });
   }
 

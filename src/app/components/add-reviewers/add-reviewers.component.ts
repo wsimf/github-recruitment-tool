@@ -22,6 +22,7 @@ export class AddReviewersComponent implements OnInit {
   candidate: Candidate;
   private githubUser: any;
   private r: Reviewer;
+  subscription: any;
 
   constructor(public dialogRef: MdDialogRef<AddReviewersComponent>,
     public reviewerService: ReviewerService,
@@ -45,9 +46,10 @@ export class AddReviewersComponent implements OnInit {
     //var gid = identifierDiv.innerHTML;
 
     //Get email of the reviewer from github
-    this.githubService.getUser(this.reviewerGithubID).subscribe( githubUser => {
+    this.subscription =this.githubService.getUser(this.reviewerGithubID).subscribe( githubUser => {
       this.githubUser = githubUser;
       console.log('this.githubId is: ' +this.githubId);
+      console.log(githubUser);
       this.reviewer = {
         name: this.githubUser.name.toLowerCase(),
         email: this.githubUser.email.toLowerCase(),
@@ -70,11 +72,13 @@ export class AddReviewersComponent implements OnInit {
 
       this.emailService.sendReviewerEmail(this.reviewer);
     });
-    // console.log(this.githubUser);
 
-    // adding reviewer as collaborator.
-    this.githubService.addCollaborator(this.candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
-      console.log(res);
-    }).unsubscribe();
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe();
+    }
   }
 }

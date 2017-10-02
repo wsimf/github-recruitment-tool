@@ -32,8 +32,7 @@ export class GithubService {
   }
   // Create a repository for a candidate
   createRepository(candidate: Candidate) {
-    console.log('Creating repository');
-
+    console.log('Creating repository 123');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
     const body = {
       name: candidate.repositoryName,
