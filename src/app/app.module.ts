@@ -28,6 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
 
+
 // Import services
 import { AppService } from './services/app.service';
 import { AuthService } from './services/auth.service';
@@ -39,6 +40,7 @@ import { RecruiterService } from './services/recruiter.service';
 import {EmailService} from "./services/email.service";
 import { ResultsComponent } from './components/results/results.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { ReviewCandidateComponent } from './components/review-candidate/review-candidate.component';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -47,6 +49,7 @@ const appRoutes: Routes =[
   {path:'add-cand',component:AddCandComponent,canActivate:[AuthGuard]},
   {path:'results/:id', component:ResultsComponent,canActivate:[AuthGuard]},
   {path:'feedback', component:FeedbackComponent},
+  {path:'reviewcandidate/:id', component:ReviewCandidateComponent},
   {path:'feedback/:githubId/:reviewerGithub', component:FeedbackComponent} // https://elanderson.net/2017/01/angular-2-optional-route-parameter/
 ];
 
@@ -70,7 +73,8 @@ export const firebaseConfig = {
     RegisterComponent,
     AddReviewersComponent,
     ResultsComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ReviewCandidateComponent
   ],
   imports: [
     BrowserModule,

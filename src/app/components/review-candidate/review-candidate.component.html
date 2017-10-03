@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-8 offset-md-2">
+    <div class="card">
+      <div class="card-block pb-5">
+        <!--<div >-->
+        <!--<a routerLink="/" href="#" class = "btn btn-link"><i class ="fa fa-arrow-circle-o-left"></i> Back</a>-->
+        <!--</div>-->
+        <h3 style="text-align: center">Enter your Github Id to be assigned to review the candidate </h3>
+
+        <form>
+          <div class="form-group">
+            <br>
+            <label for="reviewerGithubId">Your (Reviewer's) Github ID</label>
+            <input type="text" name="reviewerGithubId" class="form-control" [(ngModel)]="reviewerGithubId" id="reviewerGithubId">
+          </div><br>
+          <button type="submit" (click)="ngOnSubmit()" class="btn btn-warning col-md-5" id="">Submit</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
