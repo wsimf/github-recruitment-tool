@@ -39,6 +39,7 @@ import { RecruiterService } from './services/recruiter.service';
 import {EmailService} from "./services/email.service";
 import { ResultsComponent } from './components/results/results.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { EmailManagerComponent } from './components/email-manager/email-manager.component';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -70,7 +71,8 @@ export const firebaseConfig = {
     RegisterComponent,
     AddReviewersComponent,
     ResultsComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    EmailManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,8 @@ export const firebaseConfig = {
   ],
   entryComponents: [
     AddReviewersComponent,
-    EditCanComponent
+    EditCanComponent,
+    EmailManagerComponent
   ],
   providers: [
     AppService,
