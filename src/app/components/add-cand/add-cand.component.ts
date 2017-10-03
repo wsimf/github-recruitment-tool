@@ -90,11 +90,11 @@ export class AddCandComponent implements OnInit {
         //if github id is not being used by another candidate, successfully add it and make repo
         if (!candidateGithubExists) {
           console.log("Adding candidate now..");
-          // Create a repo and add candidate
-          this.githubService.addCandidate(this.candidate);
 
           // Email candidate
           this.emailService.sendCandidateEmail(this.candidate);
+
+          this.createCandidateRepo(this.candidate);
 
           // // Persist the candidate
           this.candidateService.newCandidate(this.candidate);
@@ -105,6 +105,12 @@ export class AddCandComponent implements OnInit {
         }
       });
     });
+  }
+
+  // Call this function after emailing to Create a repo and add candidate
+  createCandidateRepo(candidate: Candidate){
+    console.log('inside createRepo');
+    this.githubService.addCandidate(this.candidate);
   }
 
   isUndefinedOrEmpty(stringToCheck: string) {

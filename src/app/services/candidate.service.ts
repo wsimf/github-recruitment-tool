@@ -59,26 +59,27 @@ export class CandidateService {
   addReviewertoCandidate(githubId: string, reviewerGithubId: string ) {
     this.getCandidates().subscribe(cand =>{
       this.can = cand;
-    });
-    for(let ca of this.can){
-      if(ca.githubID != undefined && ca.githubID == githubId){
-        if(ca.reviewers == "" || ca.reviewers == undefined){
-          ca.reviewers = reviewerGithubId;
-          this.candidates.update(ca.$key,ca);
+      for(let ca of this.can){
+        if(ca.githubID != undefined && ca.githubID == githubId){
+          if(ca.reviewers == "" || ca.reviewers == undefined){
+            ca.reviewers = reviewerGithubId;
+            this.candidates.update(ca.$key,ca);
 
-         // Make sure reviewer isn't already added
-        }else if (ca.reviewers.indexOf(reviewerGithubId) == -1){
-          ca.reviewers += "," + reviewerGithubId;
-          this.candidates.update(ca.$key,ca);
+            // Make sure reviewer isn't already added
+          }else if (ca.reviewers.indexOf(reviewerGithubId) == -1){
+            ca.reviewers += "," + reviewerGithubId;
+            this.candidates.update(ca.$key,ca);
 
-        // If reviewer already assigned, display error message
-        } else {
-          this.flashMessageService.show("This reviewer has already been added", {cssClass: 'alert-danger', timeout: 5000});
+            // If reviewer already assigned, display error message
+          } else {
+            this.flashMessageService.show("This reviewer has already been added", {cssClass: 'alert-danger', timeout: 5000});
+          }
+          console.log(ca);
+          return ca;
         }
-        console.log(ca);
-        return ca;
       }
-    }
+      return null;
+    });
   }
 
   addReviewtoCandidate(githubId: string, reviewId: string ) {

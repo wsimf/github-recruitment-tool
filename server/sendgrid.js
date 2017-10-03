@@ -1,6 +1,8 @@
 const express = require('express');
 const sgMail = require('@sendgrid/mail');
 const router = express.Router();
+// const typescriptRequire = require('typescript-require');
+// var addCandComponent = require('../src/app/components/add-cand.component.ts');
 
 router.put('/sendReviewerEmail', (req, res) => {
   console.log("Sending email to reviewer: " + req.body.reviewer.name);
@@ -24,9 +26,15 @@ router.put('/sendCandidateEmail', (req, res) => {
     from: 'nfuseuoa@gmail.com',
     subject: 'MYOB Technical Assessment',
     text: 'You have been invited to do a challenge to assess your technical capabilities.' +
-    'You will recieve an invitation to a GitHub repository which will contain further instructions'
+    'You will receive an invitation to a GitHub repository which will contain further instructions'
   };
   sgMail.send(msg);
+
+  // setTimeout(function() {
+  //   addCandComponent;
+  // }, 15000);
+
+
 })
 
 router.put('/sendRecruiterEmail', (req, res) => {

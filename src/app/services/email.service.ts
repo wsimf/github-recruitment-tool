@@ -11,9 +11,12 @@ import {FeedbackForm} from "../models/FeedbackForm";
 export class EmailService {
 
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
 
-  serverUrl = "http://localhost:80"
+  }
+
+  serverUrl = "http://localhost:80";
+  subscription: any;
 
   // sendRecruiterEmail(){
   //   let url = `https://us-central1-nufeproject.cloudfunctions.net/sendEmailtoRecruiter`
@@ -34,8 +37,8 @@ export class EmailService {
   // }
 
   sendReviewerEmail(reviewer: Reviewer) {
-    console.log(reviewer);
-    const req = this.http.put( this.serverUrl + '/api/sendgrid/sendReviewerEmail', {
+
+    this.subscription = this.http.put( this.serverUrl + '/api/sendgrid/sendReviewerEmail', {
       reviewer: reviewer
     }).subscribe(
         res => {
@@ -49,7 +52,8 @@ export class EmailService {
 
   sendCandidateEmail(candidate: Candidate){
     console.log(candidate);
-    const req = this.http.put(this.serverUrl + '/api/sendgrid/sendCandidateEmail', {
+
+    this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendCandidateEmail', {
       candidate: candidate
     }).subscribe(
       res => {
@@ -65,8 +69,7 @@ export class EmailService {
     console.log(feedback);
 
     // From feedback, find candidate and recruiter details
-
-    const req = this.http.put(this.serverUrl + '/api/sendgrid/sendRecruiterEmail', {
+    this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendRecruiterEmail', {
       candidate: candidate,
       recruiterEmail: recruiterEmail,
       // reviewer: reviewer,
@@ -80,6 +83,13 @@ export class EmailService {
       }
     );
   }
+
+  ngOnDestroy(): void {
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   // sendEmail() {
   //   gapi.client.init(){
   //

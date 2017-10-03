@@ -38,6 +38,7 @@
     "ng-gapi": "0.0.43",
     "rxjs": "^5.4.2",
     "tether": "^1.4.0",
+    "typescript-require": "^0.2.9-1",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

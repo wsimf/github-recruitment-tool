@@ -58,6 +58,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     //check if candidate exists and if reviewer is assigned to him, and if this is the first submission
     let errorMessage='noError';
     let firstSubscribe = true;
+    let candidateFound = false;
     this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
       if(!firstSubscribe) {return}
       firstSubscribe=false;
@@ -86,11 +87,13 @@ export class FeedbackComponent implements OnInit, OnDestroy {
           } else { // Else: the reviewer is not in the candidate's reviewer list
             errorMessage = 'Your github ID is not assigned to review this candidate';
           }
+          candidateFound = true;
           break;  //candidate githubId already found, break the search
-
-        } else { // candidate githubid provided not found
-          errorMessage= "No candidate found with this Github id " + feedback.githubId;
         }
+      }
+
+      if (!candidateFound) {
+        errorMessage= "No candidate found with this Github id " + feedback.githubId;
       }
 
       // Display errorMessage if there is one

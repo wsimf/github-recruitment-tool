@@ -19,7 +19,6 @@ export class AddReviewersComponent implements OnInit {
   reviewer: Reviewer;
   githubId: string;
   reviewerList: any[];
-  candidate: Candidate;
   private githubUser: any;
   private r: Reviewer;
   subscription: any;
@@ -55,19 +54,26 @@ export class AddReviewersComponent implements OnInit {
         email: this.githubUser.email.toLowerCase(),
         githubID: this.reviewerGithubID.toLowerCase(),
       };
-      this.candidate = this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
+      this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
       this.reviewerList = this.candidateService.getReviewerList(this.githubId);
 
 
       // If this is a new reviewer, add their details to the db
-      this.r = this.reviewerService.findReviewer(this.reviewerGithubID)
+      this.r = this.reviewerService.findReviewer(this.reviewerGithubID);
       if (this.r == null) {
         this.reviewerService.persistReviewer(this.reviewer);
       }
 
-      // adding reviewer as collaborator.
-      this.githubService.addCollaborator(this.candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
-        console.log(res);
+      this.candidateService.getCandidates().subscribe(candidateList => {
+        //Retrieve candidate's repo name
+        for (let ca of candidateList) {
+          if (ca.githubID != undefined && ca.githubID == this.githubId) {
+            console.log(ca);
+            // adding reviewer as collaborator.
+            this.githubService.addCollaborator(ca.repositoryName, this.reviewer.githubID).subscribe(res => {
+            });
+          }
+        }
       });
 
       this.emailService.sendReviewerEmail(this.reviewer);
