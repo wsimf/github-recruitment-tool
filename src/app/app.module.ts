@@ -27,6 +27,7 @@ import { EditCanComponent } from './components/edit-can/edit-can.component';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RegisterComponent } from './components/register/register.component';
+import  { ReviewCandidateComponent } from './components/review-candidate/review-candidate.component'
 
 // Import services
 import { AppService } from './services/app.service';
@@ -72,7 +73,8 @@ export const firebaseConfig = {
     AddReviewersComponent,
     ResultsComponent,
     FeedbackComponent,
-    EmailManagerComponent
+    EmailManagerComponent,
+    ReviewCandidateComponent
   ],
   imports: [
     BrowserModule,
