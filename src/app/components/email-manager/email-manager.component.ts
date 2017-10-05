@@ -32,9 +32,9 @@ export class EmailManagerComponent implements OnInit {
         if (ca.githubID == this.githubId) {
           this.devEmailContent = ca.name + ' has finished their coding problem. Please forward this email to all potential reviewers ' +
             'who would be interested in reviewing this candidate and providing technical feedback.\nThe reviewers can assign themselves ' +
-            'to this candidate using this link: \n' + this.url + '/reviewCandidate/' + ca.githubID + '\n ' + 'After the reviewers have finished ' +
+            'to this candidate using this link: \n' + this.url + '/reviewCandidate/' + ca.$key + '\n ' + 'After the reviewers have finished ' +
             'assessing the candidate\'s solution they can submit their technical comments and feedback using the following link:\n'
-            + this.url + '/feedback/' + ca.githubID;
+            + this.url + '/feedback/' + ca.$key;
         }
       }
     })
