@@ -26,6 +26,7 @@ export class EmailManagerComponent implements OnInit {
     for(let i = 0; i < this.candidates.length; i++){
       if( this.githubId == this.candidates[i].githubID){
         this.candidates[i].progressStatus = "Being Reviewed";
+        this.candidates[i].timestamp = Date.now();
         this.candidateService.editCandidate(this.candidates[i].$key,this.candidates[i]);
         this.candidate = this.candidates[i];
         break;
