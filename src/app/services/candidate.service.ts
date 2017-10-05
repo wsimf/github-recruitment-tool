@@ -57,8 +57,13 @@ export class CandidateService {
   }
 
   addReviewertoCandidate(githubId: string, reviewerGithubId: string ) {
+    let firstSubscribe = true;
+
     this.getCandidates().subscribe(cand =>{
+      if(!firstSubscribe) {return}
+      firstSubscribe = false;
       this.can = cand;
+
       for(let ca of this.can){
         if(ca.githubID != undefined && ca.githubID == githubId){
           if(ca.reviewers == "" || ca.reviewers == undefined){
