@@ -30,6 +30,7 @@ export class EmailManagerComponent implements OnInit {
     this.subscription = this.candidateService.getCandidates().subscribe(candidatesList => {
       for (let ca of candidatesList) {
         if (ca.githubID == this.githubId) {
+          this.candidate = ca;
           this.devEmailContent = ca.name + ' has finished their coding problem. Please forward this email to all potential reviewers ' +
             'who would be interested in reviewing this candidate and providing technical feedback.\nThe reviewers can assign themselves ' +
             'to this candidate using this link: \n' + this.url + '/reviewCandidate/' + ca.$key + '\n ' + 'After the reviewers have finished ' +
@@ -41,15 +42,8 @@ export class EmailManagerComponent implements OnInit {
   }
 
   sentEmail(){
-    this.candidateService.getCandidates().subscribe(candidates =>{ this.candidates = candidates; });
-    for(let i = 0; i < this.candidates.length; i++){
-      if( this.githubId == this.candidates[i].githubID){
-        this.candidates[i].progressStatus = "Being Reviewed";
-        this.candidateService.editCandidate(this.candidates[i].$key,this.candidates[i]);
-        this.candidate = this.candidates[i];
-        break;
-      }
-    }
+    this.candidate.progressStatus = "Being Reviewed";
+    this.candidateService.editCandidate(this.candidate.$key,this.candidate);
 
     this.emailService.sendDevManagerEmail(this.devEmail, this.devEmailContent);
     this.onCloseCancel();
@@ -58,5 +52,12 @@ export class EmailManagerComponent implements OnInit {
 
   onCloseCancel() {
     this.dialogRef.close('Cancel');
+  }
+
+
+  ngOnDestroy(): void {
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe();
+    }
   }
 }
