@@ -80,7 +80,11 @@ export class ReviewerService {
 
   persistReviewer(reviewer: Reviewer) {
     console.log("Adding reviewer: " + reviewer.name);
-    this.reviewers.push(reviewer);
+    let reviewer2 = this.findReviewer(reviewer.githubID);
+    if (reviewer2 == null) {
+      this.reviewers.push(reviewer);
+    }
+
   }
 
   findReviewer(githubID: string) {

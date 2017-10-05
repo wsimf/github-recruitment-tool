@@ -15,7 +15,9 @@ import {FlashMessagesService} from "angular2-flash-messages";
 export class ReviewCandidateComponent implements OnInit {
   subscription: any;
   subscription2: any;
+  subscription3: any;
   githubId: string;
+  firebaseKey: string;
   reviewerGithubId: string;
   reviewer: Reviewer;
   private r: Reviewer;
@@ -30,7 +32,7 @@ export class ReviewCandidateComponent implements OnInit {
               public route: ActivatedRoute,
               public router: Router) {
     this.subscription = this.route.params.subscribe(params => {
-      this.githubId = params.id;
+      this.firebaseKey = params.id;
     });
   }
 
@@ -39,7 +41,7 @@ export class ReviewCandidateComponent implements OnInit {
 
   ngOnSubmit() {
     //Get name and Email of the reviewer from github
-    this.subscription =this.githubService.getUser(this.reviewerGithubId).subscribe( githubUser => {
+    this.subscription3 =this.githubService.getUser(this.reviewerGithubId).subscribe( githubUser => {
       this.githubUser = githubUser;
 
       this.reviewer = {
@@ -61,34 +63,40 @@ export class ReviewCandidateComponent implements OnInit {
         for (let ca of candidateList) {
 
           // First check if candidate with this githubId exists
-          if (ca.githubID != undefined && ca.githubID == this.githubId) {
+          if (ca.$key == this.firebaseKey) {
+            candidateFound = true;
 
+            this.githubId = ca.githubID;
             // Now check if reviewer limit of 5 has not been reached
             let reviewers = ca.reviewers.split(',');
             console.log(reviewers);
-            if (reviewers.length != 5) {
+            if (reviewers.length == 5) {
+              errorMessage = 'The limit of 5 reviewers has already been met. Cannot assign more reviewers';
+              break;
+            }
+
+            if (reviewers.indexOf(this.reviewerGithubId) != -1) {
+              errorMessage = 'A reviewer with this github ID (' + this.reviewerGithubId + ') has already been assigned to this candidate';
+              break;
+            }
+
               // Succesfully add the reviewer
               this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
               // this.reviewerList = this.candidateService.getReviewerList(this.githubId);
 
 
               // If this is a new reviewer, add their details to the db
-              this.r = this.reviewerService.findReviewer(this.reviewerGithubId)
-              if (this.r == null) {
-                this.reviewerService.persistReviewer(this.reviewer);
-              }
+              this.reviewerService.persistReviewer(this.reviewer);
+
 
               // add the reviewer as a collaborator to the repo
               this.githubService.addCollaborator(ca.repositoryName, this.reviewer.githubID).subscribe(res => {
               });
 
-              this.flashMessageService.show('You have successfully been added as a reviewer. You should now have collaborator access to their repo.', {cssClass: 'alert-success', timeout: 5000});
+              this.flashMessageService.show('You have successfully been added as a reviewer. You should now have collaborator access to their repo.', {cssClass: 'alert-success', timeout: 10000});
               this.router.navigate(['/']);
-            } else { // There are already 5 reviewers
-              errorMessage = 'The limit of 5 reviewers has already been met. Cannot assign more reviewers';
-            }
-            candidateFound = true;
-            break;  //candidate githubId already found, break the search
+
+              break;  //candidate githubId already found, break the search
           }
         }
 
@@ -110,6 +118,9 @@ export class ReviewCandidateComponent implements OnInit {
     }
     if (this.subscription2 != undefined) {
       this.subscription2.unsubscribe();
+    }
+    if (this.subscription3 != undefined) {
+      this.subscription3.unsubscribe();
     }
   }
 
