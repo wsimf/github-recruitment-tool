@@ -55,12 +55,12 @@ export class AddCandComponent implements OnInit {
       console.log(user);
       this.candidate = {
         name: this.name,
-        email: this.email,
-        githubID: this.githubID,
+        email: this.email.toLowerCase(),
+        githubID: this.githubID.toLowerCase(),
         problem: this.problem,
         repositoryName: 'code-challenge-' + this.githubID,
         progressStatus: 'Doing',
-        adder: user.email,
+        adder: user.email.toLowerCase(),
         reviews: ''
       };
 

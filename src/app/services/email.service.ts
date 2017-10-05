@@ -36,18 +36,23 @@ export class EmailService {
   //     })
   // }
 
-  sendReviewerEmail(reviewer: Reviewer) {
+  sendRecruiterEmail(candidate: Candidate, recruiterEmail: string, feedback: FeedbackForm) {
+    console.log(feedback);
 
-    this.subscription = this.http.put( this.serverUrl + '/api/sendgrid/sendReviewerEmail', {
-      reviewer: reviewer
+    // From feedback, find candidate and recruiter details
+    this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendRecruiterEmail', {
+      candidate: candidate,
+      recruiterEmail: recruiterEmail,
+      // reviewer: reviewer,
+      feedback: feedback
     }).subscribe(
-        res => {
-          console.log(res);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   sendCandidateEmail(candidate: Candidate){
@@ -65,15 +70,13 @@ export class EmailService {
     );
   }
 
-  sendRecruiterEmail(candidate: Candidate, recruiterEmail: string, feedback: FeedbackForm) {
-    console.log(feedback);
+  sendDevManagerEmail(devManagerEmail: string, content: string) {
+    console.log("Sending email to dev manager " + devManagerEmail);
 
     // From feedback, find candidate and recruiter details
-    this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendRecruiterEmail', {
-      candidate: candidate,
-      recruiterEmail: recruiterEmail,
-      // reviewer: reviewer,
-      feedback: feedback
+    this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendDevManagerEmail', {
+      email: devManagerEmail,
+      content: content
     }).subscribe(
       res => {
         console.log(res);

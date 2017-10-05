@@ -4,16 +4,17 @@ const router = express.Router();
 // const typescriptRequire = require('typescript-require');
 // var addCandComponent = require('../src/app/components/add-cand.component.ts');
 
-router.put('/sendReviewerEmail', (req, res) => {
-  console.log("Sending email to reviewer: " + req.body.reviewer.name);
+router.put('/sendDevManagerEmail', (req, res) => {
+  console.log("Sending email to dev manager: " + req.body.email);
   sgMail.setApiKey('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');
   // console.log(req.body.reviewer);
   const msg = {
-    to: req.body.reviewer.email,
+    to: req.body.email,
     from: 'nfuseuoa@gmail.com',
-    subject: 'You have been assigned a new Candidate to review!',
-    text: 'You will receive an invitation to a GitHub repository with the candidates solution. Fill in comments here: http://localhost:80/nfuse/feedback'
+    subject: 'A candidate is ready to be reviewed!',
+    text: req.body.content
   };
+
   sgMail.send(msg);
 
 })

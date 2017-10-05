@@ -76,7 +76,7 @@ export class AddReviewersComponent implements OnInit {
         }
       });
 
-      this.emailService.sendReviewerEmail(this.reviewer);
+      //this.emailService.sendReviewerEmail(this.reviewer);
     });
 
   }
