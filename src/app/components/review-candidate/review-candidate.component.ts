@@ -61,14 +61,14 @@ export class ReviewCandidateComponent implements OnInit {
         firstSubscribe=false;
 
         for (let ca of candidateList) {
-
           // First check if candidate with this githubId exists
           if (ca.$key == this.firebaseKey) {
             candidateFound = true;
 
             this.githubId = ca.githubID;
             // Now check if reviewer limit of 5 has not been reached
-            let reviewers = ca.reviewers.split(',');
+
+            let reviewers = ca.reviewers == undefined? [] : ca.reviewers.split(',');
             console.log(reviewers);
             if (reviewers.length == 5) {
               errorMessage = 'The limit of 5 reviewers has already been met. Cannot assign more reviewers';

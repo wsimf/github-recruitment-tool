@@ -49,7 +49,7 @@ const appRoutes: Routes =[
   {path:'add-cand',component:AddCandComponent,canActivate:[AuthGuard]},
   {path:'results/:id', component:ResultsComponent,canActivate:[AuthGuard]},
   {path:'feedback', component:FeedbackComponent},
-  {path: 'reviewcandidate/:id', component: ReviewCandidateComponent},
+  {path: 'reviewCandidate/:id', component: ReviewCandidateComponent},
   {path:'feedback/:githubId/:reviewerGithub', component:FeedbackComponent} // https://elanderson.net/2017/01/angular-2-optional-route-parameter/
 ];
 
