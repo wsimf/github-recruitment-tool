@@ -31,11 +31,12 @@ export class EmailManagerComponent implements OnInit {
       for (let ca of candidatesList) {
         if (ca.githubID == this.githubId) {
           this.candidate = ca;
-          this.devEmailContent = ca.name + ' has finished their coding problem. Please forward this email to all potential reviewers ' +
+          // NOTE: do not put spaces before or after /n new lines because it distorts text sizes in the email
+          this.devEmailContent = 'Dear Development Manager,\n\n' + ca.name + ' has finished their coding problem. Please forward this email to all potential reviewers ' +
             'who would be interested in reviewing this candidate and providing technical feedback.\nThe reviewers can assign themselves ' +
-            'to this candidate using this link: \n' + this.url + '/reviewCandidate/' + ca.$key + '\n ' + 'After the reviewers have finished ' +
+            'to this candidate using this link:\n' + this.url + '/reviewCandidate/' + ca.$key + '\n\nAfter the reviewers have finished ' +
             'assessing the candidate\'s solution they can submit their technical comments and feedback using the following link:\n'
-            + this.url + '/feedback/' + ca.$key;
+            + this.url + '/feedback/' + ca.$key   + '\n\n' + 'MYOB Recruitment Team';
         }
       }
     })
