@@ -29,7 +29,7 @@
     "angularfire2": "^4.0.0-rc.2",
     "bootstrap": "4.0.0-alpha.6",
     "core-js": "^2.4.1",
-    "firebase": "^4.3.1",
+    "firebase": "^3.9.0",
     "font-awesome": "^4.7.0",
     "gapi": "0.0.3",
     "google-auth-library": "^0.11.0",

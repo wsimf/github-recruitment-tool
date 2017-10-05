@@ -10,7 +10,7 @@ import { CandidateService } from '../../services/candidate.service';
 import {Observable} from "rxjs/Observable";
 import {GithubService} from "../../services/github.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import { FlashMessagesService } from 'angular2-flash-messages'; 
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 interface Repo {
   name: string;
@@ -53,7 +53,7 @@ export class CandidatelistComponent implements OnInit {
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
       });
-      
+
   }
 
   viewResults(githubId: string){
@@ -72,12 +72,32 @@ export class CandidatelistComponent implements OnInit {
       for(let i = 0; i < this.candidates.length; i++){
         if(id == this.candidates[i].githubID){
           this.candidates[i].progressStatus = "Done";
+          this.candidates[i].timestamp = Date.now();
           this.candidateService.editCandidate(this.candidates[i].$key,this.candidates[i]);
           this.flashMessageService.show(this.candidates[i].name+ 'compelte repo problem!', {cssClass:'alert-success', timeout: 4000});
           break;
         }
       }
     }
+  }
+
+  checkTimeElapsed(timestamp : number){
+    if(timestamp === undefined){
+      return 'No Timestamp Saved.';
+    }
+    var delta = Math.abs(Date.now() - timestamp) / 1000;
+
+    var days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+
+    var hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+
+    var minutes = Math.floor(delta / 60) % 60;
+    if(minutes > 30){
+      hours ++;
+    }
+    return days + ' days, ' + hours + ' hours';
   }
 
   openEmailManager(id: string){

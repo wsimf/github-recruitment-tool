@@ -46,6 +46,7 @@ export class EmailManagerComponent implements OnInit {
       if( this.githubId == this.candidates[i].githubID){
         console.log("Progress status changed to Being Reviewed");
         this.candidates[i].progressStatus = "Being Reviewed";
+        this.candidates[i].timestamp = Date.now();
         this.candidateService.editCandidate(this.candidates[i].$key,this.candidates[i]);
         this.candidate = this.candidates[i];
         break;
