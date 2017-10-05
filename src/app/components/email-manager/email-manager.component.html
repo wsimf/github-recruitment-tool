@@ -8,16 +8,19 @@
         <div class="modal-body">
           <form>
             <div class="form-group" id="">
-              <label for="authEmail">Email</label>
-              <input type="text" placeholder="Type Email to assign authority" name="authMangerEmail" class="form-control" id="authMangerEmail">
+              <label for="devEmail">Email</label>
+              <input type="text" placeholder="Type Email of the dev manager" name="devEmail" class="form-control" id="devEmail" [(ngModel)]="devEmail">
+            </div>
+            <div class="form-group">
+              <label for="devEmailContent">Email Content</label>
+              <textarea name="devEmailContent" rows="3" [(ngModel)]="devEmailContent" class="form-control" cols="150" rows="15"></textarea>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary"(click)="onCloseCancel()" >Close</button>
-          <button class="btn btn-warning" (click)="sentEmail()">Sent</button>
+          <button class="btn btn-warning" (click)="sentEmail()">Send</button>
         </div>
       </div>
     </div>
   </div>
-  
