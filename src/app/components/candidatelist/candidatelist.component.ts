@@ -50,6 +50,7 @@ export class CandidatelistComponent implements OnInit {
       // this.githubService.getCandidateList().subscribe(candidates => {
       // this.candidates = candidates;
       // });
+      
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
       });

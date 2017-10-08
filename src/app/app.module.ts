@@ -41,6 +41,7 @@ import {EmailService} from "./services/email.service";
 import { ResultsComponent } from './components/results/results.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { EmailManagerComponent } from './components/email-manager/email-manager.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const appRoutes: Routes =[
   {path:'',component:DashboardComponent,canActivate:[AuthGuard]},
@@ -50,7 +51,9 @@ const appRoutes: Routes =[
   {path:'results/:id', component:ResultsComponent,canActivate:[AuthGuard]},
   {path:'feedback', component:FeedbackComponent},
   {path: 'reviewCandidate/:id', component: ReviewCandidateComponent},
-  {path:'feedback/:githubId/:reviewerGithub', component:FeedbackComponent} // https://elanderson.net/2017/01/angular-2-optional-route-parameter/
+  {path:'feedback/:githubId/:reviewerGithub', component:FeedbackComponent}, // https://elanderson.net/2017/01/angular-2-optional-route-parameter/
+  {path:'**', component:PageNotFoundComponent},
+  {path:'pagenotfound', component:PageNotFoundComponent},
 ];
 
 export const firebaseConfig = {
@@ -75,7 +78,8 @@ export const firebaseConfig = {
     ResultsComponent,
     FeedbackComponent,
     EmailManagerComponent,
-    ReviewCandidateComponent
+    ReviewCandidateComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

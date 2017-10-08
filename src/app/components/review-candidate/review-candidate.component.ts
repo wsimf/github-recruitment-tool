@@ -16,6 +16,7 @@ export class ReviewCandidateComponent implements OnInit {
   subscription: any;
   subscription2: any;
   subscription3: any;
+  subscription4: any;
   githubId: string;
   firebaseKey: string;
   reviewerGithubId: string;
@@ -37,6 +38,17 @@ export class ReviewCandidateComponent implements OnInit {
   }
 
   ngOnInit() {
+    let temp = location.pathname.toString().split("/");
+    let tempbool = false;
+    this.subscription4 = this.candidateService.getCandidates().subscribe(candidatesList => {
+      for (let ca of candidatesList) {
+        if (ca.$key.toString() == temp[3]) {
+          tempbool = true;
+          console.log(ca.$key);
+        }
+      }
+      if (tempbool == false) this.router.navigate(['pagenotfound']);
+    });
   }
 
   ngOnSubmit() {
