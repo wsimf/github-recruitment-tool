@@ -35,6 +35,5 @@
 </div>
 
 <ng-template #noComments>
-  <md-spinner></md-spinner>
-  <h5 *ngIf="(reviews | async)?.length==0">There is no feedback for this candidate</h5>
+  <h5 *ngIf="(reviews | async)?.length==0" style="text-align: center">There is no feedback for this candidate</h5>
 </ng-template>
