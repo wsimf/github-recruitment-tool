@@ -50,7 +50,7 @@ export class CandidatelistComponent implements OnInit {
       // this.githubService.getCandidateList().subscribe(candidates => {
       // this.candidates = candidates;
       // });
-      
+
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
       });
@@ -82,7 +82,7 @@ export class CandidatelistComponent implements OnInit {
     }
   }
 
-  checkTimeElapsed(timestamp : number){
+  checkLastUpdated(timestamp : number){
     if(timestamp === undefined){
       return 'No Timestamp Saved.';
     }
