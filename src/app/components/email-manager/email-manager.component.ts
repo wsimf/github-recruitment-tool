@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Candidate } from '../../models/Candidate';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import {EmailService} from "../../services/email.service";
 import { CandidateService } from '../../services/candidate.service';
 //import {window} from 'rxjs/operator/window';
@@ -20,7 +20,7 @@ export class EmailManagerComponent implements OnInit {
   url: string;
 
   constructor(
-    public dialogRef: MdDialogRef<EmailManagerComponent>,
+    public dialogRef: MatDialogRef<EmailManagerComponent>,
     private emailService: EmailService,
     public candidateService: CandidateService) { }
 

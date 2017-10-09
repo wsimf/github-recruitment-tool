@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-edit-can',
@@ -9,7 +9,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 export class EditCanComponent implements OnInit {
 
   constructor(
-    public dialogRef : MdDialogRef<EditCanComponent>,
+    public dialogRef : MatDialogRef<EditCanComponent>,
   ) { }
 
   ngOnInit() {

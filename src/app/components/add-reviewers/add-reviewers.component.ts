@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Reviewer } from '../../models/Reviewer';
 import { Router } from '@angular/router';
 import { ReviewerService } from '../../services/reviewer.service';
@@ -23,7 +23,7 @@ export class AddReviewersComponent implements OnInit {
   private r: Reviewer;
   subscription: any;
 
-  constructor(public dialogRef: MdDialogRef<AddReviewersComponent>,
+  constructor(public dialogRef: MatDialogRef<AddReviewersComponent>,
     public reviewerService: ReviewerService,
     public candidateService: CandidateService,
     public githubService: GithubService, private emailService: EmailService) {

@@ -13,9 +13,9 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 
 // Material imports
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MdCardModule, MdFormFieldControl, MdProgressSpinnerModule, MdSliderModule} from '@angular/material';
-import { MdButtonModule } from '@angular/material';
-import { MdDialogModule } from '@angular/material';
+import {MatCardModule, MatFormFieldControl, MatProgressSpinnerModule, MatSliderModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 
 // Component Imports
 import { AppComponent } from './app.component';
@@ -86,14 +86,14 @@ export const firebaseConfig = {
     FormsModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdCardModule,
-    MdDialogModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FlashMessagesModule,
     HttpClientModule,
     HttpModule,
-    MdProgressSpinnerModule
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     AddReviewersComponent,

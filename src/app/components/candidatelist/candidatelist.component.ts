@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { MdDialog, MdDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
 import { EmailManagerComponent } from '../email-manager/email-manager.component';
@@ -25,9 +25,9 @@ interface Repo {
   styleUrls: ['./candidatelist.component.css']
 })
 export class CandidatelistComponent implements OnInit {
-  dialogRef: MdDialogRef<AddReviewersComponent>;
-  dialogRef2: MdDialogRef<EditCanComponent>;
-  dialogRef3: MdDialogRef<EmailManagerComponent>;
+  dialogRef: MatDialogRef<AddReviewersComponent>;
+  dialogRef2: MatDialogRef<EditCanComponent>;
+  dialogRef3: MatDialogRef<EmailManagerComponent>;
   repos$: Observable<Repo[]>;
   candidates: any[];
   isCandidateDone: boolean;
@@ -36,7 +36,7 @@ export class CandidatelistComponent implements OnInit {
   //candidates: Candidate[];
 
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     public githubService: GithubService,
     public candidateService: CandidateService,
     public route: Router,
