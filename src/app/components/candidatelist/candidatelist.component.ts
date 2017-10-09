@@ -69,13 +69,13 @@ export class CandidatelistComponent implements OnInit {
       indentifierDiv.innerHTML = id;
     }
   candDone(id: string){
-    if(window.confirm("Are you sure this candidate complete?")){
+    if(window.confirm("Please confirm if this candidate has finished their coding problem")){
       for(let i = 0; i < this.candidates.length; i++){
         if(id == this.candidates[i].githubID){
           this.candidates[i].progressStatus = "Done";
           this.candidates[i].timestamp = Date.now();
           this.candidateService.editCandidate(this.candidates[i].$key,this.candidates[i]);
-          this.flashMessageService.show(this.candidates[i].name+ 'compelte repo problem!', {cssClass:'alert-success', timeout: 4000});
+          this.flashMessageService.show(this.candidates[i].name+ ' has been finished their coding problem. You may now email a Dev Manager.', {cssClass:'alert-success', timeout: 5000});
           break;
         }
       }

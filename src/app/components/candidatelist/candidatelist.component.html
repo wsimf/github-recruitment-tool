@@ -25,7 +25,7 @@
     <div>
       <!--<button class="btn btn-warning btn-sm" (click)="openDialog(c.githubID)"> Add Reviewers</button>-->
       <!-- <div  *NgIf=""></div> -->
-      <button *ngIf="c.progressStatus === 'Doing'" class="btn btn-purple btn-sm" (click)="candDone(c.githubID)"> Done</button>
+      <button *ngIf="c.progressStatus === 'Doing'" class="btn btn-purple btn-sm" (click)="candDone(c.githubID)">Mark as done</button>
       <button *ngIf="c.progressStatus === 'Done' " class="btn btn-purple btn-sm" (click)="openEmailManager(c.githubID)"> Email Manager</button>
       <button *ngIf="c.progressStatus !=='Doing' && c.progressStatus !== 'Done'"class="btn btn-success btn-sm viewResult" (click)="viewResults(c.githubID)"> View Results</button>
       <button class="btn btn-link" (click)="editCan()"> Edit</button>
