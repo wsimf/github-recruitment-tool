@@ -26,7 +26,7 @@ export class EmailManagerComponent implements OnInit {
 
   ngOnInit() {
     this.githubId = document.getElementById("identifier2").innerHTML.toLowerCase();
-    this.url = 'http://localhost/nfuse';
+    this.url = window.location.origin + '/nfuse';
     this.subscription = this.candidateService.getCandidates().subscribe(candidatesList => {
       for (let ca of candidatesList) {
         if (ca.githubID == this.githubId) {
