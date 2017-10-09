@@ -18,6 +18,11 @@ export class FeedbackComponent implements OnInit, OnDestroy {
   candidate: Candidate;
   candidates: Observable<any[]>;
   subscription: any;
+  subscription2: any;
+  subscription3: any;
+  firebaseKey: string;
+  candidateGithubId: string;
+
 
   @Input() githubId;
   @Input() reviewerGithub;
@@ -28,10 +33,21 @@ export class FeedbackComponent implements OnInit, OnDestroy {
               public flashMessageService: FlashMessagesService,
               public candidateService: CandidateService) {
 
-    // Retrieve params (if provided) and set the two github Ids inside the input boxes
+    // Retrieve parameter of database key (if provided) to be used to retrieve candidate's github Id
     this.subscription = this.route.params.subscribe(params => {
-      this.githubId = params.githubId != undefined ? params.githubId : "";
-      this.reviewerGithub =params.reviewerGithub != undefined ? params.reviewerGithub : "";
+        this.firebaseKey = params.id != undefined ? params.id : "";
+    //   this.githubId = params.githubId != undefined ? params.githubId : "";
+    //   this.reviewerGithub =params.reviewerGithub != undefined ? params.reviewerGithub : "";
+      this.subscription2 = this.candidateService.getCandidates().subscribe(candidateList => {
+        this.githubId="";
+        for (let ca of candidateList) {
+          if(ca.$key == this.firebaseKey) {
+            this.githubId = ca.githubID;
+            this.candidateGithubId = ca.githubID;
+            break;
+          }
+          }
+        });
     });
   }
 
@@ -49,24 +65,24 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     }));
 
     // Make Ids case insensitive
-    feedback.githubId=feedback.githubId.toLowerCase();
+    this.candidateGithubId=this.candidateGithubId.toLowerCase();
     feedback.reviewerGithub=feedback.reviewerGithub.toLowerCase();
 
     // Generate unique reviewId for each feedbackform submitted
-    feedback.reviewId= feedback.githubId +"&" + feedback.reviewerGithub;
+    feedback.reviewId= this.candidateGithubId +"&" + feedback.reviewerGithub;
 
     //check if candidate exists and if reviewer is assigned to him, and if this is the first submission
     let errorMessage='noError';
     let firstSubscribe = true;
     let candidateFound = false;
-    this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
+    this.subscription3 = this.candidateService.getCandidates().subscribe(candidateList => {
       if(!firstSubscribe) {return}
       firstSubscribe=false;
 
       for (let ca of candidateList) {
 
         // First check if candidate with this githubId exists
-        if (ca.githubID != undefined && ca.githubID == feedback.githubId) {
+        if (ca.githubID != undefined && ca.githubID == this.candidateGithubId) {
 
           // Now check if this reviewer githubid has been assigned to this candidate
           let reviewers = ca.reviewers.split(',');
@@ -76,7 +92,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
             if (ca.reviews.indexOf(feedback.reviewId) == -1) {
               // feedback submission successful
               this.reviewerService.newFeedback(feedback);
-              this.candidateService.addReviewtoCandidate(feedback.githubId, feedback.reviewId);
+              this.candidateService.addReviewtoCandidate(this.candidateGithubId, feedback.reviewId);
               this.flashMessageService.show('Feedback submitted!', {cssClass: 'alert-success', timeout: 4000});
               this.router.navigate(['/']);
 
@@ -93,7 +109,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
       }
 
       if (!candidateFound) {
-        errorMessage= "No candidate found with this Github id " + feedback.githubId;
+        errorMessage= "No candidate found with this Github id " + this.candidateGithubId;
       }
 
       // Display errorMessage if there is one
