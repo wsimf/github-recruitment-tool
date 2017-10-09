@@ -119,6 +119,8 @@ export class CandidatelistComponent implements OnInit {
   }
 
   deleteCandidate(candidate: Candidate) {
-    this.candidateService.deleteCand(candidate);
+    if (window.confirm('Are you sure to delete this candidate?')) {
+      this.candidateService.deleteCand(candidate);
+    }
   }
 }
