@@ -94,8 +94,9 @@ export class AddCandComponent implements OnInit {
 
           // Email candidate
           this.emailService.sendCandidateEmail(this.candidate);
-
+          
           this.createCandidateRepo(this.candidate);
+
 
           // // Persist the candidate
           this.candidateService.newCandidate(this.candidate);
