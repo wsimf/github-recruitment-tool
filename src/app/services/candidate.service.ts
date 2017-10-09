@@ -14,7 +14,7 @@ export class CandidateService {
                public flashMessageService: FlashMessagesService,) {
     console.log("Initializing candidates");
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
-    // console.log("Retrieved " + this.candidates.count + " candidates");   // candidates not available yet - async
+    //console.log("Retrieved " + this.candidates.count + " candidates");   // candidates not available yet - async
   }
 
   getCandidates() {
