@@ -117,4 +117,8 @@ export class CandidatelistComponent implements OnInit {
     // boxShadow.value = "padding:0";
     // hideShadow.attributes.setNamedItem(boxShadow);
   }
+
+  deleteCandidate(candidate: Candidate) {
+    this.candidateService.deleteCand(candidate);
+  }
 }

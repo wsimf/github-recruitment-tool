@@ -107,9 +107,9 @@ export class CandidateService {
     });
   }
 
-  getReviewerList(githubId: string){
+  getReviewerList(githubId: string) {
     // Get the list of the candidate
-    this.getCandidates().subscribe(cand =>{
+    this.getCandidates().subscribe(cand => {
       this.can = cand;
     });
 
@@ -122,5 +122,9 @@ export class CandidateService {
         }
       }
     }
+  }
+
+  deleteCand(cand: Candidate) {
+    this.candidates.remove(cand.$key);
   }
 }
