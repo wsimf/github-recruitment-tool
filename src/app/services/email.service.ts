@@ -15,7 +15,7 @@ export class EmailService {
 
   }
 
-  serverUrl = "http://localhost:80";
+  serverUrl = window.location.origin;
   subscription: any;
 
   // sendRecruiterEmail(){
