@@ -119,4 +119,10 @@ export class CandidatelistComponent implements OnInit {
       //editCanID.innerHTML = id;
       //console.log(document.getElementsByClassName("editCandID")[0].innerHTML);
   }
+
+  deleteCandidate(candidate: Candidate) {
+    if (window.confirm('Are you sure to delete this candidate?')) {
+      this.candidateService.deleteCand(candidate);
+    }
+  }
 }
