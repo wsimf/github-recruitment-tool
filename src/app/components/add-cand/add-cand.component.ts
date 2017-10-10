@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Candidate} from '../../models/Candidate';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import {AuthService} from "../../services/auth.service";
   templateUrl: './add-cand.component.html',
   styleUrls: ['./add-cand.component.css']
 })
-export class AddCandComponent implements OnInit {
+export class AddCandComponent implements OnInit, OnDestroy {
   name: string;
   email: string;
   githubID: string;
@@ -22,6 +22,7 @@ export class AddCandComponent implements OnInit {
   candidate: Candidate;
   candidates:  Observable<any[]>;
   subscription: any;
+  subscription2: any;
 
    constructor(public flashMessageService: FlashMessagesService,
               public router: Router,
@@ -51,8 +52,10 @@ export class AddCandComponent implements OnInit {
     }
 
     // Create the a new Candidate object for new candidate, need authservice to get Adder's email
-    this.authService.getAuth().subscribe( user => {
+    let firstSubscribe = true;
+    this.subscription2 = this.authService.getAuth().subscribe( user => {
       console.log(user);
+
       this.candidate = {
         name: this.name,
         email: this.email.toLowerCase(),
@@ -69,15 +72,13 @@ export class AddCandComponent implements OnInit {
       // Now need to check if the Github Id is already in use in our system
       let candidateGithubExists = false;
 
-      let firstSubscribe = true;
       this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
+        // Check if this GithubId is being used my another candidate
         // Only allow first execution of subscribe to work
         if (!firstSubscribe) {
           return;
         }
         firstSubscribe = false;
-
-        // Check if this GithubId is being used my another candidate
         for (let ca of candidateList) {
           if (ca.githubID != undefined && ca.githubID == this.githubID) {
             candidateGithubExists = true;
@@ -134,6 +135,9 @@ export class AddCandComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.subscription != undefined) {
       this.subscription.unsubscribe();    //close subscription once component ceases, otherwise subscription persists
+    }
+    if (this.subscription2 != undefined){
+      this.subscription2.unsubscribe();
     }
   }
 }

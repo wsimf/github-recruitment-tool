@@ -71,13 +71,17 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     // Generate unique reviewId for each feedbackform submitted
     feedback.reviewId= this.candidateGithubId +"&" + feedback.reviewerGithub;
     feedback.githubId = this.candidateGithubId;
-    
+
     //check if candidate exists and if reviewer is assigned to him, and if this is the first submission
     let errorMessage='noError';
     let firstSubscribe = true;
+    console.log("SETTING FIRSTSUB");
     let candidateFound = false;
     this.subscription3 = this.candidateService.getCandidates().subscribe(candidateList => {
-      if(!firstSubscribe) {return}
+      console.log("First sub is: " + firstSubscribe);
+      if(!firstSubscribe) {
+        return;
+      }
       firstSubscribe=false;
 
       for (let ca of candidateList) {
@@ -123,6 +127,12 @@ export class FeedbackComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.subscription != undefined) {
       this.subscription.unsubscribe();
+    }
+    if (this.subscription2 != undefined){
+      this.subscription2.unsubscribe();
+    }
+    if (this.subscription3 != undefined){
+      this.subscription3.unsubscribe();
     }
   }
 }

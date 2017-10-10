@@ -36,7 +36,12 @@ export class ReviewerService {
   newFeedback(feedback: FeedbackForm) {
     this.comments.push(feedback);
     console.log(feedback);
+    var firstSubscribe = true;
     this.findName(feedback.githubId).subscribe( res => {
+      if(!firstSubscribe){
+        return;
+      }
+      firstSubscribe = false;
       this.c = res[0];
       console.log("this.c is: " +this.c);
       this.emailService.sendRecruiterEmail(this.c, this.c.adder , feedback);
