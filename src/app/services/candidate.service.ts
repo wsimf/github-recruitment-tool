@@ -91,6 +91,11 @@ export class CandidateService {
     });
   }
 
+  /**
+   * Add a reviewer to the candidate and persist in FBDB
+   * @param {string} githubId
+   * @param {string} reviewId
+   */
   addReviewtoCandidate(githubId: string, reviewId: string ) {
     let firstSubscribe = true;
     this.getCandidates().subscribe(candidates =>{
@@ -111,6 +116,11 @@ export class CandidateService {
     });
   }
 
+  /**
+   * This function return an array of string contains the name of reviewers
+   * @param {string} githubId
+   * @returns {string[]}
+   */
   getReviewerList(githubId: string) {
     // Get the list of the candidate
     this.getCandidates().subscribe(cand => {

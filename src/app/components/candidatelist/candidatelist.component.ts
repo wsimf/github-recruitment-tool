@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { MdDialog, MdDialogRef,MdDialogConfig, MD_DIALOG_DATA } from '@angular/material';
+//import { MatDialog, MatDialogRef, MatDialogConfig, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
 import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
 import { EmailManagerComponent } from '../email-manager/email-manager.component';
@@ -25,9 +26,9 @@ interface Repo {
   styleUrls: ['./candidatelist.component.css']
 })
 export class CandidatelistComponent implements OnInit {
-  dialogRef: MdDialogRef<AddReviewersComponent>;
-  dialogRef2: MdDialogRef<EditCanComponent>;
-  dialogRef3: MdDialogRef<EmailManagerComponent>;
+  dialogRef: MatDialogRef<AddReviewersComponent>;
+  dialogRef2: MatDialogRef<EditCanComponent>;
+  dialogRef3: MatDialogRef<EmailManagerComponent>;
   repos$: Observable<Repo[]>;
   candidates: any[];
   isCandidateDone: boolean;
@@ -36,7 +37,7 @@ export class CandidatelistComponent implements OnInit {
   //candidates: Candidate[];
 
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     public githubService: GithubService,
     public candidateService: CandidateService,
     public route: Router,
@@ -101,7 +102,7 @@ export class CandidatelistComponent implements OnInit {
     return days + ' days, ' + hours + ' hours';
   }
 
-  openEmailManager(id: string){
+  openEmailManager(id: string) {
     this.dialogRef3 = this.dialog.open(EmailManagerComponent,{width:'1px', height:'1px'});
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
     var indentifierDiv =  document.getElementById("identifier2");
@@ -113,7 +114,7 @@ export class CandidatelistComponent implements OnInit {
     //let config = new MdDialogConfig();
     this.dialogRef2 = this.dialog.open(EditCanComponent);
     this.dialogRef2.componentInstance.id = id;
-    //this.dialogRef2.componentInstance.name 
+    //this.dialogRef2.componentInstance.name
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
       //var editCanID =  document.getElementsByClassName("editCandID")[0];
       //editCanID.innerHTML = id;

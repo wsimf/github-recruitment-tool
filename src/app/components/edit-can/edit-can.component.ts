@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog, MdDialogRef, MdDialogConfig, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
 import { CandidateService } from '../../services/candidate.service';
 import { Candidate } from '../../models/Candidate';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -10,15 +10,15 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./edit-can.component.css']
 })
 export class EditCanComponent implements OnInit {
-  id:string;
-  candidate:Candidate;
+  id: string;
+  candidate: Candidate;
   reviewerList: any[];
 
   constructor(
-    public dialogRef : MdDialogRef<EditCanComponent>,
+    public dialogRef : MatDialogRef<EditCanComponent>,
     public candidateService: CandidateService,
     public router: Router,
-    public route:ActivatedRoute,
+    public route: ActivatedRoute,
   ) {
   }
 
@@ -31,17 +31,20 @@ export class EditCanComponent implements OnInit {
     this.dialogRef.close('Cancel');
   }
 
-  SaveChange(){
+  SaveChange() {
     this.candidate.reviewers = this.reviewerList.toString();
-    this.candidateService.editCandidate(this.id,this.candidate);
+    this.candidateService.editCandidate(this.id, this.candidate);
     window.alert('Change Saved!');
   }
-  
+
   deleteReviewer(rev : string){
     if(window.confirm("Are you sure to delete the reviewer?")){
       for( let i = 0; i<this.reviewerList.length ; i++){
+        // Find and delete the reviewer from the reviewer list
         if( this.reviewerList[i] == rev){
           this.reviewerList.splice(i,1);
+          // Update candidate
+
         }
       }
     }
