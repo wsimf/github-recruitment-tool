@@ -12,7 +12,7 @@ export class EditCanComponent implements OnInit {
   candidateEmail: string;
   codingChallenge: string;
   constructor(
-    public dialogRef : MatDialogRef<EditCanComponent>,
+    public dialogRef: MatDialogRef<EditCanComponent>,
   ) { }
 
   ngOnInit() {
