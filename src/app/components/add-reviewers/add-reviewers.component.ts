@@ -39,11 +39,6 @@ export class AddReviewersComponent implements OnInit {
   }
 
   addReviewer() {
-    //Send Reviewer email
-    // For database
-    //var identifierDiv = document.getElementById("identifier");
-    //var gid = identifierDiv.innerHTML;
-
     //Get email of the reviewer from github
     this.subscription =this.githubService.getUser(this.reviewerGithubID).subscribe( githubUser => {
       this.githubUser = githubUser;

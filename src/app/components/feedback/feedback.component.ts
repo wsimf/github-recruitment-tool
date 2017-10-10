@@ -17,9 +17,7 @@ import {Observable} from "rxjs/Observable";
 export class FeedbackComponent implements OnInit, OnDestroy {
   candidate: Candidate;
   candidates: Observable<any[]>;
-  subscription: any;
-  subscription2: any;
-  subscription3: any;
+  subscriptions: any[];
   firebaseKey: string;
   candidateGithubId: string;
 
@@ -33,11 +31,10 @@ export class FeedbackComponent implements OnInit, OnDestroy {
               public candidateService: CandidateService) {
 
     // Retrieve parameter of database key (if provided) to be used to retrieve candidate's github Id
-    this.subscription = this.route.params.subscribe(params => {
+    this.subscriptions = [];
+    this.subscriptions.push( this.route.params.subscribe(params => {
         this.firebaseKey = params.id != undefined ? params.id : "";
-    //   this.githubId = params.githubId != undefined ? params.githubId : "";
-    //   this.reviewerGithub =params.reviewerGithub != undefined ? params.reviewerGithub : "";
-      this.subscription2 = this.candidateService.getCandidates().subscribe(candidateList => {
+      this.subscriptions.push( this.candidateService.getCandidates().subscribe(candidateList => {
         this.githubId = "";
         for (let ca of candidateList) {
           if(ca.$key == this.firebaseKey) {
@@ -46,13 +43,11 @@ export class FeedbackComponent implements OnInit, OnDestroy {
             break;
           }
           }
-        });
-    });
+        }));
+    }));
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 
   onSubmit(f: NgForm) {
     let feedback = new FeedbackForm();
@@ -72,16 +67,16 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     feedback.githubId = this.candidateGithubId;
 
     //check if candidate exists and if reviewer is assigned to him, and if this is the first submission
-    let errorMessage='noError';
+    let errorMessage =  'noError';
     let firstSubscribe = true;
-    console.log("SETTING FIRSTSUB");
+    //console.log("SETTING FIRSTSUB");
     let candidateFound = false;
-    this.subscription3 = this.candidateService.getCandidates().subscribe(candidateList => {
-      console.log("First sub is: " + firstSubscribe);
+    this.subscriptions.push (this.candidateService.getCandidates().subscribe(candidateList => {
+      //console.log("First sub is: " + firstSubscribe);
       if(!firstSubscribe) {
         return;
       }
-      firstSubscribe=false;
+      firstSubscribe = false;
 
       for (let ca of candidateList) {
 
@@ -120,18 +115,17 @@ export class FeedbackComponent implements OnInit, OnDestroy {
       if (errorMessage != "noError") {
         this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 5000});
       }
-    });
+    }));
   }
 
+  /**
+   * Destroy Firebase subscriptions when finished
+   */
   ngOnDestroy(): void {
-    if (this.subscription != undefined) {
-      this.subscription.unsubscribe();
-    }
-    if (this.subscription2 != undefined){
-      this.subscription2.unsubscribe();
-    }
-    if (this.subscription3 != undefined){
-      this.subscription3.unsubscribe();
+    for (let subscription of this.subscriptions){
+      if (subscription !== undefined) {
+        subscription.unsubscribe();
+      }
     }
   }
 }

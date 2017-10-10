@@ -33,24 +33,16 @@ export class CandidatelistComponent implements OnInit {
   candidates: any[];
   isCandidateDone: boolean;
 
-  // Fetch all candidate from the database
-  //candidates: Candidate[];
-
   constructor(
     public dialog: MatDialog,
     public githubService: GithubService,
     public candidateService: CandidateService,
     public route: Router,
     public flashMessageService:FlashMessagesService,
-  ){
-    //this.repos$ = this.githubService.getCandidateList();
-  }
+  ){}
 
   ngOnInit() {
-      // this.githubService.getCandidateList().subscribe(candidates => {
-      // this.candidates = candidates;
-      // });
-
+      // Fetch all candidate from the database
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
       });

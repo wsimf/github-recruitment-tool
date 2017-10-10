@@ -18,11 +18,9 @@ export class AddCandComponent implements OnInit, OnDestroy {
   email: string;
   githubID: string;
   problem: string;
-  // repositoryName: string;
   candidate: Candidate;
   candidates:  Observable<any[]>;
-  subscription: any;
-  subscription2: any;
+  subscriptions: any[];
 
    constructor(public flashMessageService: FlashMessagesService,
               public router: Router,
@@ -31,6 +29,7 @@ export class AddCandComponent implements OnInit, OnDestroy {
               private emailService: EmailService,
               public authService: AuthService) {
     this.problem = 'Origin-Technical-Challenge';
+    this.subscriptions = [];
   }
 
   ngOnInit() {
@@ -53,8 +52,8 @@ export class AddCandComponent implements OnInit, OnDestroy {
 
     // Create the a new Candidate object for new candidate, need authservice to get Adder's email
     let firstSubscribe = true;
-    this.subscription2 = this.authService.getAuth().subscribe( user => {
-      console.log(user);
+    this.subscriptions.push( this.authService.getAuth().subscribe( user => {
+      //console.log(user);
 
       this.candidate = {
         name: this.name,
@@ -67,12 +66,11 @@ export class AddCandComponent implements OnInit, OnDestroy {
         timestamp: Date.now(),
         reviews: ''
       };
-
-
+      
       // Now need to check if the Github Id is already in use in our system
       let candidateGithubExists = false;
 
-      this.subscription = this.candidateService.getCandidates().subscribe(candidateList => {
+      this.subscriptions.push(this.candidateService.getCandidates().subscribe(candidateList => {
         // Check if this GithubId is being used my another candidate
         // Only allow first execution of subscribe to work
         if (!firstSubscribe) {
@@ -89,33 +87,37 @@ export class AddCandComponent implements OnInit, OnDestroy {
             break;
           }
         }
+
         //if github id is not being used by another candidate, successfully add it and make repo
         if (!candidateGithubExists) {
-          console.log("Adding candidate now..");
+          //console.log("Adding candidate now..");
 
           // Email candidate
           this.emailService.sendCandidateEmail(this.candidate);
-
           this.createCandidateRepo(this.candidate);
 
-
-          // // Persist the candidate
+          // Persist the candidate
           this.candidateService.newCandidate(this.candidate);
 
           // Adding candidate succesful
           this.flashMessageService.show('New candidate added!', {cssClass: 'alert-success', timeout: 2000});
           this.router.navigate(['/']);
         }
-      });
-    });
+      }));
+    }));
   }
 
   // Call this function after emailing to Create a repo and add candidate
-  createCandidateRepo(candidate: Candidate){
-    console.log('inside createRepo');
+  createCandidateRepo(candidate: Candidate) {
+    //console.log('inside createRepo');
     this.githubService.addCandidate(this.candidate);
   }
 
+  /**
+   * Check if a string is null or underfined or size 0
+   * @param {string} stringToCheck
+   * @returns {boolean}
+   */
   isUndefinedOrEmpty(stringToCheck: string) {
     if (stringToCheck === undefined || stringToCheck === null || stringToCheck.trim().length === 0) {
       return true;
@@ -123,6 +125,12 @@ export class AddCandComponent implements OnInit, OnDestroy {
     return false;
   }
 
+  /**
+   * Check if a string contains all characters in a given array
+   * @param stringToCheck
+   * @param array
+   * @returns {boolean}
+   */
   contains(stringToCheck, array) {
     for (let item of array) {
       if (stringToCheck.indexOf(item) === -1) {
@@ -132,12 +140,14 @@ export class AddCandComponent implements OnInit, OnDestroy {
     return true;
   }
 
+  /**
+   * Destroy Firebase subscriptions when finished
+   */
   ngOnDestroy(): void {
-    if (this.subscription != undefined) {
-      this.subscription.unsubscribe();    //close subscription once component ceases, otherwise subscription persists
-    }
-    if (this.subscription2 != undefined){
-      this.subscription2.unsubscribe();
+    for (let subscription of this.subscriptions){
+      if (subscription !== undefined) {
+        subscription.unsubscribe();
+      }
     }
   }
 }
