@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+//import { MatDialog, MatDialogRef, MatDialogConfig, MD_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
 import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
 import { EmailManagerComponent } from '../email-manager/email-manager.component';
@@ -65,25 +66,27 @@ export class CandidatelistComponent implements OnInit {
     this.dialogRef = this.dialog.open(AddReviewersComponent, {
       width:'1px',height:'1px'});
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
-       var indentifierDiv =  document.getElementById("identifier");
+      var indentifierDiv =  document.getElementById("identifier");
       indentifierDiv.innerHTML = id;
     }
+
   candDone(id: string){
     if(window.confirm("Please confirm if this candidate has finished their coding problem")){
       for(let i = 0; i < this.candidates.length; i++){
         if(id == this.candidates[i].githubID){
           this.candidates[i].progressStatus = "Done";
           this.candidates[i].timestamp = Date.now();
-          this.candidateService.editCandidate(this.candidates[i].$key,this.candidates[i]);
-          this.flashMessageService.show(this.candidates[i].name+ ' has been finished their coding problem. You may now email a Dev Manager.', {cssClass:'alert-success', timeout: 5000});
+          this.githubService.removeCandidateFromRepo(this.candidates[i]);
+          this.candidateService.editCandidate(this.candidates[i].$key, this.candidates[i]);
+          this.flashMessageService.show(this.candidates[i].name + ' has been finished their coding problem. You may now email a Dev Manager.', {cssClass:'alert-success', timeout: 5000});
           break;
         }
       }
     }
   }
 
-  checkLastUpdated(timestamp : number){
-    if(timestamp === undefined){
+  checkLastUpdated(timestamp: number) {
+    if(timestamp === undefined) {
       return 'No Timestamp Saved.';
     }
     var delta = Math.abs(Date.now() - timestamp) / 1000;
@@ -101,20 +104,28 @@ export class CandidatelistComponent implements OnInit {
     return days + ' days, ' + hours + ' hours';
   }
 
-  openEmailManager(id: string){
+  openEmailManager(id: string) {
     this.dialogRef3 = this.dialog.open(EmailManagerComponent,{width:'1px', height:'1px'});
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
     var indentifierDiv =  document.getElementById("identifier2");
     indentifierDiv.innerHTML = id;
   }
 
-  editCan(){
-    this.dialogRef2 = this.dialog.open(EditCanComponent,{
-      width:'1px',height:'1px'});
+  editCan(id: string){
+
+    //let config = new MdDialogConfig();
+    this.dialogRef2 = this.dialog.open(EditCanComponent);
+    this.dialogRef2.componentInstance.id = id;
+    //this.dialogRef2.componentInstance.name
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
-      // Delete these three lines, setAttribute() is better than createAttribute()
-      // var boxShadow = document.createAttribute("style");
-    // boxShadow.value = "padding:0";
-    // hideShadow.attributes.setNamedItem(boxShadow);
+      //var editCanID =  document.getElementsByClassName("editCandID")[0];
+      //editCanID.innerHTML = id;
+      //console.log(document.getElementsByClassName("editCandID")[0].innerHTML);
+  }
+
+  deleteCandidate(candidate: Candidate) {
+    if (window.confirm('Are you sure to delete this candidate?')) {
+      this.candidateService.deleteCand(candidate);
+    }
   }
 }

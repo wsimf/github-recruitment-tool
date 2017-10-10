@@ -10,5 +10,5 @@ export interface Candidate {
   adder?: string;
   timestamp?: number;
   reviewers?: string; // comma-separated list of reviewers assigned to this candidate
-  reviews?: string;         // comma-separated list of the reviewId of FeedbackForms submitted for this candidate
+  reviews?: string;   // comma-separated list of the reviewId of FeedbackForms submitted for this candidate
 }
