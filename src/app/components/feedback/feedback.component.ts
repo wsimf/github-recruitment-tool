@@ -70,7 +70,8 @@ export class FeedbackComponent implements OnInit, OnDestroy {
 
     // Generate unique reviewId for each feedbackform submitted
     feedback.reviewId= this.candidateGithubId +"&" + feedback.reviewerGithub;
-
+    feedback.githubId = this.candidateGithubId;
+    
     //check if candidate exists and if reviewer is assigned to him, and if this is the first submission
     let errorMessage='noError';
     let firstSubscribe = true;

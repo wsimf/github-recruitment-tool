@@ -21,7 +21,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   subscription2: any;
 
   constructor(public reviewerService: ReviewerService, public route: ActivatedRoute,public candidateService: CandidateService, public router: Router) {
-    this.subscription = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.githubId = params.id;
       this.reviews = this.reviewerService.findReviews(this.githubId);
       this.candidate = this.reviewerService.findName(this.githubId);
@@ -30,11 +30,13 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     let tempbool = false;
-    this.subscription2 = this.candidateService.getCandidates().subscribe(candidatesList => {
+    this.subscription = this.candidateService.getCandidates().subscribe(candidatesList => {
       for (let ca of candidatesList) {
+        console.log(this.githubId + " matching with this string: " + ca.githubID );
         if (ca.githubID == this.githubId) {
           tempbool = true;
           console.log(ca.githubID);
+          break;
         }
       }
       if (tempbool == false) this.router.navigate(['pagenotfound']);
