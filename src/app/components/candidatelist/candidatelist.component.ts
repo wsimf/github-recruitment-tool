@@ -55,21 +55,16 @@ export class CandidatelistComponent implements OnInit {
         this.candidates = candidates;
       });
     // Check pull request every 2 min
-    Observable.interval(500 * 60).subscribe(x => {
+      Observable.interval(500 * 60).subscribe(x => {
       for (let candidate of this.candidates) {
-        if (candidate.reviewers === undefined || candidate.reviewers.split(',').length === 0
-          || candidate.reviewers === '' ) {
-          candidate.progressStatus = 'Doing';
-        } else if (candidate.reviews === undefined || candidate.reviews.split(',').length === 0
-          || candidate.reviews === '') {
-          candidate.progressStatus = 'Being Reviewed';
-        } else if (candidate.reviews.split(',').length === candidate.reviewers.split(',').length) {
-          candidate.progressStatus = 'Reviewing Completed';
-        } else if (candidate.reviews.split(',').length < candidate.reviewers.split(',').length) {
-          candidate.progressStatus = candidate.reviews.split(',').length
-            + '/' + candidate.reviewers.split(',').length + ' Reviews Finished';
+        if (!(candidate.reviewers === undefined || candidate.reviewers.split(',').length === 0
+            || candidate.reviewers === '' )) {
+          if (candidate.reviews.split(',').length < candidate.reviewers.split(',').length) {
+            candidate.progressStatus = candidate.reviews.split(',').length
+              + '/' + candidate.reviewers.split(',').length + ' Reviews Finished';
+          }
+          this.candidateService.updateCandidate(candidate);
         }
-        this.candidateService.updateCandidate(candidate);
       }
     });
   }

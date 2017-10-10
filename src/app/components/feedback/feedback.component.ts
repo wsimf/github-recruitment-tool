@@ -23,7 +23,6 @@ export class FeedbackComponent implements OnInit, OnDestroy {
   firebaseKey: string;
   candidateGithubId: string;
 
-
   @Input() githubId;
   @Input() reviewerGithub;
 
@@ -39,7 +38,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     //   this.githubId = params.githubId != undefined ? params.githubId : "";
     //   this.reviewerGithub =params.reviewerGithub != undefined ? params.reviewerGithub : "";
       this.subscription2 = this.candidateService.getCandidates().subscribe(candidateList => {
-        this.githubId="";
+        this.githubId = "";
         for (let ca of candidateList) {
           if(ca.$key == this.firebaseKey) {
             this.githubId = ca.githubID;
@@ -114,7 +113,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
       }
 
       if (!candidateFound) {
-        errorMessage= "No candidate found with this Github id " + this.candidateGithubId;
+        errorMessage = "No candidate found with this Github id " + this.candidateGithubId;
       }
 
       // Display errorMessage if there is one
