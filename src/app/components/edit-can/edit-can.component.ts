@@ -7,7 +7,10 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   styleUrls: ['./edit-can.component.css']
 })
 export class EditCanComponent implements OnInit {
-
+  repoName: string;
+  candidateName: string;
+  candidateEmail: string;
+  codingChallenge: string;
   constructor(
     public dialogRef : MatDialogRef<EditCanComponent>,
   ) { }
