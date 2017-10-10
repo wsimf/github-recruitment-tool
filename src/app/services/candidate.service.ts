@@ -28,6 +28,10 @@ export class CandidateService {
   editCandidate(id:string,candidate:Candidate){
     return this.candidates.update(id,candidate);
   }
+
+  updateCandidate(cand: Candidate) {
+    this.candidates.update(cand.$key, cand);
+  }
   // These three methods are not used anywhere, consider deleting
 /*  getCandidate(key: string) {
     this.candidate = this.findCandidate(key);

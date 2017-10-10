@@ -66,25 +66,27 @@ export class CandidatelistComponent implements OnInit {
     this.dialogRef = this.dialog.open(AddReviewersComponent, {
       width:'1px',height:'1px'});
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
-       var indentifierDiv =  document.getElementById("identifier");
+      var indentifierDiv =  document.getElementById("identifier");
       indentifierDiv.innerHTML = id;
     }
+
   candDone(id: string){
     if(window.confirm("Please confirm if this candidate has finished their coding problem")){
       for(let i = 0; i < this.candidates.length; i++){
         if(id == this.candidates[i].githubID){
           this.candidates[i].progressStatus = "Done";
           this.candidates[i].timestamp = Date.now();
-          this.candidateService.editCandidate(this.candidates[i].$key,this.candidates[i]);
-          this.flashMessageService.show(this.candidates[i].name+ ' has been finished their coding problem. You may now email a Dev Manager.', {cssClass:'alert-success', timeout: 5000});
+          this.githubService.removeCandidateFromRepo(this.candidates[i]);
+          this.candidateService.editCandidate(this.candidates[i].$key, this.candidates[i]);
+          this.flashMessageService.show(this.candidates[i].name + ' has been finished their coding problem. You may now email a Dev Manager.', {cssClass:'alert-success', timeout: 5000});
           break;
         }
       }
     }
   }
 
-  checkLastUpdated(timestamp : number){
-    if(timestamp === undefined){
+  checkLastUpdated(timestamp: number) {
+    if(timestamp === undefined) {
       return 'No Timestamp Saved.';
     }
     var delta = Math.abs(Date.now() - timestamp) / 1000;

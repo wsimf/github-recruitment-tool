@@ -91,4 +91,42 @@ export class GithubService {
     return this.http.get<GithubUser>('https://api.github.com/users/' + githubId, {headers});
   }
 
+  /**
+   * This function remove candidate from the repo
+   * This event happens when a reviewer is added to the repo
+   * @param {Candidate} candidate
+   * @returns {Subscription}
+   */
+  removeCandidateFromRepo(candidate: Candidate) {
+    console.log('Removing ' + candidate.name +' from ' + candidate.repositoryName);
+    const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
+      .set('Accept', 'application/vnd.github.barred-rock-preview');
+    return this.http.delete('https://api.github.com/repos/nfuseuoa/' +
+      candidate.repositoryName + '/collaborators/' + candidate.githubID,  {headers}).subscribe((ok) => {console.log(ok); } );
+  }
+
+  /**
+   * Remove the reviewer from the candidate's repo
+   * @param {string} repoName
+   * @param {string} reviewerGithubID
+   * @returns {Subscription}
+   */
+  removeReviewerFromRepo(repoName: string, reviewerGithubID: string){
+    console.log('Removing ' + reviewerGithubID + ' from ' + repoName);
+    const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
+      .set('Accept', 'application/vnd.github.barred-rock-preview');
+    return this.http.delete('https://api.github.com/repos/nfuseuoa/' +
+      repoName + '/collaborators/' + reviewerGithubID,  {headers}).subscribe((ok) => {console.log(ok); } );
+  }
+  /**
+   * Get the pull requests of the repo for the candidate
+   * @param {Candidate} candidate
+   * @returns {Observable<Promise<any>>}
+   */
+  // getPullRequests(candidate: Candidate){
+  //   console.log('Getting number of pull requests for ' + candidate.repositoryName);
+  //   const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
+  //     .set('Accept', 'application/vnd.github.barred-rock-preview');
+  //   return this.http.get<PullRequest[]>('https://api.github.com/repos/nfuseuoa/' + candidate.repositoryName + '/pulls' ,{headers});
+  // }
 }
