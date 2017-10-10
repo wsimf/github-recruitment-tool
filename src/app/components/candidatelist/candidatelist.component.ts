@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MdDialog, MdDialogRef,MdDialogConfig, MD_DIALOG_DATA } from '@angular/material';
 import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
 import { EmailManagerComponent } from '../email-manager/email-manager.component';
@@ -25,9 +25,9 @@ interface Repo {
   styleUrls: ['./candidatelist.component.css']
 })
 export class CandidatelistComponent implements OnInit {
-  dialogRef: MatDialogRef<AddReviewersComponent>;
-  dialogRef2: MatDialogRef<EditCanComponent>;
-  dialogRef3: MatDialogRef<EmailManagerComponent>;
+  dialogRef: MdDialogRef<AddReviewersComponent>;
+  dialogRef2: MdDialogRef<EditCanComponent>;
+  dialogRef3: MdDialogRef<EmailManagerComponent>;
   repos$: Observable<Repo[]>;
   candidates: any[];
   isCandidateDone: boolean;
@@ -36,7 +36,7 @@ export class CandidatelistComponent implements OnInit {
   //candidates: Candidate[];
 
   constructor(
-    public dialog: MatDialog,
+    public dialog: MdDialog,
     public githubService: GithubService,
     public candidateService: CandidateService,
     public route: Router,
@@ -108,13 +108,15 @@ export class CandidatelistComponent implements OnInit {
     indentifierDiv.innerHTML = id;
   }
 
-  editCan(){
-    this.dialogRef2 = this.dialog.open(EditCanComponent,{
-      width:'1px',height:'1px'});
+  editCan(id: string){
+
+    //let config = new MdDialogConfig();
+    this.dialogRef2 = this.dialog.open(EditCanComponent);
+    this.dialogRef2.componentInstance.id = id;
+    //this.dialogRef2.componentInstance.name 
       var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
-      // Delete these three lines, setAttribute() is better than createAttribute()
-      // var boxShadow = document.createAttribute("style");
-    // boxShadow.value = "padding:0";
-    // hideShadow.attributes.setNamedItem(boxShadow);
+      //var editCanID =  document.getElementsByClassName("editCandID")[0];
+      //editCanID.innerHTML = id;
+      //console.log(document.getElementsByClassName("editCandID")[0].innerHTML);
   }
 }

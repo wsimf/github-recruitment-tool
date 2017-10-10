@@ -20,6 +20,10 @@ export class CandidateService {
   getCandidates() {
     return this.candidates;
   }
+  getCandidate(id: string) {
+    this.candidate = this.angularfirebase.object('/candidates/' + id) as FirebaseObjectObservable<Candidate>;
+    return this.candidate;
+  }
 
   editCandidate(id:string,candidate:Candidate){
     return this.candidates.update(id,candidate);
