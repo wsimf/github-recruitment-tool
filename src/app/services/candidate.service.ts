@@ -29,9 +29,14 @@ export class CandidateService {
     return this.candidates.update(id,candidate);
   }
 
+  /**
+   * Update the status of the candidate
+   * @param {Candidate} candidate
+   */
   updateCandidate(cand: Candidate) {
     this.candidates.update(cand.$key, cand);
   }
+
   // These three methods are not used anywhere, consider deleting
 /*  getCandidate(key: string) {
     this.candidate = this.findCandidate(key);

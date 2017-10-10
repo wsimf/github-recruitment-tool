@@ -6,9 +6,9 @@ import { EditCanComponent } from '../edit-can/edit-can.component';
 import { EmailManagerComponent } from '../email-manager/email-manager.component';
 import { Candidate } from '../../models/Candidate';
 import { Reviewer } from '../../models/Reviewer';
+import {Observable} from 'rxjs/Rx';
 
 import { CandidateService } from '../../services/candidate.service';
-import {Observable} from "rxjs/Observable";
 import {GithubService} from "../../services/github.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import { FlashMessagesService } from 'angular2-flash-messages';
@@ -44,7 +44,6 @@ export class CandidatelistComponent implements OnInit {
     public flashMessageService:FlashMessagesService,
   ){
     //this.repos$ = this.githubService.getCandidateList();
-
   }
 
   ngOnInit() {
@@ -55,7 +54,24 @@ export class CandidatelistComponent implements OnInit {
       this.candidateService.getCandidates().subscribe(candidates =>{
         this.candidates = candidates;
       });
-
+    // Check pull request every 2 min
+    Observable.interval(500 * 60).subscribe(x => {
+      for (let candidate of this.candidates) {
+        if (candidate.reviewers === undefined || candidate.reviewers.split(',').length === 0
+          || candidate.reviewers === '' ) {
+          candidate.progressStatus = 'Doing';
+        } else if (candidate.reviews === undefined || candidate.reviews.split(',').length === 0
+          || candidate.reviews === '') {
+          candidate.progressStatus = 'Being Reviewed';
+        } else if (candidate.reviews.split(',').length === candidate.reviewers.split(',').length) {
+          candidate.progressStatus = 'Reviewing Completed';
+        } else if (candidate.reviews.split(',').length < candidate.reviewers.split(',').length) {
+          candidate.progressStatus = candidate.reviews.split(',').length
+            + '/' + candidate.reviewers.split(',').length + ' Reviews Finished';
+        }
+        this.candidateService.updateCandidate(candidate);
+      }
+    });
   }
 
   viewResults(githubId: string){
@@ -71,7 +87,7 @@ export class CandidatelistComponent implements OnInit {
     }
 
   candDone(id: string){
-    if(window.confirm("Please confirm if this candidate has finished their coding problem")){
+    if( window.confirm("Please confirm if this candidate has finished their coding problem")){
       for(let i = 0; i < this.candidates.length; i++){
         if(id == this.candidates[i].githubID){
           this.candidates[i].progressStatus = "Done";
@@ -112,15 +128,10 @@ export class CandidatelistComponent implements OnInit {
   }
 
   editCan(id: string){
-
     //let config = new MdDialogConfig();
     this.dialogRef2 = this.dialog.open(EditCanComponent);
     this.dialogRef2.componentInstance.id = id;
-    //this.dialogRef2.componentInstance.name
-      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
-      //var editCanID =  document.getElementsByClassName("editCandID")[0];
-      //editCanID.innerHTML = id;
-      //console.log(document.getElementsByClassName("editCandID")[0].innerHTML);
+    var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
   }
 
   deleteCandidate(candidate: Candidate) {
