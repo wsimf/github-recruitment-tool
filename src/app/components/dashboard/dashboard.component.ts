@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
   repos$: Observable<Repo[]>;
 
   constructor(private candidateService: CandidateService, private http: HttpClient) { }
-
   ngOnInit() {
   }
 }

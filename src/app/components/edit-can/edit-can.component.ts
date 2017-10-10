@@ -33,12 +33,6 @@ export class EditCanComponent implements OnInit {
     this.dialogRef.close('Cancel');
   }
 
-  SaveChange() {
-    this.candidate.reviewers = this.reviewerList.toString();
-    this.candidateService.editCandidate(this.id, this.candidate);
-    window.alert('Change Saved!');
-  }
-
   /**
    * Remove reviewer from candidate
    * @param {string} rev
@@ -59,7 +53,7 @@ export class EditCanComponent implements OnInit {
           reviewers = reviewers + this.reviewerList[i];
         }
       }
-      console.log(reviewers);
+      // console.log(reviewers);
       this.candidate.reviewers = reviewers;
       // Update the candidate in Firebase
       this.candidateService.updateCandidate(this.candidate)

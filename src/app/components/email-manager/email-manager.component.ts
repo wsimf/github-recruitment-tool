@@ -58,7 +58,9 @@ export class EmailManagerComponent implements OnInit {
     this.dialogRef.close('Cancel');
   }
 
-
+  /**
+   * Destroy firebase subscription
+   */
   ngOnDestroy(): void {
     if (this.subscription != undefined) {
       this.subscription.unsubscribe();

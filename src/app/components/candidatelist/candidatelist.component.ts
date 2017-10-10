@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-//import { MatDialog, MatDialogRef, MatDialogConfig, MD_DIALOG_DATA} from '@angular/material';
 import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
 import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
@@ -38,7 +37,7 @@ export class CandidatelistComponent implements OnInit {
     public githubService: GithubService,
     public candidateService: CandidateService,
     public route: Router,
-    public flashMessageService:FlashMessagesService,
+    public flashMessageService: FlashMessagesService,
   ){}
 
   ngOnInit() {
@@ -65,14 +64,11 @@ export class CandidatelistComponent implements OnInit {
       this.route.navigate(['results', githubId]);
   }
 
-  openDialog(id: string) {
-    this.dialogRef = this.dialog.open(AddReviewersComponent, {
-      width:'1px',height:'1px'});
-      var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
-      var indentifierDiv =  document.getElementById("identifier");
-      indentifierDiv.innerHTML = id;
-    }
-
+  /**
+   * Mark the candidate status as done
+   * Remove the candidate from the repo and update timestamp
+   * @param {string} id
+   */
   candDone(id: string){
     if( window.confirm("Please confirm if this candidate has finished their coding problem")){
       for(let i = 0; i < this.candidates.length; i++){
@@ -88,6 +84,11 @@ export class CandidatelistComponent implements OnInit {
     }
   }
 
+  /**
+   * Get the timestamp of the last update
+   * @param {number} timestamp
+   * @returns {any}
+   */
   checkLastUpdated(timestamp: number) {
     if(timestamp === undefined) {
       return 'No Timestamp Saved.';
@@ -107,6 +108,10 @@ export class CandidatelistComponent implements OnInit {
     return days + ' days, ' + hours + ' hours';
   }
 
+  /**
+   * Open up email dialog box for sending email to developement manager
+   * @param {string} id
+   */
   openEmailManager(id: string) {
     this.dialogRef3 = this.dialog.open(EmailManagerComponent,{width:'1px', height:'1px'});
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
@@ -114,13 +119,20 @@ export class CandidatelistComponent implements OnInit {
     indentifierDiv.innerHTML = id;
   }
 
-  editCan(id: string){
-    //let config = new MdDialogConfig();
+  /**
+   * Open dialog box with candidate details
+   * @param {string} id
+   */
+  displayCandidateDetails(id: string){
     this.dialogRef2 = this.dialog.open(EditCanComponent);
     this.dialogRef2.componentInstance.id = id;
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
   }
 
+  /**
+   * Delete candidate from the system
+   * @param {Candidate} candidate
+   */
   deleteCandidate(candidate: Candidate) {
     if (window.confirm('Are you sure to delete this candidate?')) {
       this.candidateService.deleteCand(candidate);

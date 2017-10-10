@@ -27,16 +27,6 @@
             <label for="status">Status</label>
             <input type="text" name="status" class="form-control" [(ngModel)]="candidate.progressStatus"  #repositoryName="ngModel" disabled>
           </div>
-          <!--<div class="form-group">-->
-            <!--<label for="status">Status</label>-->
-            <!--<select id="status" class="form-control">-->
-                          <!--<option  selected="selected">{{candidate.progressStatus}}</option>-->
-                          <!--<option>Doing</option>-->
-                          <!--<option>Done</option>-->
-                          <!--<option>Being-Reviewed</option>-->
-                          <!--<option>Completed</option>-->
-            <!--</select>-->
-          <!--</div>-->
           <div class="form-group">
               <label for="reviewerLi">Reviewers</label>
               <div class="reviewerLi" name = "reviewerLi" id="reviewerLi">
@@ -47,7 +37,6 @@
           </div>
           <div class="row justify-content-around mt-4">
             <button type="reset" class="btn btn-secondary col-md-5" (click)="onCloseCancel()">Close</button>
-            <!--<button type="submit" class="btn btn-purple col-md-5" (click)="SaveChange()">Save</button>-->
           </div>
         </form>
       </div>

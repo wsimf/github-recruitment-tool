@@ -66,7 +66,7 @@ export class AddCandComponent implements OnInit, OnDestroy {
         timestamp: Date.now(),
         reviews: ''
       };
-      
+
       // Now need to check if the Github Id is already in use in our system
       let candidateGithubExists = false;
 
