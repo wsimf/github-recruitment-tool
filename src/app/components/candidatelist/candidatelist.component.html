@@ -28,7 +28,7 @@
       <button *ngIf="c.progressStatus === 'Doing'" class="btn btn-purple btn-sm" (click)="candDone(c.githubID)">Mark as done</button>
       <button *ngIf="c.progressStatus === 'Done' " class="btn btn-purple btn-sm" (click)="openEmailManager(c.githubID)"> Email Manager</button>
       <button *ngIf="c.progressStatus !=='Doing' && c.progressStatus !== 'Done'"class="btn btn-success btn-sm viewResult" (click)="viewResults(c.githubID)"> View Results</button>
-      <button class="btn btn-link" (click)="editCan(c.$key)"> Edit</button>
+      <button class="btn btn-link" (click)="editCan(c.$key)"> Details</button>
       <button class="btn btn-link" (click)="deleteCandidate(c)"> Delete</button>
     </div>
   </div>
