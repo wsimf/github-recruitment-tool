@@ -1,14 +1,33 @@
 # GithubRecruitmentTool
 
+A tool that will simplify and standardise the process recruiters from HR technically assess candidates for a software development job. The tool will streamline the process so that recruiters do not need to know how to use GitHub but be able to set up everything for the candidate.
+
+## Key Features
+
+- Authourisation (Login)
+- View list of candidates being assessed
+- Add new candidate for assessment (Create GitHub repo with challenge and add candidate as collaborator)
+- Allow technical reviewer to assess candidate's solution (Add reviewer as collaborator in GitHub repo and provide feedback form)
+- Sending email to notify relevant users (New candidate, development managers, recruiters)
+
+## Technologies
+
+- Frontend Client-side: Angular 4 (4.4.3)
+- Backend Server-side: NodeJS (v6)
+- DB: Firebase (3.9)
+- Others: GitHub API, AWS Hosting
+- Project Management: Trello, Slack, Google Drive
+
 ## Running application
 
 1. Install NodeJS (https://nodejs.org/en/download/) (The application was built using Node v6 LTS)
 2. Install Angular Core by running `npm install -g angular-cli`
 3. Clone the project to a directory
 4. Run `npm install` to install all dependencies
-5. Run `ng serve` to build and run the angular components
+5. Run `ng build` to build the angular components
+6. Run `node app.js` to run the node server and built angular components (May need to run `sudo node app.js` for admin access)
 
-The application will start up, you can access it by opening `http://localhost:4200` in a web browser.
+The application will start up, you can access it by opening `http://localhost:80` in a web browser.
 
 ## Folder structure
 
