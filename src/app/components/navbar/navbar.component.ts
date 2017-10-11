@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import 'rxjs/add/operator/map';
 
+/**
+ * @navbar.component.ts
+ * The navigation bar buttons based on the logged in state
+ */
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',

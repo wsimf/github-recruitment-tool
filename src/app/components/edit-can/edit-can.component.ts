@@ -5,6 +5,11 @@ import { Candidate } from '../../models/Candidate';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GithubService } from "../../services/github.service";
 
+/**
+ * @edit-can.component.ts
+ * A dialog which displays detailed information regarding a candidate
+ * Allows removing of reviewers assigned to candidate
+ */
 @Component({
   selector: 'app-edit-can',
   templateUrl: './edit-can.component.html',

@@ -8,6 +8,11 @@ import {EmailService} from "../../services/email.service";
 import {Observable} from "rxjs/Observable";
 import {AuthService} from "../../services/auth.service";
 
+/**
+ * @add-cand.component.ts
+ * Provides functionality to add a new candidate to be assessed.
+ * Saving details candidate to DB and setting up a GitHub repo for them
+ */
 @Component({
   selector: 'app-add-cand',
   templateUrl: './add-cand.component.html',

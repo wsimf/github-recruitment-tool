@@ -5,6 +5,10 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { Recruiter } from '../../models/Recruiter';
 import { RecruiterService} from "../../services/recruiter.service";
 
+/**
+ * @register.component.ts
+ * Provides functionality to register for an account to gain access to the toold
+ */
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

@@ -8,6 +8,10 @@ import {CandidateService} from "../../services/candidate.service";
 import {Candidate} from "../../models/Candidate";
 import {Observable} from "rxjs/Observable";
 
+/**
+ * @feedback.component.ts
+ * Provides functionality to submit feedback after assessing a candidates solution
+ */
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',

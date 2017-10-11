@@ -6,6 +6,10 @@ import { CandidateService } from '../../services/candidate.service';
 import {FlashMessagesService} from "angular2-flash-messages";
 //import {window} from 'rxjs/operator/window';
 
+/**
+ * @email-manager.component.ts
+ * Provides functionality to send an email to development manager and ability to edit content of email
+ */
 @Component({
   selector: 'app-email-manager',
   templateUrl: './email-manager.component.html',

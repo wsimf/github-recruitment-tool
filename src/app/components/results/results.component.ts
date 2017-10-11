@@ -6,6 +6,10 @@ import {FeedbackForm} from "../../models/FeedbackForm";
 import {Candidate} from "../../models/Candidate";
 import { CandidateService } from '../../services/candidate.service';
 
+/**
+ * @results.component.ts
+ * Provides functionality to retrieve and display all the feedback that is given for a candidate
+ */
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',

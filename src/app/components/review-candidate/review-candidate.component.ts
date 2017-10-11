@@ -7,6 +7,10 @@ import { GithubService} from "../../services/github.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FlashMessagesService} from "angular2-flash-messages";
 
+/**
+ * @review-candidate-component.ts
+ * Provides functionality to add a reviewer to the repo without requiring authourisation to the tool
+ */
 @Component({
   selector: 'app-review-candidate',
   templateUrl: './review-candidate.component.html',

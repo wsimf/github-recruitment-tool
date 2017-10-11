@@ -18,6 +18,10 @@ interface Repo {
   subscribers_url: string;
 }
 
+/**
+ * @candidatelist.component.ts
+ * Provides functionality to display list of candidates currently in system
+ */
 @Component({
   selector: 'app-candidatelist',
   templateUrl: './candidatelist.component.html',
