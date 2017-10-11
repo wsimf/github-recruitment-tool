@@ -35,14 +35,14 @@ export class EditCanComponent implements OnInit {
 
   /**
    * Remove reviewer from candidate
-   * @param {string} rev
+   * @param {string} reviewer
    */
-  deleteReviewer(rev : string){
+  deleteReviewer(reviewer : string){
     if(window.confirm("This action will remove the reviewer from the candidate's repo. Do you want to continue?")) {
       let reviewers = '';
       for( let i = 0; i < this.reviewerList.length ; i++){
         // Find and delete the reviewer from the reviewer list
-        if( this.reviewerList[i] == rev){
+        if( this.reviewerList[i] == reviewer){
           // Remove the reviewer from a repo
           this.githubService.removeReviewerFromRepo(this.candidate.repositoryName, this.reviewerList[i]);
           this.reviewerList.splice(i,1);

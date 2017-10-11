@@ -18,8 +18,6 @@ export class ReviewCandidateComponent implements OnInit {
   firebaseKey: string;
   reviewerGithubId: string;
   reviewer: Reviewer;
-  private r: Reviewer;
-  reviewerList: any[];
   candidate: Candidate;
   private githubUser: any;
 

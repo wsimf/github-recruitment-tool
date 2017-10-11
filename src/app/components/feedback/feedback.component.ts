@@ -15,7 +15,6 @@ import {Observable} from "rxjs/Observable";
 })
 
 export class FeedbackComponent implements OnInit, OnDestroy {
-  candidate: Candidate;
   candidates: Observable<any[]>;
   subscriptions: any[];
   firebaseKey: string;
@@ -36,10 +35,10 @@ export class FeedbackComponent implements OnInit, OnDestroy {
         this.firebaseKey = params.id != undefined ? params.id : "";
       this.subscriptions.push( this.candidateService.getCandidates().subscribe(candidateList => {
         this.githubId = "";
-        for (let ca of candidateList) {
-          if(ca.$key == this.firebaseKey) {
-            this.githubId = ca.githubID;
-            this.candidateGithubId = ca.githubID;
+        for (let candidate of candidateList) {
+          if(candidate.$key == this.firebaseKey) {
+            this.githubId = candidate.githubID;
+            this.candidateGithubId = candidate.githubID;
             break;
           }
           }
@@ -49,10 +48,10 @@ export class FeedbackComponent implements OnInit, OnDestroy {
 
   ngOnInit() {}
 
-  onSubmit(f: NgForm) {
+  onSubmit(form: NgForm) {
     let feedback = new FeedbackForm();
 
-    Object.assign(feedback, f.value);
+    Object.assign(feedback, form.value);
 
     feedback = JSON.parse(JSON.stringify(feedback, function (key, value) {
       return (key.endsWith("Score") && value === undefined) ? 3 : (value === undefined) ? '' : value
@@ -78,17 +77,17 @@ export class FeedbackComponent implements OnInit, OnDestroy {
       }
       firstSubscribe = false;
 
-      for (let ca of candidateList) {
+      for (let candidate of candidateList) {
 
         // First check if candidate with this githubId exists
-        if (ca.githubID != undefined && ca.githubID == this.candidateGithubId) {
+        if (candidate.githubID != undefined && candidate.githubID == this.candidateGithubId) {
 
           // Now check if this reviewer githubid has been assigned to this candidate
-          let reviewers = ca.reviewers.split(',');
+          let reviewers = candidate.reviewers.split(',');
           if (reviewers.indexOf(feedback.reviewerGithub) != -1) {
 
             //Lastly, check that the reviewer has not already submitted feedback TODO: load previously filled feedbackform at the start
-            if (ca.reviews.indexOf(feedback.reviewId) == -1) {
+            if (candidate.reviews.indexOf(feedback.reviewId) == -1) {
               // feedback submission successful
               this.reviewerService.newFeedback(feedback);
               this.candidateService.addReviewtoCandidate(this.candidateGithubId, feedback.reviewId);

@@ -77,10 +77,10 @@ export class AddCandComponent implements OnInit, OnDestroy {
           return;
         }
         firstSubscribe = false;
-        for (let ca of candidateList) {
-          if (ca.githubID != undefined && ca.githubID == this.githubID) {
+        for (let candidate of candidateList) {
+          if (candidate.githubID != undefined && candidate.githubID == this.githubID) {
             candidateGithubExists = true;
-            this.flashMessageService.show('This github ID ' + ca.githubID + ' is already registered to a candidate', {
+            this.flashMessageService.show('This github ID ' + candidate.githubID + ' is already registered to a candidate', {
               cssClass: 'alert-danger',
               timeout: 5000
             });
