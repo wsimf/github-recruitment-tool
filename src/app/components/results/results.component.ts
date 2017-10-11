@@ -13,12 +13,10 @@ import { CandidateService } from '../../services/candidate.service';
 })
 export class ResultsComponent implements OnInit, OnDestroy {
 
-
   reviews: Observable<FeedbackForm[]>;
   candidate: Observable<Candidate>;
   githubId: string;
   subscription: any;
-  subscription2: any;
 
   constructor(public reviewerService: ReviewerService, public route: ActivatedRoute,public candidateService: CandidateService, public router: Router) {
     this.route.params.subscribe(params => {
@@ -32,10 +30,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
     let tempbool = false;
     this.subscription = this.candidateService.getCandidates().subscribe(candidatesList => {
       for (let ca of candidatesList) {
-        console.log(this.githubId + " matching with this string: " + ca.githubID );
+        //console.log(this.githubId + " matching with this string: " + ca.githubID );
         if (ca.githubID == this.githubId) {
           tempbool = true;
-          console.log(ca.githubID);
+          //console.log(ca.githubID);
           break;
         }
       }
@@ -43,6 +41,9 @@ export class ResultsComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Destroy firebase subscription when done
+   */
   ngOnDestroy(): void {
     if (this.subscription != undefined) {
       this.subscription.unsubscribe();

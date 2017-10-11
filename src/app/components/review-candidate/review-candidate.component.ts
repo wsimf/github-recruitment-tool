@@ -13,7 +13,7 @@ import {FlashMessagesService} from "angular2-flash-messages";
   styleUrls: ['./review-candidate.component.css']
 })
 export class ReviewCandidateComponent implements OnInit {
-  subscription: any;
+  subscriptions: any[];
   subscription2: any;
   subscription3: any;
   subscription4: any;
@@ -32,15 +32,15 @@ export class ReviewCandidateComponent implements OnInit {
               public githubService: GithubService,
               public route: ActivatedRoute,
               public router: Router) {
-    this.subscription = this.route.params.subscribe(params => {
+    this.subscriptions.push( this.route.params.subscribe(params => {
       this.firebaseKey = params.id;
-    });
+    }));
   }
 
   ngOnInit() {
     let temp = location.pathname.toString().split("/");
     let tempbool = false;
-    this.subscription4 = this.candidateService.getCandidates().subscribe(candidatesList => {
+    this.subscriptions.push (this.candidateService.getCandidates().subscribe(candidatesList => {
       for (let ca of candidatesList) {
         if (ca.$key.toString() == temp[3]) {
           tempbool = true;
@@ -48,12 +48,12 @@ export class ReviewCandidateComponent implements OnInit {
         }
       }
       if (tempbool == false) this.router.navigate(['pagenotfound']);
-    });
+    }));
   }
 
   ngOnSubmit() {
     //Get name and Email of the reviewer from github
-    this.subscription3 =this.githubService.getUser(this.reviewerGithubId).subscribe( githubUser => {
+    this.subscriptions.push (this.githubService.getUser(this.reviewerGithubId).subscribe( githubUser => {
       this.githubUser = githubUser;
 
       this.reviewer = {
@@ -66,20 +66,19 @@ export class ReviewCandidateComponent implements OnInit {
 
       // Need to check if this candidate exists first, and if the total number of reviewers is less than the limit of 5
       let firstSubscribe = true;
-      let candidateFound=false;
-      let errorMessage='noError';
-      this.subscription2 = this.candidateService.getCandidates().subscribe(candidateList => {
-        if(!firstSubscribe) {return}
-        firstSubscribe=false;
+      let candidateFound = false;
+      let errorMessage = 'noError';
+      this.subscriptions.push (this.candidateService.getCandidates().subscribe(candidateList => {
+        if (!firstSubscribe) {return;}
+        firstSubscribe = false;
 
         for (let ca of candidateList) {
           // First check if candidate with this githubId exists
           if (ca.$key == this.firebaseKey) {
             candidateFound = true;
-
             this.githubId = ca.githubID;
-            // Now check if reviewer limit of 5 has not been reached
 
+            // Now check if reviewer limit of 5 has not been reached
             let reviewers = ca.reviewers == undefined? [] : ca.reviewers.split(',');
             console.log(reviewers);
             if (reviewers.length == 5) {
@@ -96,7 +95,6 @@ export class ReviewCandidateComponent implements OnInit {
               this.candidateService.addReviewertoCandidate(this.githubId, this.reviewer.githubID);
               // this.reviewerList = this.candidateService.getReviewerList(this.githubId);
 
-
               // If this is a new reviewer, add their details to the db
               this.reviewerService.persistReviewer(this.reviewer);
 
@@ -107,7 +105,6 @@ export class ReviewCandidateComponent implements OnInit {
 
               this.flashMessageService.show('You have successfully been added as a reviewer. You should now have collaborator access to their repo.', {cssClass: 'alert-success', timeout: 10000});
               this.router.navigate(['/']);
-
               break;  //candidate githubId already found, break the search
           }
         }
@@ -120,20 +117,18 @@ export class ReviewCandidateComponent implements OnInit {
         if (errorMessage != "noError") {
           this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 5000});
         }
-      });
-    });
+      }));
+    }));
   }
 
+  /**
+   * Destroy Firebase subscriptions when finished
+   */
   ngOnDestroy(): void {
-    if (this.subscription != undefined) {
-      this.subscription.unsubscribe();
-    }
-    if (this.subscription2 != undefined) {
-      this.subscription2.unsubscribe();
-    }
-    if (this.subscription3 != undefined) {
-      this.subscription3.unsubscribe();
+    for (let subscription of this.subscriptions){
+      if (subscription !== undefined) {
+        subscription.unsubscribe();
+      }
     }
   }
-
 }
