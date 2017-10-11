@@ -49,13 +49,13 @@ The application will start up, you can access it by opening `http://localhost:80
 ## Authors:
 **Name                  UPI       Github ID	
 --------------------------------------------------------				
-Van Pham(Johnny)        dpha010   JohPa8696
-Aaron Zhong             azho472   xlin504   xlin504
-Stella Li               hli936    lhystella
-Waleed Al-saady         wals005   wal88
-Jay Pandya              jpan889   bawse
-Sudara Fernando         wfer594   wsimf
-Kaimin Li (Alex)        kli438    Humbis
+*Van Pham(Johnny)        dpha010   JohPa8696
+*Aaron Zhong             azho472   xlin504   xlin504
+*Stella Li               hli936    lhystella
+*Waleed Al-saady         wals005   wal88
+*Jay Pandya              jpan889   bawse
+*Sudara Fernando         wfer594   wsimf
+*Kaimin Li (Alex)        kli438    Humbis
 
 ## Acknowledgement
 **Our customers:
