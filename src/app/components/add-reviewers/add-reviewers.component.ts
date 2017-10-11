@@ -20,7 +20,7 @@ export class AddReviewersComponent implements OnInit {
   githubId: string;
   reviewerList: any[];
   private githubUser: any;
-  private r: Reviewer;
+  private duplicateReviewer: Reviewer;
   subscription: any;
 
   constructor(public dialogRef: MatDialogRef<AddReviewersComponent>,
@@ -54,18 +54,18 @@ export class AddReviewersComponent implements OnInit {
 
 
       // If this is a new reviewer, add their details to the db
-      this.r = this.reviewerService.findReviewer(this.reviewerGithubID);
-      if (this.r == null) {
+      this.duplicateReviewer = this.reviewerService.findReviewer(this.reviewerGithubID);
+      if (this.duplicateReviewer == null) {
         this.reviewerService.persistReviewer(this.reviewer);
       }
 
       this.candidateService.getCandidates().subscribe(candidateList => {
         //Retrieve candidate's repo name
-        for (let ca of candidateList) {
-          if (ca.githubID != undefined && ca.githubID == this.githubId) {
-            console.log(ca);
+        for (let candidate of candidateList) {
+          if (candidate.githubID != undefined && candidate.githubID == this.githubId) {
+            console.log(candidate);
             // adding reviewer as collaborator.
-            this.githubService.addCollaborator(ca.repositoryName, this.reviewer.githubID).subscribe(res => {
+            this.githubService.addCollaborator(candidate.repositoryName, this.reviewer.githubID).subscribe(res => {
             });
           }
         }

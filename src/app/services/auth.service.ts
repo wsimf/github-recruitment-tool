@@ -20,7 +20,8 @@ export class AuthService {
   }
 
   /**
-   * Check if the user is already loggedin
+   * Check if the user is already logged in
+   *
    * @returns {Observable<any>}
    */
   getAuth() {
