@@ -20,19 +20,27 @@ export class GithubService {
 
   constructor(private http: HttpClient) { }
 
-  // Create a repo for a candidate
+  /**
+   * Create a repository and add the candidate as a collabrorator
+   * @param {Candidate} candidate
+   */
   addCandidate(candidate: Candidate) {
     this.createRepository(candidate).subscribe(data => {
       this.importRepository(data, candidate).subscribe( res => {
         this.addCollaborator(data['name'], candidate.githubID).subscribe(res =>{
-          console.log(res);
+          // console.log(res);
         });
       });
     });
   }
-  // Create a repository for a candidate
+
+  /**
+   * Create a new repository for candidate
+   * @param {Candidate} candidate
+   * @returns {Observable<Object>}
+   */
   createRepository(candidate: Candidate) {
-    console.log('Creating repository 123');
+    // console.log('Creating repository 123');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
     const body = {
       name: candidate.repositoryName,
@@ -43,48 +51,55 @@ export class GithubService {
       has_wiki: true
     };
 
-    console.log({headers});
+    // console.log({headers});
     return this.http.post('https://api.github.com/user/repos', body, {headers});
   }
 
   // Clone repository
   importRepository(response: any, candidate: Candidate) {
-    console.log(response);
-
-    console.log('Importing repository');
-
+    // console.log(response);
+    // console.log('Importing repository');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0').set('Accept', 'application/vnd.github.barred-rock-preview');
     const body = {
       vcs: "git",
       vcs_url: 'https://github.com/nfuseuoa/' + candidate.problem + '.git'
     };
 
-    console.log({headers});
+    // console.log({headers});
     return this.http.put('https://api.github.com/repos/nfuseuoa/' + response["name"] + '/import', body, {headers});
   }
 
-  // Add colabrorator to a github repo
+  /**
+   * Add github user as collaborator
+   * @param {string} name
+   * @param {string} collaborator
+   * @returns {Observable<Object>}
+   */
   addCollaborator(name: string, collaborator: string) {
-    console.log('Adding a collaborator');
+    // console.log('Adding a collaborator');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
       .set('Accept', 'application/vnd.github.barred-rock-preview');
-    console.log(name + '  ' + collaborator);
+    // console.log(name + '  ' + collaborator);
     return this.http.put('https://api.github.com/repos/nfuseuoa/' + name + '/collaborators/' + collaborator, null, {headers});
-    // return this.http.put('https://api.github.com/repos/nfuseuoa/code-challenge-'
-    //   + collaborator + '/collaborators/' + collaborator, null, {headers});
   }
 
+  /**
+   * Get a list of repositories from user account
+   * @returns {Observable<Object>}
+   */
   getCandidateList() { // token: 9f7fa497acff70abc90ea8c4419bd35495615ba0
-    console.log('called');
+    // console.log('called');
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
     const body = {name: 'This is my repository'};
-    console.log({headers});
-    // return this.http.post<Repo[]>('https://api.github.com/user/repos', body, {headers});
+    // console.log({headers});
     return this.http.get<Repo[]>('https://api.github.com/user/repos', {headers});
-    // this.repos$ = this.http.get<Repo[]>("https://api.github.com/user/repos", {headers}).map(data => _.values(data)).do(console.log);
-    // this.http.get("https://api.github.com/user/repos", {headers}).subscribe(val => console.log(val));
   }
 
+  /**
+   * Get user details from Github
+   * @param {string} githubId
+   * @returns {Observable<Object>}
+   */
   getUser(githubId: string) {
     console.log("Getting user details from GitHub...");
     const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
@@ -118,15 +133,5 @@ export class GithubService {
     return this.http.delete('https://api.github.com/repos/nfuseuoa/' +
       repoName + '/collaborators/' + reviewerGithubID,  {headers}).subscribe((ok) => {console.log(ok); } );
   }
-  /**
-   * Get the pull requests of the repo for the candidate
-   * @param {Candidate} candidate
-   * @returns {Observable<Promise<any>>}
-   */
-  // getPullRequests(candidate: Candidate){
-  //   console.log('Getting number of pull requests for ' + candidate.repositoryName);
-  //   const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0')
-  //     .set('Accept', 'application/vnd.github.barred-rock-preview');
-  //   return this.http.get<PullRequest[]>('https://api.github.com/repos/nfuseuoa/' + candidate.repositoryName + '/pulls' ,{headers});
-  // }
+
 }

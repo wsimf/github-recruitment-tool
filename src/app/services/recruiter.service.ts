@@ -16,5 +16,4 @@ export class RecruiterService {
   persistRecruiter(recruiter: Recruiter) {
     this.recruiters.push(recruiter);
   }
-
 }

@@ -8,25 +8,40 @@ import {FlashMessagesService} from "angular2-flash-messages";
 export class CandidateService {
   candidates: FirebaseListObservable<any[]>;
   candidate: FirebaseObjectObservable<any>;
-  can : any[];
+  can: any[];
 
   constructor( public angularfirebase: AngularFireDatabase,
-               public flashMessageService: FlashMessagesService,) {
-    console.log("Initializing candidates");
+               public flashMessageService: FlashMessagesService ) {
+    // console.log("Initializing candidates");
     this.candidates = this.angularfirebase.list('/candidates') as FirebaseListObservable<Candidate[]>;
-    //console.log("Retrieved " + this.candidates.count + " candidates");   // candidates not available yet - async
   }
 
+  /**
+   * Get all candidate from FBDB 
+   * @returns {FirebaseListObservable<any[]>}
+   */
   getCandidates() {
     return this.candidates;
   }
+
+  /**
+   * Get a single candidate from FBDB using a key
+   * @param {string} id
+   * @returns {FirebaseObjectObservable<any>}
+   */
   getCandidate(id: string) {
     this.candidate = this.angularfirebase.object('/candidates/' + id) as FirebaseObjectObservable<Candidate>;
     return this.candidate;
   }
 
-  editCandidate(id:string,candidate:Candidate){
-    return this.candidates.update(id,candidate);
+  /**
+   * Edit the candidate epo
+   * @param {string} id
+   * @param {Candidate} candidate
+   * @returns {firebase.Promise<void>}
+   */
+  editCandidate(id: string, candidate: Candidate) {
+    return this.candidates.update(id, candidate);
   }
 
   /**
@@ -37,38 +52,19 @@ export class CandidateService {
     this.candidates.update(cand.$key, cand);
   }
 
-  // These three methods are not used anywhere, consider deleting
-/*  getCandidate(key: string) {
-    this.candidate = this.findCandidate(key);
-    return this.candidate;
-  }
-
-  findCandidate(key: string) {
-    this.candidates.forEach(function(cand: Candidate){
-      if (cand.$key === key) {
-        return cand;
-      }
-    });
-    // no candidate found
-    return null;
-  }
-
-  getCandidateByGithubId(githubId: string) {
-    return this.candidates.map(items => {
-      // items.forEach(item => {
-      //   item.githubId === githubId ? this.matchedComments.push(item) : console.log("not found");
-      // });
-      const filtered = items.filter(item => item.githubID === githubId);
-      return filtered;
-      //return this.matchedComments;
-    });
-  }
-*/
-
+  /**
+   * Add new candidate to the candidate list
+   * @param {Candidate} candidate
+   */
   newCandidate(candidate: Candidate) {
     this.candidates.push(candidate);
   }
 
+  /**
+   * Adding reviewer to candidate and persist the information in FBDB
+   * @param {string} githubId
+   * @param {string} reviewerGithubId
+   */
   addReviewertoCandidate(githubId: string, reviewerGithubId: string ) {
     let firstSubscribe = true;
 
@@ -92,7 +88,7 @@ export class CandidateService {
           } else {
             this.flashMessageService.show("This reviewer has already been added", {cssClass: 'alert-danger', timeout: 5000});
           }
-          console.log(ca);
+          /console.log(ca);
           return ca;
         }
       }
@@ -147,6 +143,10 @@ export class CandidateService {
     }
   }
 
+  /**
+   * Delete the candidate from the
+   * @param {Candidate} cand
+   */
   deleteCand(cand: Candidate) {
     this.candidates.remove(cand.$key);
   }

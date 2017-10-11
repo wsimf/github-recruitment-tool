@@ -44,7 +44,7 @@ export class ReviewCandidateComponent implements OnInit {
       for (let ca of candidatesList) {
         if (ca.$key.toString() == temp[3]) {
           tempbool = true;
-          console.log(ca.$key);
+          // console.log(ca.$key);
         }
       }
       if (tempbool == false) this.router.navigate(['pagenotfound']);
@@ -80,7 +80,7 @@ export class ReviewCandidateComponent implements OnInit {
 
             // Now check if reviewer limit of 5 has not been reached
             let reviewers = ca.reviewers == undefined? [] : ca.reviewers.split(',');
-            console.log(reviewers);
+            // console.log(reviewers);
             if (reviewers.length == 5) {
               errorMessage = 'The limit of 5 reviewers has already been met. Cannot assign more reviewers';
               break;
@@ -97,7 +97,6 @@ export class ReviewCandidateComponent implements OnInit {
 
               // If this is a new reviewer, add their details to the db
               this.reviewerService.persistReviewer(this.reviewer);
-
 
               // add the reviewer as a collaborator to the repo
               this.githubService.addCollaborator(ca.repositoryName, this.reviewer.githubID).subscribe(res => {
