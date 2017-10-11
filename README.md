@@ -8,6 +8,7 @@ Currently, the MYOB's recruitment process is very inefficient and requires a lot
 * Managers assign technical reviewers to assess the solution and determine the technical competency of the candidate.
 * Technical reviewers send feedbacks to the recruiter.
 * The recruiter then send feedback to the candidate.
+
 This is not scalable as it requires a lot of work from the recruiter and reviewers. Further, reviewers would like to see the process, develoment methodology and coding practices used by the candidate in solving the problem. This can be done through examining the commit history. However, submissions in the type of zipfile, or dropbox do not contain the commit history. Hence, MYOB wants to simplify and standardise the recuiting process using Github and a tool with a user-friendly interface suitable for non-technical users such as recruiters.
 
 ## Description
