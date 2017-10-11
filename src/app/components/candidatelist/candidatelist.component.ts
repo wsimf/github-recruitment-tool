@@ -50,7 +50,7 @@ export class CandidatelistComponent implements OnInit {
       for (let candidate of this.candidates) {
         if (!(candidate.reviewers === undefined || candidate.reviewers.split(',').length === 0
             || candidate.reviewers === '' )) {
-          if (candidate.reviews.split(',').length < candidate.reviewers.split(',').length) {
+          if (candidate.reviews.split(',').length <= candidate.reviewers.split(',').length) {
             candidate.progressStatus = candidate.reviews.split(',').length
               + '/' + candidate.reviewers.split(',').length + ' Reviews Finished';
           }
