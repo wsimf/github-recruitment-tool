@@ -96,16 +96,16 @@ export class CandidateService {
     this.getCandidates().subscribe(candidates =>{
       if(!firstSubscribe) {return};
       firstSubscribe=false;
-      for(let ca of candidates){
-        if(ca.githubID != undefined && ca.githubID == githubId){
-          if(ca.reviews == "" || ca.reviews == undefined){
-            ca.reviews = reviewId;
-            this.candidates.update(ca.$key,ca);
+      for(let candidate of candidates){
+        if(candidate.githubID != undefined && candidate.githubID == githubId){
+          if(candidate.reviews == "" || candidate.reviews == undefined){
+            candidate.reviews = reviewId;
+            this.candidates.update(candidate.$key,candidate);
           }else{
-            ca.reviews += "," + reviewId;
-            this.candidates.update(ca.$key,ca);
+            candidate.reviews += "," + reviewId;
+            this.candidates.update(candidate.$key,candidate);
           }
-          return ca;
+          return candidate;
         }
       }
     });
@@ -118,15 +118,15 @@ export class CandidateService {
    */
   getReviewerList(githubId: string) {
     // Get the list of the candidate
-    this.getCandidates().subscribe(cand => {
-      this.can = cand;
+    this.getCandidates().subscribe(candidate => {
+      this.can = candidate;
     });
 
     // Find the reviewers
-    for(let ca of this.can){
-      if(ca.githubID != undefined && ca.githubID == githubId){
-        if(ca.reviewers != "" && ca.reviewers != undefined){
-          var viewList = ca.reviewers.split(',');
+    for(let candidate of this.can){
+      if(candidate.githubID != undefined && candidate.githubID == githubId){
+        if(candidate.reviewers != "" && candidate.reviewers != undefined){
+          var viewList = candidate.reviewers.split(',');
           return viewList;
         }
       }
@@ -135,9 +135,9 @@ export class CandidateService {
 
   /**
    * Delete the candidate from the
-   * @param {Candidate} cand
+   * @param {Candidate} candidate
    */
-  deleteCand(cand: Candidate) {
-    this.candidates.remove(cand.$key);
+  deleteCand(candidate: Candidate) {
+    this.candidates.remove(candidate.$key);
   }
 }

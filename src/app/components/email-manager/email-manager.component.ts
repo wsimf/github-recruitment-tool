@@ -3,6 +3,7 @@ import { Candidate } from '../../models/Candidate';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import {EmailService} from "../../services/email.service";
 import { CandidateService } from '../../services/candidate.service';
+import {FlashMessagesService} from "angular2-flash-messages";
 //import {window} from 'rxjs/operator/window';
 
 @Component({
@@ -22,7 +23,8 @@ export class EmailManagerComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<EmailManagerComponent>,
     private emailService: EmailService,
-    public candidateService: CandidateService) { }
+    public candidateService: CandidateService,
+    public flashMessageService: FlashMessagesService) { }
 
   ngOnInit() {
     this.githubId = document.getElementById("identifier2").innerHTML.toLowerCase();
@@ -46,6 +48,16 @@ export class EmailManagerComponent implements OnInit {
    * Send email to development manager
    */
   sentEmail(){
+    //Check that a valid email is given
+    let errorMessage = this.isUndefinedOrEmpty(this.devEmail) ? "Please enter candidate's email":
+                       !this.contains(this.devEmail, ['@','.']) ? "Please enter a correct email address":
+                       "noFormErrors";
+
+    if (errorMessage != "noFormErrors"){
+      this.flashMessageService.show(errorMessage, {cssClass: 'alert-danger', timeout: 3000});
+      return;
+    }
+
     this.candidate.progressStatus = "Being Reviewed";
     this.candidateService.updateCandidate(this.candidate);
 
@@ -56,6 +68,33 @@ export class EmailManagerComponent implements OnInit {
 
   onCloseCancel() {
     this.dialogRef.close('Cancel');
+  }
+
+  /**
+   * Check if a string is null or underfined or size 0
+   * @param {string} stringToCheck
+   * @returns {boolean}
+   */
+  isUndefinedOrEmpty(stringToCheck: string) {
+    if (stringToCheck === undefined || stringToCheck === null || stringToCheck.trim().length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if a string contains all characters in a given array
+   * @param stringToCheck
+   * @param array
+   * @returns {boolean}
+   */
+  contains(stringToCheck, array) {
+    for (let item of array) {
+      if (stringToCheck.indexOf(item) === -1) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
