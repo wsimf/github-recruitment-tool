@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
-import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
 import { EmailManagerComponent } from '../email-manager/email-manager.component';
 import { Candidate } from '../../models/Candidate';
@@ -9,7 +8,7 @@ import {Observable} from 'rxjs/Rx';
 
 import { CandidateService } from '../../services/candidate.service';
 import {GithubService} from "../../services/github.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 interface Repo {
@@ -24,8 +23,8 @@ interface Repo {
   templateUrl: './candidatelist.component.html',
   styleUrls: ['./candidatelist.component.css']
 })
+
 export class CandidatelistComponent implements OnInit {
-  dialogRef: MatDialogRef<AddReviewersComponent>;
   dialogRef2: MatDialogRef<EditCanComponent>;
   dialogRef3: MatDialogRef<EmailManagerComponent>;
   repos$: Observable<Repo[]>;
@@ -60,6 +59,11 @@ export class CandidatelistComponent implements OnInit {
     });
   }
 
+  /***
+   * Go to the results page showing feedback submitted for candidate with this Github Id
+   *
+   * @param {string} githubId
+   */
   viewResults(githubId: string){
       this.route.navigate(['results', githubId]);
   }
