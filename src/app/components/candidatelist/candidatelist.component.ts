@@ -25,11 +25,9 @@ interface Repo {
 })
 
 export class CandidatelistComponent implements OnInit {
-  dialogRef2: MatDialogRef<EditCanComponent>;
-  dialogRef3: MatDialogRef<EmailManagerComponent>;
-  repos$: Observable<Repo[]>;
+  EditCandidateDialog: MatDialogRef<EditCanComponent>;
+  EmailManagerDialog: MatDialogRef<EmailManagerComponent>;
   candidates: any[];
-  isCandidateDone: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -73,8 +71,8 @@ export class CandidatelistComponent implements OnInit {
    * Remove the candidate from the repo and update timestamp
    * @param {string} id
    */
-  candDone(id: string){
-    if( window.confirm("Please confirm if this candidate has finished their coding problem")){
+  candidateDone(id: string){
+    if( window.confirm("Please confirm that this candidate has finished their coding problem")){
       for(let i = 0; i < this.candidates.length; i++){
         if(id == this.candidates[i].githubID){
           this.candidates[i].progressStatus = "Done";
@@ -117,7 +115,7 @@ export class CandidatelistComponent implements OnInit {
    * @param {string} id
    */
   openEmailManager(id: string) {
-    this.dialogRef3 = this.dialog.open(EmailManagerComponent,{width:'1px', height:'1px'});
+    this.EmailManagerDialog = this.dialog.open(EmailManagerComponent,{width:'1px', height:'1px'});
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
     var indentifierDiv =  document.getElementById("identifier2");
     indentifierDiv.innerHTML = id;
@@ -128,8 +126,8 @@ export class CandidatelistComponent implements OnInit {
    * @param {string} id
    */
   displayCandidateDetails(id: string){
-    this.dialogRef2 = this.dialog.open(EditCanComponent);
-    this.dialogRef2.componentInstance.id = id;
+    this.EditCandidateDialog = this.dialog.open(EditCanComponent);
+    this.EditCandidateDialog.componentInstance.id = id;
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
   }
 

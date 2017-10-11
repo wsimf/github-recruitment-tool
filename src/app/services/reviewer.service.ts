@@ -93,7 +93,7 @@ export class ReviewerService {
    */
   findRecruiter(recruiterName: string) {
     return this.recruiters.map( recruiters => {
-      const recruiter = recruiters.filter( r => r.name === recruiterName);
+      const recruiter = recruiters.filter( reviewer => reviewer.name === recruiterName);
       return recruiter;
     })
   }
