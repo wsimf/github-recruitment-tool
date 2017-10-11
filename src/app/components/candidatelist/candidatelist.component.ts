@@ -76,7 +76,7 @@ export class CandidatelistComponent implements OnInit {
           this.candidates[i].progressStatus = "Done";
           this.candidates[i].timestamp = Date.now();
           this.githubService.removeCandidateFromRepo(this.candidates[i]);
-          this.candidateService.editCandidate(this.candidates[i].$key, this.candidates[i]);
+          this.candidateService.updateCandidate(this.candidates[i]);
           this.flashMessageService.show(this.candidates[i].name + ' has been finished their coding problem. You may now email a Dev Manager.', {cssClass:'alert-success', timeout: 5000});
           break;
         }

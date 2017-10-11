@@ -35,16 +35,6 @@ export class CandidateService {
   }
 
   /**
-   * Edit the candidate epo
-   * @param {string} id
-   * @param {Candidate} candidate
-   * @returns {firebase.Promise<void>}
-   */
-  editCandidate(id: string, candidate: Candidate) {
-    return this.candidates.update(id, candidate);
-  }
-
-  /**
    * Update the status of the candidate
    * @param {Candidate} candidate
    */
