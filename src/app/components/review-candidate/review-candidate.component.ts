@@ -14,9 +14,6 @@ import {FlashMessagesService} from "angular2-flash-messages";
 })
 export class ReviewCandidateComponent implements OnInit {
   subscriptions: any[];
-  subscription2: any;
-  subscription3: any;
-  subscription4: any;
   githubId: string;
   firebaseKey: string;
   reviewerGithubId: string;
