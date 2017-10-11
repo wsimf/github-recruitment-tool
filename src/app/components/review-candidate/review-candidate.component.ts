@@ -78,12 +78,12 @@ export class ReviewCandidateComponent implements OnInit {
             candidateFound = true;
 
             this.githubId = ca.githubID;
-            // Now check if reviewer limit of 5 has not been reached
+            // Now check if reviewer limit of 3 has not been reached
 
             let reviewers = ca.reviewers == undefined? [] : ca.reviewers.split(',');
             console.log(reviewers);
-            if (reviewers.length == 5) {
-              errorMessage = 'The limit of 5 reviewers has already been met. Cannot assign more reviewers';
+            if (reviewers.length == 3) {
+              errorMessage = 'The limit of 3 reviewers has already been met. Cannot assign more reviewers';
               break;
             }
 

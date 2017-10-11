@@ -9,10 +9,20 @@ export class RecruiterService {
     this.recruiters = this.angularfirebase.list('/recruiters') as FirebaseListObservable<Recruiter[]>;
   }
 
+  /***
+   * Return the full list of recruiters
+   *
+   * @returns {FirebaseListObservable<Recruiter[]>}
+   */
   getRecruiters() {
     return this.recruiters;
   }
 
+  /***
+   * persist a new recruiter into the database
+   *
+   * @param {Recruiter} recruiter
+   */
   persistRecruiter(recruiter: Recruiter) {
     this.recruiters.push(recruiter);
   }

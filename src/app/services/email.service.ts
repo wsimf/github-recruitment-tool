@@ -9,69 +9,66 @@ import {FeedbackForm} from "../models/FeedbackForm";
 
 @Injectable()
 export class EmailService {
-
-
-  constructor(private http: Http) {
-
-  }
-
   serverUrl = window.location.origin;
   subscription: any;
 
-  // sendRecruiterEmail(){
-  //   let url = `https://us-central1-nufeproject.cloudfunctions.net/sendEmailtoRecruiter`
-  //   let params: URLSearchParams = new URLSearchParams();
-  //   let headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-  //   params.set('to', 'dpha010@aucklanduni.ac.nz');
-  //   params.set('from', 'nfuseuoa@gmail.com');
-  //   params.set('subject', 'test-email');
-  //   params.set('content', 'Hello World');
-  //   return this.http.post(url, params, headers)
-  //     .toPromise()
-  //     .then( res => {
-  //       console.log(res)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
+  constructor(private http: Http) { }
 
+  /***
+   * Send an email to the recruiter when the reviewer has submitted feedback
+   *
+   * @param {Candidate} candidate
+   * @param {string} recruiterEmail
+   * @param {FeedbackForm} feedback
+   */
   sendRecruiterEmail(candidate: Candidate, recruiterEmail: string, feedback: FeedbackForm) {
-    console.log(feedback);
+    // console.log(feedback);
 
-    // From feedback, find candidate and recruiter details
+    // From the feedback form, find candidate and recruiter details
     this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendRecruiterEmail', {
       candidate: candidate,
       recruiterEmail: recruiterEmail,
-      // reviewer: reviewer,
       feedback: feedback
     }).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
       },
       err => {
-        console.log(err);
+        // console.log(err);
       }
     );
   }
 
+  /***
+   * Send an email to the candidate when they are first added to the system
+   * to let them know they will soon receive a Github repo invitation
+   *
+   * @param {Candidate} candidate
+   */
   sendCandidateEmail(candidate: Candidate){
-    console.log(candidate);
+    // console.log(candidate);
 
     this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendCandidateEmail', {
       candidate: candidate
     }).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
       },
       err => {
-        console.log(err);
+        // console.log(err);
       }
     );
   }
 
+  /***
+   * Used to send an email to the development manager to let them know that the Candidate is now finished.
+   * The email will contain links for adding a reviewer and giving feedback
+   *
+   * @param {string} devManagerEmail
+   * @param {string} content
+   */
   sendDevManagerEmail(devManagerEmail: string, content: string) {
-    console.log("Sending email to dev manager " + devManagerEmail);
+    // console.log("Sending email to dev manager " + devManagerEmail);
 
     // From feedback, find candidate and recruiter details
     this.subscription = this.http.put(this.serverUrl + '/api/sendgrid/sendDevManagerEmail', {
@@ -79,10 +76,10 @@ export class EmailService {
       content: content
     }).subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
       },
       err => {
-        console.log(err);
+        // console.log(err);
       }
     );
   }
@@ -93,28 +90,4 @@ export class EmailService {
     }
   }
 
-  // sendEmail() {
-  //   gapi.client.init(){
-  //
-  //     'clientId':'763732167157-5fto94ei2iv80kb3g1qplft1vtilkn5l.apps.googleusercontent.com',
-  //       'discoveryDocs' : ['https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest'],
-  //       'scope' : 'https://www.googleapis.com/auth/gmail.send',
-  //   }).then(function () {});
-  // }
-  // sendEmailtoReviewer() {
-  //   //   console.log('Creating repository');
-  //   //
-  //   //   const headers = new HttpHeaders().set('Authorization', 'token ' + '9f7fa497acff70abc90ea8c4419bd35495615ba0');
-  //   //   const body = {
-  //   //     name: candidate.repositoryName,
-  //   //     description: 'MYOB technical challenge for ' + candidate.name,
-  //   //     private: false,   //False for now since we dont have any private repos for the general acc
-  //   //     has_issues: true,
-  //   //     has_projects: true,
-  //   //     has_wiki: true
-  //   //   };
-  //   //
-  //   //   console.log({headers});
-  //   //   return this.http.post('https://api.github.com/user/repos', body, {headers});
-  // }
 }

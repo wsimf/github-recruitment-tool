@@ -31,11 +31,6 @@ router.put('/sendCandidateEmail', (req, res) => {
   };
   sgMail.send(msg);
 
-  // setTimeout(function() {
-  //   addCandComponent;
-  // }, 15000);
-
-
 })
 
 router.put('/sendRecruiterEmail', (req, res) => {

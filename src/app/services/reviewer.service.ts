@@ -17,9 +17,7 @@ export class ReviewerService {
 
   comment: FirebaseObjectObservable<any>;
   matchedComments: FeedbackForm[];
-  private c: Candidate;
-  private rc: Recruiter;
-  private rv: Reviewer;
+  private candidate: Candidate;
 
   constructor(public angularfirebase: AngularFireDatabase, public emailService: EmailService) {
     this.comments = this.angularfirebase.list('/responses') as FirebaseListObservable<FeedbackForm[]>;
@@ -29,48 +27,70 @@ export class ReviewerService {
     this.matchedComments = [];
   }
 
+  /***
+   * Return all feedback comments
+   *
+   * @returns {FirebaseListObservable<any[]>}
+   */
   getComments(){
     return this.comments;
   }
 
+  /***
+   * Persist the feedback, update candidate to reflect new feedback, and email recruiter to inform them about this
+   *
+   * @param {FeedbackForm} feedback
+   */
   newFeedback(feedback: FeedbackForm) {
+    // Persist the feedback into the database
     this.comments.push(feedback);
-    console.log(feedback);
+    // console.log(feedback);
+
     var firstSubscribe = true;
-    this.findName(feedback.githubId).subscribe( res => {
+    this.findCandidate(feedback.githubId).subscribe(candidate => {
       if(!firstSubscribe){
         return;
       }
       firstSubscribe = false;
-      this.c = res[0];
-      console.log("this.c is: " +this.c);
-      this.emailService.sendRecruiterEmail(this.c, this.c.adder , feedback);
-    }) ; // find candidate
-
-
-    // this.rv = this.findReviewer(feedback.reviewerGithub);
-    // this.emailService.sendRecruiterEmail(this.c, this.rc , feedback);
-  }
-
-  findReviews(githubId: string){
-    console.log("Searching reviews for: " + githubId);
-    return this.comments.map(items => {
-      // items.forEach(item => {
-      //   item.githubId === githubId ? this.matchedComments.push(item) : console.log("not found");
-      // });
-      const filtered = items.filter(item => item.githubId === githubId);
-      return filtered;
-      //return this.matchedComments;
+      this.candidate = candidate[0];
+      // console.log("this.candidate is: " +this.candidate);
+      this.emailService.sendRecruiterEmail(this.candidate, this.candidate.adder , feedback);
     });
   }
 
-  findName(githubId: string){
+  /***
+   * Find and return all feedback reviews submitted for the candidate with a given github Id
+   *
+   * @param {string} githubId
+   * @returns {Observable<any>}
+   */
+  findReviews(githubId: string){
+    // console.log("Searching reviews for: " + githubId);
+    return this.comments.map(items => {
+      const filtered = items.filter(item => item.githubId === githubId);
+      return filtered;
+    });
+  }
+
+  /***
+   * Find candidate by Github Id
+   *
+   * @param {string} githubId
+   * @returns {Observable<any>}
+   */
+  findCandidate(githubId: string){
     return this.candidates.map(items => {
       const filtered = items.filter(item => item.githubID === githubId);
       return filtered;
     })
   }
 
+  /***
+   * Find recruiter by their name
+   *
+   * @param {string} recruiterName
+   * @returns {Observable<any>}
+   */
   findRecruiter(recruiterName: string) {
     return this.recruiters.map( recruiters => {
       const recruiter = recruiters.filter( r => r.name === recruiterName);
@@ -78,20 +98,36 @@ export class ReviewerService {
     })
   }
 
-
+  /***
+   * Returns all reviewers
+   *
+   * @returns {FirebaseListObservable<Reviewer[]>}
+   */
   getReviewers() {
     return this.reviewers;
   }
 
+  /***
+   * Persist a new reviewer into the database
+   *
+   * @param {Reviewer} reviewer
+   */
   persistReviewer(reviewer: Reviewer) {
-    console.log("Adding reviewer: " + reviewer.name);
-    let reviewer2 = this.findReviewer(reviewer.githubID);
-    if (reviewer2 == null) {
+    // console.log("Adding reviewer: " + reviewer.name);
+    //Check if reviewer already exists in the database, otherwise don't persist
+    let savedReviewer = this.findReviewer(reviewer.githubID);
+    if (savedReviewer == null) {
       this.reviewers.push(reviewer);
     }
 
   }
 
+  /***
+   * Find and return a reviewer by their Github Id
+   *
+   * @param {string} githubID
+   * @returns {any}
+   */
   findReviewer(githubID: string) {
     this.reviewers.forEach(function(reviewer: Reviewer){
       if (reviewer.githubID === githubID) {

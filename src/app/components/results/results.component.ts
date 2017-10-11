@@ -24,7 +24,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.githubId = params.id;
       this.reviews = this.reviewerService.findReviews(this.githubId);
-      this.candidate = this.reviewerService.findName(this.githubId);
+      this.candidate = this.reviewerService.findCandidate(this.githubId);
     });
   }
 
