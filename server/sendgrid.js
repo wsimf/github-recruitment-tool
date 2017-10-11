@@ -41,7 +41,9 @@ router.put('/sendRecruiterEmail', (req, res) => {
     to: req.body.recruiterEmail,
     from: 'nfuseuoa@gmail.com',
     subject: 'A review has been completed for ' + req.body.candidate.name,
-    text: JSON.stringify(req.body.feedback)
+    text: req.body.feedback.reviewerGithub + ' has completed a review for ' + req.body.candidate.name + '\n\n' +
+      'Summary: ' + req.body.feedback.summary + '\n\n' +
+      'Skill Level: ' + req.body.feedback.recommend
   };
   sgMail.send(msg);
 })
