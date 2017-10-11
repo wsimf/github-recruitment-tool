@@ -17,7 +17,7 @@ export class CandidateService {
   }
 
   /**
-   * Get all candidate from FBDB 
+   * Get all candidate from FBDB
    * @returns {FirebaseListObservable<any[]>}
    */
   getCandidates() {
@@ -88,7 +88,7 @@ export class CandidateService {
           } else {
             this.flashMessageService.show("This reviewer has already been added", {cssClass: 'alert-danger', timeout: 5000});
           }
-          /console.log(ca);
+          //console.log(ca);
           return ca;
         }
       }

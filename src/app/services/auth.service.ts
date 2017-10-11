@@ -19,17 +19,27 @@ export class AuthService {
     });
   }
 
-  // Check out user status
+  /**
+   * Check if the user is already loggedin
+   * @returns {Observable<any>}
+   */
   getAuth() {
     return this.afAuth.authState.map(auth => auth);
   }
 
-  // Logout user
+  /**
+   * Log user out
+   */
   logout() {
     this.afAuth.auth.signOut();
   }
 
-  // Register User
+  /**
+   * Register a new authentication using user email and password
+   * @param {string} email
+   * @param {string} password
+   * @returns {Promise<any>}
+   */
   register(email: string, password: string) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.createUserWithEmailAndPassword(email, password)
