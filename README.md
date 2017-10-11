@@ -59,4 +59,4 @@ Name----------------UPI---Github ID
 * Kaimin Li (Alex)--------kli438----Humbis
 
 ## Acknowledgement
-NFuse would like give a humungous thank to our customers,..., for their guidances throughout this project. 
+NFuse would like give a humungous thank to our customers, Shailan Patel, Karen Xie, Mark Pearl, Darren Sim and Lucas Rainett, for their guidances throughout this project. 
