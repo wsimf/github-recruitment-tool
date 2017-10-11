@@ -18,8 +18,6 @@ export class ReviewCandidateComponent implements OnInit {
   firebaseKey: string;
   reviewerGithubId: string;
   reviewer: Reviewer;
-  private r: Reviewer;
-  reviewerList: any[];
   candidate: Candidate;
   private githubUser: any;
 
@@ -29,6 +27,7 @@ export class ReviewCandidateComponent implements OnInit {
               public githubService: GithubService,
               public route: ActivatedRoute,
               public router: Router) {
+    this.subscriptions = [];
     this.subscriptions.push( this.route.params.subscribe(params => {
       this.firebaseKey = params.id;
     }));

@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDialogConfig} from '@angular/material';
-import { AddReviewersComponent } from '../add-reviewers/add-reviewers.component';
 import { EditCanComponent } from '../edit-can/edit-can.component';
 import { EmailManagerComponent } from '../email-manager/email-manager.component';
 import { Candidate } from '../../models/Candidate';
@@ -9,7 +8,7 @@ import {Observable} from 'rxjs/Rx';
 
 import { CandidateService } from '../../services/candidate.service';
 import {GithubService} from "../../services/github.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import { FlashMessagesService } from 'angular2-flash-messages';
 
 interface Repo {
@@ -24,13 +23,11 @@ interface Repo {
   templateUrl: './candidatelist.component.html',
   styleUrls: ['./candidatelist.component.css']
 })
+
 export class CandidatelistComponent implements OnInit {
-  dialogRef: MatDialogRef<AddReviewersComponent>;
-  dialogRef2: MatDialogRef<EditCanComponent>;
-  dialogRef3: MatDialogRef<EmailManagerComponent>;
-  repos$: Observable<Repo[]>;
+  EditCandidateDialog: MatDialogRef<EditCanComponent>;
+  EmailManagerDialog: MatDialogRef<EmailManagerComponent>;
   candidates: any[];
-  isCandidateDone: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -60,6 +57,11 @@ export class CandidatelistComponent implements OnInit {
     });
   }
 
+  /***
+   * Go to the results page showing feedback submitted for candidate with this Github Id
+   *
+   * @param {string} githubId
+   */
   viewResults(githubId: string){
       this.route.navigate(['results', githubId]);
   }
@@ -69,8 +71,8 @@ export class CandidatelistComponent implements OnInit {
    * Remove the candidate from the repo and update timestamp
    * @param {string} id
    */
-  candDone(id: string){
-    if( window.confirm("Please confirm if this candidate has finished their coding problem")){
+  candidateDone(id: string){
+    if( window.confirm("Please confirm that this candidate has finished their coding problem")){
       for(let i = 0; i < this.candidates.length; i++){
         if(id == this.candidates[i].githubID){
           this.candidates[i].progressStatus = "Done";
@@ -113,7 +115,7 @@ export class CandidatelistComponent implements OnInit {
    * @param {string} id
    */
   openEmailManager(id: string) {
-    this.dialogRef3 = this.dialog.open(EmailManagerComponent,{width:'1px', height:'1px'});
+    this.EmailManagerDialog = this.dialog.open(EmailManagerComponent,{width:'1px', height:'1px'});
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
     var indentifierDiv =  document.getElementById("identifier2");
     indentifierDiv.innerHTML = id;
@@ -124,8 +126,8 @@ export class CandidatelistComponent implements OnInit {
    * @param {string} id
    */
   displayCandidateDetails(id: string){
-    this.dialogRef2 = this.dialog.open(EditCanComponent);
-    this.dialogRef2.componentInstance.id = id;
+    this.EditCandidateDialog = this.dialog.open(EditCanComponent);
+    this.EditCandidateDialog.componentInstance.id = id;
     var hideShadow = document.getElementsByClassName('mat-dialog-container')[0].setAttribute('style', 'padding:0');
   }
 
