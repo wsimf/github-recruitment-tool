@@ -47,7 +47,7 @@ export class EmailManagerComponent implements OnInit {
    */
   sentEmail(){
     this.candidate.progressStatus = "Being Reviewed";
-    this.candidateService.editCandidate(this.candidate.$key,this.candidate);
+    this.candidateService.updateCandidate(this.candidate);
 
     this.emailService.sendDevManagerEmail(this.devEmail, this.devEmailContent);
     this.onCloseCancel();
