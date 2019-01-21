@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.put('/sendDevManagerEmail', (req, res) => {
   console.log("Sending email to dev manager: " + req.body.email);
-  sgMail.setApiKey('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');
+  sgMail.setApiKey('<>');
   // console.log(req.body.reviewer);
   const msg = {
     to: req.body.email,
@@ -21,7 +21,7 @@ router.put('/sendDevManagerEmail', (req, res) => {
 
 router.put('/sendCandidateEmail', (req, res) => {
   console.log("Sending email to candidate: " + req.body.candidate.name);
-  sgMail.setApiKey('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');
+  sgMail.setApiKey('<>');
   const msg = {
     to: req.body.candidate.email,
     from: 'nfuseuoa@gmail.com',
@@ -35,7 +35,7 @@ router.put('/sendCandidateEmail', (req, res) => {
 
 router.put('/sendRecruiterEmail', (req, res) => {
   console.log("Sending email to recruiter: " + req.body.recruiterEmail);
-  sgMail.setApiKey('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');
+  sgMail.setApiKey('<>');
   // console.log(req.body.recruiter);
   const msg = {
     to: req.body.recruiterEmail,
